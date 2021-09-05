@@ -13,6 +13,16 @@
 		15E1E7EF26E50657000461B8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 15E1E7ED26E50657000461B8 /* Main.storyboard */; };
 		15E1E7F126E50659000461B8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 15E1E7F026E50659000461B8 /* Assets.xcassets */; };
 		15E1E7F426E50659000461B8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 15E1E7F226E50659000461B8 /* LaunchScreen.storyboard */; };
+		15E1E7FE26E5527E000461B8 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E7FD26E5527E000461B8 /* Coordinator.swift */; };
+		15E1E80026E552A4000461B8 /* RootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E7FF26E552A4000461B8 /* RootCoordinator.swift */; };
+		15E1E80326E553B0000461B8 /* WeatherCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E80226E553B0000461B8 /* WeatherCoordinator.swift */; };
+		15E1E80526E55419000461B8 /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E80426E55419000461B8 /* WeatherViewController.swift */; };
+		15E1E80726E55503000461B8 /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E80626E55503000461B8 /* WeatherView.swift */; };
+		15E1E80D26E55679000461B8 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E80C26E55679000461B8 /* UIViewControllerExtension.swift */; };
+		15E1E81026E55728000461B8 /* WeatherViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 15E1E80F26E55728000461B8 /* WeatherViewController.storyboard */; };
+		15E1E81226E5577F000461B8 /* WeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E81126E5577F000461B8 /* WeatherViewModel.swift */; };
+		15E1E81426E558FF000461B8 /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E81326E558FF000461B8 /* TypeAliases.swift */; };
+		15E1E81626E55B2E000461B8 /* UINavigationBarExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E81526E55B2E000461B8 /* UINavigationBarExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +34,16 @@
 		15E1E7F026E50659000461B8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		15E1E7F326E50659000461B8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		15E1E7F526E50659000461B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		15E1E7FD26E5527E000461B8 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		15E1E7FF26E552A4000461B8 /* RootCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCoordinator.swift; sourceTree = "<group>"; };
+		15E1E80226E553B0000461B8 /* WeatherCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCoordinator.swift; sourceTree = "<group>"; };
+		15E1E80426E55419000461B8 /* WeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewController.swift; sourceTree = "<group>"; };
+		15E1E80626E55503000461B8 /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
+		15E1E80C26E55679000461B8 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
+		15E1E80F26E55728000461B8 /* WeatherViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WeatherViewController.storyboard; sourceTree = "<group>"; };
+		15E1E81126E5577F000461B8 /* WeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModel.swift; sourceTree = "<group>"; };
+		15E1E81326E558FF000461B8 /* TypeAliases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeAliases.swift; sourceTree = "<group>"; };
+		15E1E81526E55B2E000461B8 /* UINavigationBarExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationBarExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,8 +76,10 @@
 		15E1E7E626E50657000461B8 /* Weather App */ = {
 			isa = PBXGroup;
 			children = (
+				15E1E81326E558FF000461B8 /* TypeAliases.swift */,
 				15E1E7E726E50657000461B8 /* AppDelegate.swift */,
 				15E1E7E926E50657000461B8 /* SceneDelegate.swift */,
+				15E1E7FB26E55265000461B8 /* UI */,
 				15E1E7EB26E50657000461B8 /* ViewController.swift */,
 				15E1E7ED26E50657000461B8 /* Main.storyboard */,
 				15E1E7F026E50659000461B8 /* Assets.xcassets */,
@@ -65,6 +87,54 @@
 				15E1E7F526E50659000461B8 /* Info.plist */,
 			);
 			path = "Weather App";
+			sourceTree = "<group>";
+		};
+		15E1E7FB26E55265000461B8 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				15E1E80E26E556FC000461B8 /* WeatherVC */,
+				15E1E7FC26E5526C000461B8 /* RootCoordinator */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		15E1E7FC26E5526C000461B8 /* RootCoordinator */ = {
+			isa = PBXGroup;
+			children = (
+				15E1E7FD26E5527E000461B8 /* Coordinator.swift */,
+				15E1E7FF26E552A4000461B8 /* RootCoordinator.swift */,
+				15E1E80926E555A9000461B8 /* Common */,
+			);
+			path = RootCoordinator;
+			sourceTree = "<group>";
+		};
+		15E1E80826E5559F000461B8 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				15E1E80C26E55679000461B8 /* UIViewControllerExtension.swift */,
+				15E1E81526E55B2E000461B8 /* UINavigationBarExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		15E1E80926E555A9000461B8 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				15E1E80826E5559F000461B8 /* Extensions */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		15E1E80E26E556FC000461B8 /* WeatherVC */ = {
+			isa = PBXGroup;
+			children = (
+				15E1E80226E553B0000461B8 /* WeatherCoordinator.swift */,
+				15E1E80626E55503000461B8 /* WeatherView.swift */,
+				15E1E81126E5577F000461B8 /* WeatherViewModel.swift */,
+				15E1E80426E55419000461B8 /* WeatherViewController.swift */,
+				15E1E80F26E55728000461B8 /* WeatherViewController.storyboard */,
+			);
+			path = WeatherVC;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -124,6 +194,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15E1E81026E55728000461B8 /* WeatherViewController.storyboard in Resources */,
 				15E1E7F426E50659000461B8 /* LaunchScreen.storyboard in Resources */,
 				15E1E7F126E50659000461B8 /* Assets.xcassets in Resources */,
 				15E1E7EF26E50657000461B8 /* Main.storyboard in Resources */,
@@ -137,9 +208,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15E1E7FE26E5527E000461B8 /* Coordinator.swift in Sources */,
 				15E1E7EC26E50657000461B8 /* ViewController.swift in Sources */,
+				15E1E80D26E55679000461B8 /* UIViewControllerExtension.swift in Sources */,
+				15E1E81226E5577F000461B8 /* WeatherViewModel.swift in Sources */,
+				15E1E80026E552A4000461B8 /* RootCoordinator.swift in Sources */,
+				15E1E81426E558FF000461B8 /* TypeAliases.swift in Sources */,
 				15E1E7E826E50657000461B8 /* AppDelegate.swift in Sources */,
 				15E1E7EA26E50657000461B8 /* SceneDelegate.swift in Sources */,
+				15E1E80726E55503000461B8 /* WeatherView.swift in Sources */,
+				15E1E81626E55B2E000461B8 /* UINavigationBarExtension.swift in Sources */,
+				15E1E80526E55419000461B8 /* WeatherViewController.swift in Sources */,
+				15E1E80326E553B0000461B8 /* WeatherCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
