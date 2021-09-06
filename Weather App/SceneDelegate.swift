@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             rootCoordinator = RootCoordinator()
         }
         
-        _ = rootCoordinator?.start()
+        window?.rootViewController = rootCoordinator?.start()
         window?.makeKeyAndVisible()
     }
 

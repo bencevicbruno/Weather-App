@@ -33,20 +33,5 @@ extension UIViewController: RootShowable {
         }
         return appWindow
     }
- 
-    public var contentViewController: UIViewController? {
-        if let navigationViewController = self as? UINavigationController {
-            return navigationViewController.topViewController?.contentViewController
-        } else {
-            return self
-        }
-    }
-}
 
-extension UIViewController {
-    func showMessage(title: String, messagae: String) {
-        let alert = UIAlertController(title: title, message: messagae, preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
 }

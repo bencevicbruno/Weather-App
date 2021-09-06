@@ -9,9 +9,7 @@ import Foundation
 import UIKit
 
 final class RootCoordinator: Coordinator {
-    
     var childCoordinator: Coordinator?
-    let navigationController = UINavigationController()
     
     func start() -> UIViewController {
         let vc: UIViewController
@@ -22,13 +20,11 @@ final class RootCoordinator: Coordinator {
     }
     
     private func createHomeVC() -> UIViewController {
-        let homeCoordinator = WeatherCoordinator()
+        let weatherCoordinator = WeatherCoordinator()
         
-        childCoordinator = homeCoordinator
-        let rootVC = homeCoordinator.start()
-        rootVC.showAsRoot()
+        childCoordinator = weatherCoordinator
+        let rootVC = weatherCoordinator.start()
         
         return rootVC
     }
-    
 }

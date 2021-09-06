@@ -7,9 +7,9 @@
 
 import UIKit
 
-class WeatherViewController: UIViewController {
-    private lazy var homeView = WeatherView()
-    var viewModel: WeatherViewModel!
+class HomeViewController: UIViewController {
+    private lazy var homeView = HomeView()
+    var viewModel: HomeViewModel!
     
     //MARK: LifeCycle
     
@@ -19,7 +19,6 @@ class WeatherViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupCallbacks()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -29,18 +28,21 @@ class WeatherViewController: UIViewController {
     
     //MARK: Actions
     
-    private func setupCallbacks() {
-        
-    }
-    
     private func setupNavigationBar() {
+        self.title = "Home"
         self.navigationController?.navigationBar.setVisible(false)
         self.navigationController?.navigationBar.tintColor = .black
-        
+        removeTextFromBackButton()
         self.navigationItem.leftBarButtonItems = [
             UIBarButtonItem(image: UIImage(named: "search"), style: .plain, target: self, action: #selector(goToSearchScreen)),
             UIBarButtonItem(image: UIImage(named: "settings"), style: .plain, target: self, action: #selector(goToSettingsScreen))
         ]
+    }
+    
+    private func removeTextFromBackButton() {
+        let backButton = UIBarButtonItem()
+        backButton.title = ""
+        self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
     }
     
     @objc private func goToSearchScreen() {

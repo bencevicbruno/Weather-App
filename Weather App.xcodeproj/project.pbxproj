@@ -15,14 +15,21 @@
 		15E1E7F426E50659000461B8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 15E1E7F226E50659000461B8 /* LaunchScreen.storyboard */; };
 		15E1E7FE26E5527E000461B8 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E7FD26E5527E000461B8 /* Coordinator.swift */; };
 		15E1E80026E552A4000461B8 /* RootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E7FF26E552A4000461B8 /* RootCoordinator.swift */; };
-		15E1E80326E553B0000461B8 /* WeatherCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E80226E553B0000461B8 /* WeatherCoordinator.swift */; };
-		15E1E80526E55419000461B8 /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E80426E55419000461B8 /* WeatherViewController.swift */; };
-		15E1E80726E55503000461B8 /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E80626E55503000461B8 /* WeatherView.swift */; };
+		15E1E80326E553B0000461B8 /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E80226E553B0000461B8 /* HomeCoordinator.swift */; };
+		15E1E80526E55419000461B8 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E80426E55419000461B8 /* HomeViewController.swift */; };
+		15E1E80726E55503000461B8 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E80626E55503000461B8 /* HomeView.swift */; };
 		15E1E80D26E55679000461B8 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E80C26E55679000461B8 /* UIViewControllerExtension.swift */; };
-		15E1E81026E55728000461B8 /* WeatherViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 15E1E80F26E55728000461B8 /* WeatherViewController.storyboard */; };
-		15E1E81226E5577F000461B8 /* WeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E81126E5577F000461B8 /* WeatherViewModel.swift */; };
+		15E1E81226E5577F000461B8 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E81126E5577F000461B8 /* HomeViewModel.swift */; };
 		15E1E81426E558FF000461B8 /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E81326E558FF000461B8 /* TypeAliases.swift */; };
 		15E1E81626E55B2E000461B8 /* UINavigationBarExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E81526E55B2E000461B8 /* UINavigationBarExtension.swift */; };
+		15E1E81A26E639A0000461B8 /* SettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E81926E639A0000461B8 /* SettingsCoordinator.swift */; };
+		15E1E81C26E639AA000461B8 /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E81B26E639AA000461B8 /* SearchCoordinator.swift */; };
+		15E1E81E26E64018000461B8 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E81D26E64018000461B8 /* SearchViewController.swift */; };
+		15E1E82026E64023000461B8 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E81F26E64023000461B8 /* SettingsViewController.swift */; };
+		15E1E82226E64B70000461B8 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E82126E64B70000461B8 /* SearchViewModel.swift */; };
+		15E1E82426E64B95000461B8 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E82326E64B95000461B8 /* SettingsViewModel.swift */; };
+		15E1E82626E64BAA000461B8 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E82526E64BAA000461B8 /* SearchView.swift */; };
+		15E1E82826E64BCD000461B8 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E82726E64BCD000461B8 /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,14 +43,21 @@
 		15E1E7F526E50659000461B8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		15E1E7FD26E5527E000461B8 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		15E1E7FF26E552A4000461B8 /* RootCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCoordinator.swift; sourceTree = "<group>"; };
-		15E1E80226E553B0000461B8 /* WeatherCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCoordinator.swift; sourceTree = "<group>"; };
-		15E1E80426E55419000461B8 /* WeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewController.swift; sourceTree = "<group>"; };
-		15E1E80626E55503000461B8 /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
+		15E1E80226E553B0000461B8 /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
+		15E1E80426E55419000461B8 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		15E1E80626E55503000461B8 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		15E1E80C26E55679000461B8 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
-		15E1E80F26E55728000461B8 /* WeatherViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WeatherViewController.storyboard; sourceTree = "<group>"; };
-		15E1E81126E5577F000461B8 /* WeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModel.swift; sourceTree = "<group>"; };
+		15E1E81126E5577F000461B8 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		15E1E81326E558FF000461B8 /* TypeAliases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeAliases.swift; sourceTree = "<group>"; };
 		15E1E81526E55B2E000461B8 /* UINavigationBarExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationBarExtension.swift; sourceTree = "<group>"; };
+		15E1E81926E639A0000461B8 /* SettingsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinator.swift; sourceTree = "<group>"; };
+		15E1E81B26E639AA000461B8 /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
+		15E1E81D26E64018000461B8 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		15E1E81F26E64023000461B8 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		15E1E82126E64B70000461B8 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		15E1E82326E64B95000461B8 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		15E1E82526E64BAA000461B8 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		15E1E82726E64BCD000461B8 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +94,7 @@
 				15E1E7E726E50657000461B8 /* AppDelegate.swift */,
 				15E1E7E926E50657000461B8 /* SceneDelegate.swift */,
 				15E1E7FB26E55265000461B8 /* UI */,
+				15E1E80926E555A9000461B8 /* Common */,
 				15E1E7EB26E50657000461B8 /* ViewController.swift */,
 				15E1E7ED26E50657000461B8 /* Main.storyboard */,
 				15E1E7F026E50659000461B8 /* Assets.xcassets */,
@@ -92,7 +107,9 @@
 		15E1E7FB26E55265000461B8 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				15E1E80E26E556FC000461B8 /* WeatherVC */,
+				15E1E81826E6398F000461B8 /* SearchVC */,
+				15E1E81726E63984000461B8 /* SettingsVC */,
+				15E1E80E26E556FC000461B8 /* HomeVC */,
 				15E1E7FC26E5526C000461B8 /* RootCoordinator */,
 			);
 			path = UI;
@@ -103,7 +120,6 @@
 			children = (
 				15E1E7FD26E5527E000461B8 /* Coordinator.swift */,
 				15E1E7FF26E552A4000461B8 /* RootCoordinator.swift */,
-				15E1E80926E555A9000461B8 /* Common */,
 			);
 			path = RootCoordinator;
 			sourceTree = "<group>";
@@ -125,16 +141,37 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
-		15E1E80E26E556FC000461B8 /* WeatherVC */ = {
+		15E1E80E26E556FC000461B8 /* HomeVC */ = {
 			isa = PBXGroup;
 			children = (
-				15E1E80226E553B0000461B8 /* WeatherCoordinator.swift */,
-				15E1E80626E55503000461B8 /* WeatherView.swift */,
-				15E1E81126E5577F000461B8 /* WeatherViewModel.swift */,
-				15E1E80426E55419000461B8 /* WeatherViewController.swift */,
-				15E1E80F26E55728000461B8 /* WeatherViewController.storyboard */,
+				15E1E80226E553B0000461B8 /* HomeCoordinator.swift */,
+				15E1E80426E55419000461B8 /* HomeViewController.swift */,
+				15E1E81126E5577F000461B8 /* HomeViewModel.swift */,
+				15E1E80626E55503000461B8 /* HomeView.swift */,
 			);
-			path = WeatherVC;
+			path = HomeVC;
+			sourceTree = "<group>";
+		};
+		15E1E81726E63984000461B8 /* SettingsVC */ = {
+			isa = PBXGroup;
+			children = (
+				15E1E81926E639A0000461B8 /* SettingsCoordinator.swift */,
+				15E1E81F26E64023000461B8 /* SettingsViewController.swift */,
+				15E1E82326E64B95000461B8 /* SettingsViewModel.swift */,
+				15E1E82726E64BCD000461B8 /* SettingsView.swift */,
+			);
+			path = SettingsVC;
+			sourceTree = "<group>";
+		};
+		15E1E81826E6398F000461B8 /* SearchVC */ = {
+			isa = PBXGroup;
+			children = (
+				15E1E81B26E639AA000461B8 /* SearchCoordinator.swift */,
+				15E1E81D26E64018000461B8 /* SearchViewController.swift */,
+				15E1E82126E64B70000461B8 /* SearchViewModel.swift */,
+				15E1E82526E64BAA000461B8 /* SearchView.swift */,
+			);
+			path = SearchVC;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -194,7 +231,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				15E1E81026E55728000461B8 /* WeatherViewController.storyboard in Resources */,
 				15E1E7F426E50659000461B8 /* LaunchScreen.storyboard in Resources */,
 				15E1E7F126E50659000461B8 /* Assets.xcassets in Resources */,
 				15E1E7EF26E50657000461B8 /* Main.storyboard in Resources */,
@@ -208,18 +244,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15E1E82826E64BCD000461B8 /* SettingsView.swift in Sources */,
+				15E1E81E26E64018000461B8 /* SearchViewController.swift in Sources */,
+				15E1E82626E64BAA000461B8 /* SearchView.swift in Sources */,
 				15E1E7FE26E5527E000461B8 /* Coordinator.swift in Sources */,
 				15E1E7EC26E50657000461B8 /* ViewController.swift in Sources */,
 				15E1E80D26E55679000461B8 /* UIViewControllerExtension.swift in Sources */,
-				15E1E81226E5577F000461B8 /* WeatherViewModel.swift in Sources */,
+				15E1E81226E5577F000461B8 /* HomeViewModel.swift in Sources */,
+				15E1E81A26E639A0000461B8 /* SettingsCoordinator.swift in Sources */,
 				15E1E80026E552A4000461B8 /* RootCoordinator.swift in Sources */,
+				15E1E82026E64023000461B8 /* SettingsViewController.swift in Sources */,
+				15E1E81C26E639AA000461B8 /* SearchCoordinator.swift in Sources */,
 				15E1E81426E558FF000461B8 /* TypeAliases.swift in Sources */,
 				15E1E7E826E50657000461B8 /* AppDelegate.swift in Sources */,
 				15E1E7EA26E50657000461B8 /* SceneDelegate.swift in Sources */,
-				15E1E80726E55503000461B8 /* WeatherView.swift in Sources */,
+				15E1E80726E55503000461B8 /* HomeView.swift in Sources */,
 				15E1E81626E55B2E000461B8 /* UINavigationBarExtension.swift in Sources */,
-				15E1E80526E55419000461B8 /* WeatherViewController.swift in Sources */,
-				15E1E80326E553B0000461B8 /* WeatherCoordinator.swift in Sources */,
+				15E1E82226E64B70000461B8 /* SearchViewModel.swift in Sources */,
+				15E1E80526E55419000461B8 /* HomeViewController.swift in Sources */,
+				15E1E80326E553B0000461B8 /* HomeCoordinator.swift in Sources */,
+				15E1E82426E64B95000461B8 /* SettingsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,5 +1,5 @@
 //
-//  HomeVIew.swift
+//  HomeView.swift
 //  Weather App
 //
 //  Created by Bruno Benčević on 9/5/21.
@@ -7,8 +7,7 @@
 
 import UIKit
 
-class WeatherView: UIView {
-
+class HomeView: UIView {
     private lazy var backgroundImage = UIImageView()
     
     override init(frame: CGRect) {

@@ -8,9 +8,7 @@
 import Foundation
 import UIKit
 
-class WeatherViewModel {
-    //maybe: var weatherData: WeatherData?????
-    
+class HomeViewModel {
     var onGoToSearchScreen: EmptyCallback?
     var onGoToSettingsScreen: EmptyCallback?
 }

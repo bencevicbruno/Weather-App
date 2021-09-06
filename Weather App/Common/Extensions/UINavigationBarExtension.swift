@@ -20,4 +20,9 @@ extension UINavigationBar {
             self.isTranslucent = true
         }
     }
+    
+    public func removeTextFromBackButton() {
+        
+    }
+    
 }
