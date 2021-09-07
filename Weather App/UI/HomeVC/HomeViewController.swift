@@ -12,7 +12,6 @@ class HomeViewController: UIViewController {
     var viewModel: HomeViewModel!
     
     //MARK: LifeCycle
-    
     override func loadView() {
         self.view = homeView
     }
@@ -24,19 +23,14 @@ class HomeViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationBar()
+        setupNavigationItem()
     }
     
-    //MARK: Actions
-    
+    //MARK: NavigationBar and NavigationItem setup
     private func setupNavigationBar() {
-        self.title = "Home"
         self.navigationController?.navigationBar.setVisible(false)
         self.navigationController?.navigationBar.tintColor = .black
         removeTextFromBackButton()
-        self.navigationItem.leftBarButtonItems = [
-            UIBarButtonItem(image: UIImage(named: "search"), style: .plain, target: self, action: #selector(goToSearchScreen)),
-            UIBarButtonItem(image: UIImage(named: "settings"), style: .plain, target: self, action: #selector(goToSettingsScreen))
-        ]
     }
     
     private func removeTextFromBackButton() {
@@ -45,6 +39,15 @@ class HomeViewController: UIViewController {
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
     }
     
+    private func setupNavigationItem() {
+        self.title = "Home"
+        self.navigationItem.leftBarButtonItems = [
+            UIBarButtonItem(image: UIImage(named: "search"), style: .plain, target: self, action: #selector(goToSearchScreen)),
+            UIBarButtonItem(image: UIImage(named: "settings"), style: .plain, target: self, action: #selector(goToSettingsScreen))
+        ]
+    }
+    
+    //MARK: Actions
     @objc private func goToSearchScreen() {
         viewModel.onGoToSearchScreen?()
     }

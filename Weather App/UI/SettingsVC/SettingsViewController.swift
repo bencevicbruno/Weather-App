@@ -12,7 +12,6 @@ class SettingsViewController: UIViewController {
     var viewModel: SettingsViewModel!
     
     //MARK: LifeCycle
-    
     override func loadView() {
         self.view = settingsView
     }
@@ -24,11 +23,16 @@ class SettingsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationBar()
+        setupNavigationItem()
     }
     
+    //MARK: NavigationBar and NavigationItem setup
     private func setupNavigationBar() {
-        self.title = "Settings"
         self.navigationController?.navigationBar.setVisible(false)
         self.navigationController?.navigationBar.tintColor = .black
+    }
+    
+    private func setupNavigationItem() {
+        self.title = "Settings"
     }
 }

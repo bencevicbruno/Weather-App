@@ -12,7 +12,6 @@ class SearchViewController: UIViewController {
     var viewModel: SearchViewModel!
     
     //MARK: LifeCycle
-    
     override func loadView() {
         self.view = searchView
     }
@@ -24,11 +23,16 @@ class SearchViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setupNavigationBar()
+        setupNavigationItem()
     }
     
+    //MARK: NavigationBar and NavigationItem setup
     private func setupNavigationBar() {
-        self.title = "Search"
         self.navigationController?.navigationBar.setVisible(false)
         self.navigationController?.navigationBar.tintColor = .black
+    }
+    
+    private func setupNavigationItem() {
+        self.title = "Search"
     }
 }
