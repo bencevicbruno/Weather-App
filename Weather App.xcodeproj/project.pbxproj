@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		156F1B7526E7A2500021A591 /* HomeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156F1B7426E7A2500021A591 /* HomeData.swift */; };
 		15E1E7E826E50657000461B8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E7E726E50657000461B8 /* AppDelegate.swift */; };
 		15E1E7EA26E50657000461B8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E7E926E50657000461B8 /* SceneDelegate.swift */; };
 		15E1E7EC26E50657000461B8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E7EB26E50657000461B8 /* ViewController.swift */; };
@@ -33,6 +34,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		156F1B7426E7A2500021A591 /* HomeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeData.swift; sourceTree = "<group>"; };
 		15E1E7E426E50657000461B8 /* Weather App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Weather App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		15E1E7E726E50657000461B8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		15E1E7E926E50657000461B8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 				15E1E80426E55419000461B8 /* HomeViewController.swift */,
 				15E1E81126E5577F000461B8 /* HomeViewModel.swift */,
 				15E1E80626E55503000461B8 /* HomeView.swift */,
+				156F1B7426E7A2500021A591 /* HomeData.swift */,
 			);
 			path = HomeVC;
 			sourceTree = "<group>";
@@ -255,6 +258,7 @@
 				15E1E80026E552A4000461B8 /* RootCoordinator.swift in Sources */,
 				15E1E82026E64023000461B8 /* SettingsViewController.swift in Sources */,
 				15E1E81C26E639AA000461B8 /* SearchCoordinator.swift in Sources */,
+				156F1B7526E7A2500021A591 /* HomeData.swift in Sources */,
 				15E1E81426E558FF000461B8 /* TypeAliases.swift in Sources */,
 				15E1E7E826E50657000461B8 /* AppDelegate.swift in Sources */,
 				15E1E7EA26E50657000461B8 /* SceneDelegate.swift in Sources */,
