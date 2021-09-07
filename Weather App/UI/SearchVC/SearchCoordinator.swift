@@ -13,17 +13,18 @@ class SearchCoordinator: Coordinator {
     var navigationController = UINavigationController()
     
     func start() -> UIViewController {
-        let vc = createSearchVC()
+        let viewController = createSearchVC()
         
-        return vc
+        return viewController
     }
     
     private func createSearchVC() -> UIViewController {
-        let vc = SearchViewController()
-        vc.viewModel = SearchViewModel()
+        let viewController = SearchViewController()
+        let viewModel = SearchViewModel()
         
         //TODO: setup viewModel
         
-        return vc
+        viewController.viewModel = viewModel
+        return viewController
     }
 }

@@ -12,19 +12,19 @@ final class RootCoordinator: Coordinator {
     var childCoordinator: Coordinator?
     
     func start() -> UIViewController {
-        let vc: UIViewController
+        let viewController: UIViewController
         
-        vc = createHomeVC()
+        viewController = createHomeViewController()
         
-        return vc
+        return viewController
     }
     
-    private func createHomeVC() -> UIViewController {
-        let weatherCoordinator = WeatherCoordinator()
+    private func createHomeViewController() -> UIViewController {
+        let weatherCoordinator = HomeCoordinator()
         
         childCoordinator = weatherCoordinator
-        let rootVC = weatherCoordinator.start()
+        let homeViewController = weatherCoordinator.start()
         
-        return rootVC
+        return homeViewController
     }
 }

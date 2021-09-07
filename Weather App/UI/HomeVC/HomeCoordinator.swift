@@ -8,48 +8,49 @@
 import Foundation
 import UIKit
 
-class WeatherCoordinator: Coordinator {
+class HomeCoordinator: Coordinator {
     
     var childCoordinator: Coordinator?
     var navigationController: UINavigationController?
     
     func start() -> UIViewController {
-        let vc = createHomeVC()
+        let viewController = createHomeViewController()
         
-        let navigationController = UINavigationController(rootViewController: vc)
+        let navigationController = UINavigationController(rootViewController: viewController)
         self.navigationController = navigationController
         
         return navigationController
     }
     
-    private func createHomeVC() -> UIViewController {
-        let vc = HomeViewController()
-        vc.viewModel = HomeViewModel()
+    private func createHomeViewController() -> UIViewController {
+        let viewController = HomeViewController()
+        let viewModel = HomeViewModel()
         
-        vc.viewModel.onGoToSearchScreen = { [weak self] in
+        viewModel.onGoToSearchScreen = { [weak self] in
             self?.goToSearchScreen()
         }
         
-        vc.viewModel.onGoToSettingsScreen = { [weak self] in
+        viewModel.onGoToSettingsScreen = { [weak self] in
             self?.goToSettingsScreen()
         }
         
-        return vc
+        viewController.viewModel = viewModel
+        return viewController
     }
     
     private func goToSearchScreen() {
         let searchCoordinator = SearchCoordinator()
         childCoordinator = searchCoordinator
         
-        let rootVC = searchCoordinator.start()
-        self.navigationController?.pushViewController(rootVC, animated: true)
+        let searchViewController = searchCoordinator.start()
+        self.navigationController?.pushViewController(searchViewController, animated: true)
     }
     
     private func goToSettingsScreen() {
         let settingsCoordinator = SettingsCoordinator()
         childCoordinator = settingsCoordinator
         
-        let rootVC = settingsCoordinator.start()
-        self.navigationController?.pushViewController(rootVC, animated: true)
+        let settingsViewController = settingsCoordinator.start()
+        self.navigationController?.pushViewController(settingsViewController, animated: true)
     }
 }

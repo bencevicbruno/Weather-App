@@ -11,18 +11,18 @@ import UIKit
 class SettingsCoordinator: Coordinator {
     
     func start() -> UIViewController {
-        let vc = createSettingsVC()
+        let viewController = createSettingsVC()
         
-        return vc
+        return viewController
     }
     
     private func createSettingsVC() -> UIViewController {
-        let vc = SettingsViewController()
-        vc.viewModel = SettingsViewModel()
+        let viewController = SettingsViewController()
+        let viewModel = SettingsViewModel()
         
         //TODO: setup viewModel
         
-        return vc
+        viewController.viewModel = viewModel
+        return viewController
     }
-    
 }
