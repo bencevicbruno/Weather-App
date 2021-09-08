@@ -20,8 +20,6 @@ class SettingsCoordinator: Coordinator {
         let viewController = SettingsViewController()
         let viewModel = SettingsViewModel()
         
-        viewController.updateView(data: viewModel.settingsData)
-        
         viewModel.onCelsiusTapped = { [weak viewModel] wasChecked in
             let newState = !wasChecked
             let newSettings = SettingsData(useCelsius: newState)
