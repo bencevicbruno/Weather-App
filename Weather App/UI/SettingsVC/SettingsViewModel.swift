@@ -9,9 +9,6 @@ import Foundation
 import UIKit
 
 class SettingsViewModel {
-    
-    
-    var onEnter: EmptyCallback?
     var onCelsiusTapped: ((Bool) -> Void)?
     var onFahrenheitTapped: ((Bool) -> Void)?
     var onHumidityTapped: ((Bool) -> Void)?

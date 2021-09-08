@@ -8,13 +8,12 @@
 import UIKit
 
 class SettingsViewController: UIViewController {
-    lazy var settingsView = SettingsView()
+    private lazy var settingsView = SettingsView()
     var viewModel: SettingsViewModel!
     
     //MARK: LifeCycle
     override func loadView() {
         self.view = settingsView
-        viewModel.onEnter?()
     }
     
     override func viewDidLoad() {
@@ -65,4 +64,7 @@ class SettingsViewController: UIViewController {
         }
     }
     
+    public func updateView(data: SettingsData) {
+        self.settingsView.setupData(data: data)
+    }
 }

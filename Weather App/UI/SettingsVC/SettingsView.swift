@@ -166,38 +166,29 @@ class SettingsView: UIView {
     }
     
     public func setupData(data: SettingsData) {
-        setCelsiusButtonChecked(data.useCelsius)
-        setFahrenheitButtonChecked(!data.useCelsius)
-        setHumidityButtonChecked(data.showHumidity)
-        setPressureButtonChecked(data.showPressure)
-        setWindButtonChecked(data.showWind)
-    }
-    
-    public func setCelsiusButtonChecked(_ isChecked: Bool) {
-        setButtonChecked(celsiusCheckButton, isChecked)
-    }
-    
-    public func setFahrenheitButtonChecked(_ isChecked: Bool) {
-        setButtonChecked(fahrenheitCheckButton, isChecked)
-    }
-    
-    public func setHumidityButtonChecked(_ isChecked: Bool) {
-        setButtonChecked(humidityCheckButton, isChecked)
-    }
-    
-    public func setPressureButtonChecked(_ isChecked: Bool) {
-        setButtonChecked(pressureCheckButton, isChecked)
-    }
- 
-    public func setWindButtonChecked(_ isChecked: Bool) {
-        setButtonChecked(windCheckButton, isChecked)
-    }
-    
-    private func isButtonChecked(_ button: UIButton) -> Bool {
-        return button.image(for: .normal) != nil
+        if let useCelsius = data.useCelsius {
+            setButtonChecked(celsiusCheckButton, useCelsius)
+            setButtonChecked(fahrenheitCheckButton, !useCelsius)
+        }
+        
+        if let showHumidity = data.showHumidity {
+            setButtonChecked(humidityCheckButton, showHumidity)
+        }
+        
+        if let showPressure = data.showPressure {
+            setButtonChecked(pressureCheckButton, showPressure)
+        }
+        
+        if let showWind = data.showWind {
+            setButtonChecked(windCheckButton, showWind)
+        }
     }
     
     private func setButtonChecked(_ button: UIButton, _ checked: Bool) {
         button.setImage(checked ? UIImage(named: "check") : nil, for: .normal)
+    }
+    
+    private func isButtonChecked(_ button: UIButton) -> Bool {
+        return button.image(for: .normal) != nil
     }
 }

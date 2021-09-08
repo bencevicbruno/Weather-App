@@ -10,7 +10,7 @@ import UIKit
 
 class SettingsCoordinator: Coordinator {
     
-    var settingsData: SettingsData!
+    var settingsData: SettingsData?
     
     func start() -> UIViewController {
         let viewController = createSettingsVC()
@@ -22,38 +22,47 @@ class SettingsCoordinator: Coordinator {
         let viewController = SettingsViewController()
         let viewModel = SettingsViewModel()
         
-        viewModel.onEnter = { [weak self] in
-            if let loadedData = self?.loadSettingsData() {
-                viewController.settingsView.setupData(data: loadedData)
-                self?.settingsData = loadedData
-            }
-        }
+        settingsData = AppSettings.loadSettings()
+        viewController.updateView(data: settingsData!)
         
         viewModel.onCelsiusTapped = { [weak self] wasChecked in
-            viewController.settingsView.setCelsiusButtonChecked(!wasChecked)
-            viewController.settingsView.setFahrenheitButtonChecked(wasChecked)
-            self?.settingsData.useCelsius = true
+            let newState = !wasChecked
+            let newSettings = SettingsData(useCelsius: newState)
+            
+            viewController.updateView(data: newSettings)
+            self?.settingsData?.useCelsius = newState
         }
         
         viewModel.onFahrenheitTapped = { [weak self] wasChecked in
-            viewController.settingsView.setFahrenheitButtonChecked(!wasChecked)
-            viewController.settingsView.setCelsiusButtonChecked(wasChecked)
-            self?.settingsData.useCelsius = false
+            let newState = wasChecked
+            let newSettings = SettingsData(useCelsius: newState)
+            
+            viewController.updateView(data: newSettings)
+            self?.settingsData?.useCelsius = newState
         }
         
         viewModel.onHumidityTapped = { [weak self] wasChecked in
-            viewController.settingsView.setHumidityButtonChecked(!wasChecked)
-            self?.settingsData.showHumidity = !wasChecked
+            let newState = !wasChecked
+            let newSettings = SettingsData(showHumidity: newState)
+            
+            viewController.updateView(data: newSettings)
+            self?.settingsData?.showHumidity = newState
         }
         
         viewModel.onPressureTapped = { [weak self] wasChecked in
-            viewController.settingsView.setPressureButtonChecked(!wasChecked)
-            self?.settingsData.showPressure = !wasChecked
+            let newState = !wasChecked
+            let newSettings = SettingsData(showPressure: newState)
+            
+            viewController.updateView(data: newSettings)
+            self?.settingsData?.showPressure = newState
         }
         
         viewModel.onWindTapped = { [weak self] wasChecked in
-            viewController.settingsView.setWindButtonChecked(!wasChecked)
-            self?.settingsData.showWind = !wasChecked
+            let newState = !wasChecked
+            let newSettings = SettingsData(showWind: newState)
+            
+            viewController.updateView(data: newSettings)
+            self?.settingsData?.showWind = newState
         }
         
         viewModel.onExit = { [weak self] in
@@ -64,15 +73,5 @@ class SettingsCoordinator: Coordinator {
         
         viewController.viewModel = viewModel
         return viewController
-    }
-    
-    private func loadSettingsData() -> SettingsData {
-        guard let data = UserDefaults.standard.object(forKey: "settingsData") as? Data else { return SettingsData.getDefault() }
-        
-        do {
-            return try JSONDecoder().decode(SettingsData.self, from: data)
-        } catch  {
-            return SettingsData.getDefault()
-        }
     }
 }
