@@ -10,6 +10,8 @@ import UIKit
 
 class SettingsCoordinator: Coordinator {
     
+    var onExit: ((SettingsData) -> Void)?
+    
     func start() -> UIViewController {
         let viewController = createSettingsVC()
         
@@ -60,10 +62,13 @@ class SettingsCoordinator: Coordinator {
             viewModel?.settingsData.showWind = newState
         }
         
-        viewModel.onExit = { [weak viewModel] in
-            guard let data = try? JSONEncoder().encode(viewModel?.settingsData) else { return }
+        viewModel.onExit = { [weak self, weak viewModel] in
+            guard let settingsData = viewModel?.settingsData else { return }
+            guard let data = try? JSONEncoder().encode(settingsData) else { return }
+            
             UserDefaults.standard.set(data, forKey: "settingsData")
             UserDefaults.standard.synchronize()
+            self?.onExit?(settingsData)
         }
         
         viewController.viewModel = viewModel

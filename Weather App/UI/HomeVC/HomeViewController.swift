@@ -18,6 +18,7 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        homeView.setupData(data: viewModel.homeData, settings: AppSettings.loadSettings())
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,5 +55,9 @@ class HomeViewController: UIViewController {
     
     @objc private func goToSettingsScreen() {
         viewModel.onGoToSettingsScreen?()
+    }
+    
+    public func updateView(data: HomeData, settings: SettingsData) {
+        homeView.setupData(data: data, settings: settings)
     }
 }

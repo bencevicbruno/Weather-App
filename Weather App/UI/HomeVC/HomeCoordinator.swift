@@ -31,7 +31,11 @@ class HomeCoordinator: Coordinator {
         }
         
         viewModel.onGoToSettingsScreen = { [weak self] in
-            self?.goToSettingsScreen()
+            self?.goToSettingsScreen(onExit: viewModel.onReturnFromSettingsScreen)
+        }
+        
+        viewModel.onReturnFromSettingsScreen = { settingsData in
+            viewController.updateView(data: viewModel.homeData, settings: settingsData)
         }
         
         viewController.viewModel = viewModel
@@ -46,9 +50,11 @@ class HomeCoordinator: Coordinator {
         self.navigationController?.pushViewController(searchViewController, animated: true)
     }
     
-    private func goToSettingsScreen() {
+    private func goToSettingsScreen(onExit: ((SettingsData) -> Void)?) {
         let settingsCoordinator = SettingsCoordinator()
         childCoordinator = settingsCoordinator
+        
+        settingsCoordinator.onExit = onExit
         
         let settingsViewController = settingsCoordinator.start()
         self.navigationController?.pushViewController(settingsViewController, animated: true)

@@ -9,6 +9,9 @@ import Foundation
 import UIKit
 
 class HomeViewModel {
+    let homeData = HomeData.getTest()
+    
     var onGoToSearchScreen: EmptyCallback?
     var onGoToSettingsScreen: EmptyCallback?
+    var onReturnFromSettingsScreen: ((SettingsData) -> Void)?
 }

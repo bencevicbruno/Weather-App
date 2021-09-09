@@ -14,16 +14,15 @@ class HomeView: UIView {
     private lazy var cityNameLabel = UILabel()
     private lazy var minTemperatureLabel = UILabel()
     private lazy var maxTemperatureLabel = UILabel()
-    private var humidityLabel = UILabel()
-    private var pressureLabel = UILabel()
-    private var windLabel = UILabel()
+    private lazy var humidityLabel = UILabel()
+    private lazy var pressureLabel = UILabel()
+    private lazy var windLabel = UILabel()
+    
+    private lazy var optionalViews = [humidityLabel, pressureLabel, windLabel]
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        let testData = HomeData(condition: "sun.max", currentTemperature: 21, cityName: "London", minTemperature: 14.5, maxTemperature: 31.2, humidity: 0.79, pressure: 1016.7, wind: nil /*4.34*/)
-        
         setupView()
-        setupData(data: testData, useFahrenheit: false)
         setupConstraints()
     }
     
@@ -79,7 +78,6 @@ class HomeView: UIView {
         label.numberOfLines = 2
         label.textAlignment = .center
         label.textColor = .white
-        self.addSubview(label)
     }
     
     private func setupConstraints() {
@@ -110,15 +108,15 @@ class HomeView: UIView {
             maxTemperatureLabel.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerYAnchor, constant: -MIN_MAX_TEMPERATURE_OFFSET * 2),
             maxTemperatureLabel.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor, constant: MIN_MAX_TEMPERATURE_OFFSET)
         ])
-        
-        setupConstraintsForOptionalLabels()
     }
     
     private func setupConstraintsForOptionalLabels() {
-        let visibleLabels = [humidityLabel, pressureLabel, windLabel].filter { !$0.isHidden }
+        let visibleLabels = optionalViews.filter { self.subviews.contains($0) }
         
         let HORIZONTAL_OFFSET: CGFloat = 15
         let BOTTOM_OFFSET: CGFloat = -30
+        
+        if visibleLabels.isEmpty { return }
         
         if visibleLabels.count == 1 {
             let label = visibleLabels[0]
@@ -157,54 +155,63 @@ class HomeView: UIView {
 }
 
 extension HomeView {
-    public func setupData(data: HomeData, useFahrenheit: Bool) {
+    public func setupData(data: HomeData, settings: SettingsData) {
+        optionalViews.forEach {
+            $0.removeFromSuperview()
+        }
+        
         conditionImage.image = UIImage(systemName: data.condition)?.withTintColor(UIColor(red: 0.1, green: 0.3, blue: 0.3, alpha: 1.0), renderingMode: .alwaysOriginal)
-        
-        let currentTemperature = useFahrenheit ? data.currentTemperature : Int(convertToFahrenheit(Float(data.currentTemperature)))
-        let attributedString = NSMutableAttributedString(string: "\(currentTemperature)", attributes: [.font: UIFont(name: "AvenirNext-Bold", size: 85)!])
-        attributedString.append(NSMutableAttributedString(string: useFahrenheit ? "°C" : "°F", attributes: [.font: UIFont.systemFont(ofSize: 100)]))
-        currentTemperatureLabel.attributedText = attributedString
-        
         cityNameLabel.text = data.cityName
         
-        let minTemperature = useFahrenheit ? data.minTemperature : convertToFahrenheit(data.minTemperature)
-        minTemperatureLabel.text = "min\n\(minTemperature) \(useFahrenheit ? "C" : "F")"
-        let maxTemperature = useFahrenheit ? data.maxTemperature : convertToFahrenheit(data.maxTemperature)
-        maxTemperatureLabel.text = "max\n\(maxTemperature) \(useFahrenheit ? "C" : "F")"
+        let useCelsius = settings.useCelsius ?? true
+        setupTemperatures(current: data.currentTemperature, min: data.minTemperature, max: data.maxTemperature, useCelsius: useCelsius)
         
-        if let humidity = data.humidity {
-            humidityLabel.isHidden = false
+        let showHumidity = settings.showHumidity ?? true
+        if showHumidity {
             let attributedString = NSMutableAttributedString(string: "Humidity\n", attributes: [.font: UIFont.systemFont(ofSize: 20)])
-            attributedString.append(NSMutableAttributedString(string: "\(humidity) %", attributes: [.font: UIFont.systemFont(ofSize: 27)]))
+            attributedString.append(NSMutableAttributedString(string: "\(data.humidity) %", attributes: [.font: UIFont.systemFont(ofSize: 27)]))
             humidityLabel.attributedText = attributedString
+            self.addSubview(humidityLabel)
         } else {
-            humidityLabel.isHidden = true
+            humidityLabel.removeFromSuperview()
         }
         
-        if let pressure = data.pressure {
-            pressureLabel.isHidden = false
+        let showPressure = settings.showPressure ?? true
+        if showPressure {
             let attributedString = NSMutableAttributedString(string: "Pressure\n", attributes: [.font: UIFont.systemFont(ofSize: 20)])
-            attributedString.append(NSMutableAttributedString(string: "\(pressure) hpa", attributes: [.font: UIFont.systemFont(ofSize: 27)]))
+            attributedString.append(NSMutableAttributedString(string: "\(data.pressure) hpa", attributes: [.font: UIFont.systemFont(ofSize: 27)]))
             pressureLabel.attributedText = attributedString
+            self.addSubview(pressureLabel)
         } else {
-            pressureLabel.isHidden = true
+            pressureLabel.removeFromSuperview()
         }
         
-        if let wind = data.wind {
-            windLabel.isHidden = false
+        let showWind = settings.showWind ?? true
+        if showWind {
             let attributedString = NSMutableAttributedString(string: "Wind\n", attributes: [.font: UIFont.systemFont(ofSize: 20)])
-            attributedString.append(NSMutableAttributedString(string: "\(wind) mph", attributes: [.font: UIFont.systemFont(ofSize: 27)]))
+            attributedString.append(NSMutableAttributedString(string: "\(data.wind) mph", attributes: [.font: UIFont.systemFont(ofSize: 27)]))
             windLabel.attributedText = attributedString
+            self.addSubview(windLabel)
         } else {
-            windLabel.isHidden = true
+            windLabel.removeFromSuperview()
         }
+        
+        setupConstraintsForOptionalLabels()
+    }
+    
+    private func setupTemperatures(current: Int, min: Float, max: Float, useCelsius: Bool) {
+        let currentTemperature = useCelsius ? current : Int(convertToFahrenheit(Float(current)))
+        let attributedString = NSMutableAttributedString(string: "\(currentTemperature)", attributes: [.font: UIFont(name: "AvenirNext-Bold", size: 85)!])
+        attributedString.append(NSMutableAttributedString(string: useCelsius ? "°C" : "°F", attributes: [.font: UIFont.systemFont(ofSize: 100)]))
+        currentTemperatureLabel.attributedText = attributedString
+        
+        let minTemperature = useCelsius ? min : convertToFahrenheit(min)
+        minTemperatureLabel.text = "min\n\(minTemperature) \(useCelsius ? "C" : "F")"
+        let maxTemperature = useCelsius ? max : convertToFahrenheit(max)
+        maxTemperatureLabel.text = "max\n\(maxTemperature) \(useCelsius ? "C" : "F")"
     }
     
     private func convertToFahrenheit(_ celsius: Float) -> Float {
         return celsius * 1.8 + 32
-    }
-    
-    private func convertToCelsius(_ fahrenheit: Float) -> Float {
-        return (fahrenheit - 32) / 1.8
     }
 }

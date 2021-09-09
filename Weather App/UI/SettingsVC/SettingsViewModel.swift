@@ -10,7 +10,7 @@ import UIKit
 
 class SettingsViewModel {
     
-    var settingsData: SettingsData
+    var settingsData = AppSettings.loadSettings()
     
     var onCelsiusTapped: ((Bool) -> Void)?
     var onFahrenheitTapped: ((Bool) -> Void)?
@@ -18,8 +18,4 @@ class SettingsViewModel {
     var onPressureTapped: ((Bool) -> Void)?
     var onWindTapped: ((Bool) -> Void)?
     var onExit: EmptyCallback?
-    
-    init() {
-        self.settingsData = AppSettings.loadSettings()
-    }
 }
