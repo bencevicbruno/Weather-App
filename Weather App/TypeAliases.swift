@@ -6,5 +6,4 @@
 //
 
 import Foundation
-
 typealias EmptyCallback = () -> Void

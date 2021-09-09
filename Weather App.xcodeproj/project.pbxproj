@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		151F385626EA549400D90D01 /* WeatherDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151F385526EA549400D90D01 /* WeatherDataService.swift */; };
+		151F385826EA5BDA00D90D01 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151F385726EA5BDA00D90D01 /* LocationService.swift */; };
 		156F1B7726E7CB640021A591 /* SettingsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156F1B7626E7CB640021A591 /* SettingsData.swift */; };
 		156F1B7F26E8D89E0021A591 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156F1B7E26E8D89E0021A591 /* AppSettings.swift */; };
 		15C6FE0F26EA1615004BF783 /* HomeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C6FE0E26EA1615004BF783 /* HomeData.swift */; };
@@ -36,6 +38,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		151F385526EA549400D90D01 /* WeatherDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataService.swift; sourceTree = "<group>"; };
+		151F385726EA5BDA00D90D01 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		156F1B7626E7CB640021A591 /* SettingsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsData.swift; sourceTree = "<group>"; };
 		156F1B7E26E8D89E0021A591 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		15C6FE0E26EA1615004BF783 /* HomeData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeData.swift; sourceTree = "<group>"; };
@@ -144,6 +148,8 @@
 			children = (
 				15E1E80826E5559F000461B8 /* Extensions */,
 				156F1B7E26E8D89E0021A591 /* AppSettings.swift */,
+				151F385526EA549400D90D01 /* WeatherDataService.swift */,
+				151F385726EA5BDA00D90D01 /* LocationService.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -270,11 +276,13 @@
 				15E1E7E826E50657000461B8 /* AppDelegate.swift in Sources */,
 				15E1E7EA26E50657000461B8 /* SceneDelegate.swift in Sources */,
 				156F1B7726E7CB640021A591 /* SettingsData.swift in Sources */,
+				151F385826EA5BDA00D90D01 /* LocationService.swift in Sources */,
 				15E1E80726E55503000461B8 /* HomeView.swift in Sources */,
 				15E1E81626E55B2E000461B8 /* UINavigationBarExtension.swift in Sources */,
 				15E1E82226E64B70000461B8 /* SearchViewModel.swift in Sources */,
 				15E1E80526E55419000461B8 /* HomeViewController.swift in Sources */,
 				15E1E80326E553B0000461B8 /* HomeCoordinator.swift in Sources */,
+				151F385626EA549400D90D01 /* WeatherDataService.swift in Sources */,
 				15E1E82426E64B95000461B8 /* SettingsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

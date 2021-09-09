@@ -31,11 +31,15 @@ class HomeCoordinator: Coordinator {
         }
         
         viewModel.onGoToSettingsScreen = { [weak self] in
-            self?.goToSettingsScreen(onExit: viewModel.onReturnFromSettingsScreen)
+            self?.goToSettingsScreen(onExit: { settingsData in
+                viewModel.updateData?(settingsData)
+            })
         }
         
-        viewModel.onReturnFromSettingsScreen = { settingsData in
-            viewController.updateView(data: viewModel.homeData, settings: settingsData)
+        viewModel.updateData = { settingsData in
+            guard let homeData = viewModel.homeData else { return }
+            print(homeData)
+            viewController.updateView(data: homeData, settings: settingsData ?? AppSettings.loadSettings())
         }
         
         viewController.viewModel = viewModel
