@@ -20,7 +20,51 @@ class SettingsCoordinator: Coordinator {
         let viewController = SettingsViewController()
         let viewModel = SettingsViewModel()
         
-        //TODO: setup viewModel
+        viewModel.onCelsiusTapped = { [weak viewModel] wasChecked in
+            let newState = !wasChecked
+            let newSettings = SettingsData(useCelsius: newState)
+            
+            viewController.updateView(data: newSettings)
+            viewModel?.settingsData.useCelsius = newState
+        }
+        
+        viewModel.onFahrenheitTapped = { [weak viewModel] wasChecked in
+            let newState = wasChecked
+            let newSettings = SettingsData(useCelsius: newState)
+            
+            viewController.updateView(data: newSettings)
+            viewModel?.settingsData.useCelsius = newState
+        }
+        
+        viewModel.onHumidityTapped = { [weak viewModel] wasChecked in
+            let newState = !wasChecked
+            let newSettings = SettingsData(showHumidity: newState)
+            
+            viewController.updateView(data: newSettings)
+            viewModel?.settingsData.showHumidity = newState
+        }
+        
+        viewModel.onPressureTapped = { [weak viewModel] wasChecked in
+            let newState = !wasChecked
+            let newSettings = SettingsData(showPressure: newState)
+            
+            viewController.updateView(data: newSettings)
+            viewModel?.settingsData.showPressure = newState
+        }
+        
+        viewModel.onWindTapped = { [weak viewModel] wasChecked in
+            let newState = !wasChecked
+            let newSettings = SettingsData(showWind: newState)
+            
+            viewController.updateView(data: newSettings)
+            viewModel?.settingsData.showWind = newState
+        }
+        
+        viewModel.onExit = { [weak viewModel] in
+            guard let data = try? JSONEncoder().encode(viewModel?.settingsData) else { return }
+            UserDefaults.standard.set(data, forKey: "settingsData")
+            UserDefaults.standard.synchronize()
+        }
         
         viewController.viewModel = viewModel
         return viewController
