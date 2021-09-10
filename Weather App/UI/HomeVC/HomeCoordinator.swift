@@ -39,6 +39,7 @@ class HomeCoordinator: Coordinator {
         viewModel.updateData = {
             guard let homeData = viewModel.homeData else { return }
             viewController.updateView(data: homeData, settings: AppCacheService.instance.settings)
+            AppCacheService.instance.saveHomeData(data: homeData)
         }
         
         viewController.viewModel = viewModel

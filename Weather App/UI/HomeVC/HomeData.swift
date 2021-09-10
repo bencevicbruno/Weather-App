@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct HomeData {
+struct HomeData: Codable {
     let condition: String
     let currentTemperature: Int
     let cityName: String
