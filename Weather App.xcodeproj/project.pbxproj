@@ -10,7 +10,7 @@
 		151F385626EA549400D90D01 /* WeatherDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151F385526EA549400D90D01 /* WeatherDataService.swift */; };
 		151F385826EA5BDA00D90D01 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 151F385726EA5BDA00D90D01 /* LocationService.swift */; };
 		156F1B7726E7CB640021A591 /* SettingsData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156F1B7626E7CB640021A591 /* SettingsData.swift */; };
-		156F1B7F26E8D89E0021A591 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156F1B7E26E8D89E0021A591 /* AppSettings.swift */; };
+		156F1B7F26E8D89E0021A591 /* AppCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 156F1B7E26E8D89E0021A591 /* AppCacheService.swift */; };
 		15C6FE0F26EA1615004BF783 /* HomeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C6FE0E26EA1615004BF783 /* HomeData.swift */; };
 		15E1E7E826E50657000461B8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E7E726E50657000461B8 /* AppDelegate.swift */; };
 		15E1E7EA26E50657000461B8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E7E926E50657000461B8 /* SceneDelegate.swift */; };
@@ -41,7 +41,7 @@
 		151F385526EA549400D90D01 /* WeatherDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataService.swift; sourceTree = "<group>"; };
 		151F385726EA5BDA00D90D01 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		156F1B7626E7CB640021A591 /* SettingsData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsData.swift; sourceTree = "<group>"; };
-		156F1B7E26E8D89E0021A591 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		156F1B7E26E8D89E0021A591 /* AppCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCacheService.swift; sourceTree = "<group>"; };
 		15C6FE0E26EA1615004BF783 /* HomeData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeData.swift; sourceTree = "<group>"; };
 		15E1E7E426E50657000461B8 /* Weather App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Weather App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		15E1E7E726E50657000461B8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -81,6 +81,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1527542A26EB5F8A0099ACB5 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				156F1B7E26E8D89E0021A591 /* AppCacheService.swift */,
+				151F385726EA5BDA00D90D01 /* LocationService.swift */,
+				151F385526EA549400D90D01 /* WeatherDataService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		15E1E7DB26E50657000461B8 = {
 			isa = PBXGroup;
 			children = (
@@ -146,10 +156,8 @@
 		15E1E80926E555A9000461B8 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				1527542A26EB5F8A0099ACB5 /* Services */,
 				15E1E80826E5559F000461B8 /* Extensions */,
-				156F1B7E26E8D89E0021A591 /* AppSettings.swift */,
-				151F385526EA549400D90D01 /* WeatherDataService.swift */,
-				151F385726EA5BDA00D90D01 /* LocationService.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -271,7 +279,7 @@
 				15E1E80026E552A4000461B8 /* RootCoordinator.swift in Sources */,
 				15E1E82026E64023000461B8 /* SettingsViewController.swift in Sources */,
 				15E1E81C26E639AA000461B8 /* SearchCoordinator.swift in Sources */,
-				156F1B7F26E8D89E0021A591 /* AppSettings.swift in Sources */,
+				156F1B7F26E8D89E0021A591 /* AppCacheService.swift in Sources */,
 				15E1E81426E558FF000461B8 /* TypeAliases.swift in Sources */,
 				15E1E7E826E50657000461B8 /* AppDelegate.swift in Sources */,
 				15E1E7EA26E50657000461B8 /* SceneDelegate.swift in Sources */,

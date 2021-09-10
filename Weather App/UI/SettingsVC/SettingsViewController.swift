@@ -19,7 +19,7 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCallbacks()
-        updateView(data: viewModel.settingsData)
+        updateView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -65,7 +65,7 @@ class SettingsViewController: UIViewController {
         }
     }
     
-    public func updateView(data: SettingsData) {
-        self.settingsView.setupData(data: data)
+    public func updateView() {
+        self.settingsView.setupData(data: viewModel.settings)
     }
 }

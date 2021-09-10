@@ -11,17 +11,17 @@ import UIKit
 class HomeViewModel {
     var homeData: HomeData?
     
-    var updateData: ((SettingsData?) -> Void)?
+    var updateData: EmptyCallback?
     var onWeatherDataRecieved: EmptyCallback?
     var onGoToSearchScreen: EmptyCallback?
     var onGoToSettingsScreen: EmptyCallback?
     
     func onFirstAppearance() {
-        LocationSerivce.instance.requestLocationData { [weak self] coordinates in
-            if let weatherData = WeatherDataService.getWeatherData(from: coordinates) {
+        LocationSerivce.instance.requestLocationData(thenRun: { [weak self] coordinates in
+            if let weatherData = WeatherDataService.instance.getWeatherData(from: coordinates) {
                 self?.homeData = HomeData(data: weatherData)
-                self?.updateData?(nil)
+                self?.updateData?()
             }
-        }
+        }) 
     }
 }

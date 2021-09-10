@@ -32,21 +32,23 @@ struct WeatherData: Codable {
 }
 
 class WeatherDataService {
-    private static let apiKey = "2204acb6f0028d27a12476dcb0b6ac80"
+    static let instance = WeatherDataService()
     
-    static func getWeatherData(from coordinates: CLLocationCoordinate2D) -> WeatherData? {
+    private let apiKey = "2204acb6f0028d27a12476dcb0b6ac80"
+    
+    func getWeatherData(from coordinates: CLLocationCoordinate2D) -> WeatherData? {
         let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\(coordinates.latitude)&lon=\(coordinates.longitude)&appid=\(apiKey)&units=metric")
         
         return getWeatherDataFromURL(url)
     }
     
-    static func getWeatherData(for cityName: String) -> WeatherData? {
+    func getWeatherData(for cityName: String) -> WeatherData? {
         let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?q=\(cityName)&appid=\(apiKey)&units=metric")
         
         return getWeatherDataFromURL(url)
     }
     
-    private static func getWeatherDataFromURL(_ url: URL?) -> WeatherData? {
+    private func getWeatherDataFromURL(_ url: URL?) -> WeatherData? {
         guard let url = url else {
             print("Unable to parse URL")
             return nil

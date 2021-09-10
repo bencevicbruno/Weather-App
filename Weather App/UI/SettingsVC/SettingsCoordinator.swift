@@ -10,7 +10,7 @@ import UIKit
 
 class SettingsCoordinator: Coordinator {
     
-    var onExit: ((SettingsData) -> Void)?
+    var onExit: EmptyCallback?
     
     func start() -> UIViewController {
         let viewController = createSettingsVC()
@@ -22,53 +22,40 @@ class SettingsCoordinator: Coordinator {
         let viewController = SettingsViewController()
         let viewModel = SettingsViewModel()
         
-        viewModel.onCelsiusTapped = { [weak viewModel] wasChecked in
+        viewModel.onCelsiusTapped = { wasChecked in
             let newState = !wasChecked
-            let newSettings = SettingsData(useCelsius: newState)
-            
-            viewController.updateView(data: newSettings)
-            viewModel?.settingsData.useCelsius = newState
+            viewModel.settings.useCelsius = newState
+            viewController.updateView()
         }
         
-        viewModel.onFahrenheitTapped = { [weak viewModel] wasChecked in
+        viewModel.onFahrenheitTapped = { wasChecked in
             let newState = wasChecked
-            let newSettings = SettingsData(useCelsius: newState)
-            
-            viewController.updateView(data: newSettings)
-            viewModel?.settingsData.useCelsius = newState
+            viewModel.settings.useCelsius = newState
+            viewController.updateView()
         }
         
-        viewModel.onHumidityTapped = { [weak viewModel] wasChecked in
+        viewModel.onHumidityTapped = { wasChecked in
             let newState = !wasChecked
-            let newSettings = SettingsData(showHumidity: newState)
-            
-            viewController.updateView(data: newSettings)
-            viewModel?.settingsData.showHumidity = newState
+            viewModel.settings.showHumidity = newState
+            viewController.updateView()
         }
         
-        viewModel.onPressureTapped = { [weak viewModel] wasChecked in
+        viewModel.onPressureTapped = { wasChecked in
             let newState = !wasChecked
-            let newSettings = SettingsData(showPressure: newState)
-            
-            viewController.updateView(data: newSettings)
-            viewModel?.settingsData.showPressure = newState
+            viewModel.settings.showPressure = newState
+            viewController.updateView()
         }
         
-        viewModel.onWindTapped = { [weak viewModel] wasChecked in
+        viewModel.onWindTapped = { wasChecked in
             let newState = !wasChecked
-            let newSettings = SettingsData(showWind: newState)
-            
-            viewController.updateView(data: newSettings)
-            viewModel?.settingsData.showWind = newState
+            viewModel.settings.showWind = newState
+            viewController.updateView()
         }
         
-        viewModel.onExit = { [weak self, weak viewModel] in
-            guard let settingsData = viewModel?.settingsData else { return }
-            guard let data = try? JSONEncoder().encode(settingsData) else { return }
-            
-            UserDefaults.standard.set(data, forKey: "settingsData")
-            UserDefaults.standard.synchronize()
-            self?.onExit?(settingsData)
+        viewModel.onExit = { [weak self] in
+            AppCacheService.instance.settings = viewModel.settings
+            AppCacheService.instance.saveSettings()
+            self?.onExit?()
         }
         
         viewController.viewModel = viewModel

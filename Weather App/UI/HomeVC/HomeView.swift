@@ -200,18 +200,18 @@ extension HomeView {
     }
     
     private func setupTemperatures(current: Int, min: Float, max: Float, useCelsius: Bool) {
-        let currentTemperature = useCelsius ? current : Int(convertToFahrenheit(Float(current)))
+        let currentTemperature = useCelsius ? current : Int(convertToFahrenheitAndRound(Float(current)))
         let attributedString = NSMutableAttributedString(string: "\(currentTemperature)", attributes: [.font: UIFont(name: "AvenirNext-Bold", size: 85)!])
         attributedString.append(NSMutableAttributedString(string: useCelsius ? "°C" : "°F", attributes: [.font: UIFont.systemFont(ofSize: 100)]))
         currentTemperatureLabel.attributedText = attributedString
         
-        let minTemperature = useCelsius ? min : convertToFahrenheit(min)
+        let minTemperature = useCelsius ? min : convertToFahrenheitAndRound(min)
         minTemperatureLabel.text = "min\n\(minTemperature) \(useCelsius ? "C" : "F")"
-        let maxTemperature = useCelsius ? max : convertToFahrenheit(max)
+        let maxTemperature = useCelsius ? max : convertToFahrenheitAndRound(max)
         maxTemperatureLabel.text = "max\n\(maxTemperature) \(useCelsius ? "C" : "F")"
     }
     
-    private func convertToFahrenheit(_ celsius: Float) -> Float {
-        return celsius * 1.8 + 32
+    private func convertToFahrenheitAndRound(_ celsius: Float) -> Float {
+        return ((celsius * 1.8 + 32) * 100).rounded() / 100
     }
 }

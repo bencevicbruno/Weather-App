@@ -9,8 +9,7 @@ import Foundation
 import UIKit
 
 class SettingsViewModel {
-    
-    var settingsData = AppSettings.loadSettings()
+    var settings = AppCacheService.instance.settings
     
     var onCelsiusTapped: ((Bool) -> Void)?
     var onFahrenheitTapped: ((Bool) -> Void)?
