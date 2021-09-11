@@ -9,5 +9,8 @@ import Foundation
 import UIKit
 
 class SearchViewModel {
+    var cachedLocations = ["London", "Paris"]//[String]()
+    var fetchedLocations = ["Slavonski Brod", "Osijek"]//[String]()
+    var showingCachedLocations = true
     
 }

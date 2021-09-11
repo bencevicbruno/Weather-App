@@ -18,6 +18,7 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchView.setTableData(viewModel.cachedLocations)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -34,5 +35,9 @@ class SearchViewController: UIViewController {
     
     private func setupNavigationItem() {
         self.title = "Search"
+    }
+    
+    public func setTableData(_ data: [String]) {
+        searchView.setTableData(data)
     }
 }
