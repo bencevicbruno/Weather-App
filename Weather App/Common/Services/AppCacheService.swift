@@ -12,9 +12,11 @@ class AppCacheService {
     
     private static let settingsKey = "settingsData"
     private static let homeDataKey = "homeData"
+    private static let cachedLocationsKey = "cachedLocationsKey"
     
-    public var settings = AppCacheService.loadSettings()
-    public var cachedHomeData = AppCacheService.loadHomeData()
+    public lazy var settings = AppCacheService.loadSettings()
+    public lazy var cachedHomeData = AppCacheService.loadHomeData()
+    public lazy var cachedLocations = AppCacheService.loadCachedLocations()
     
     func saveSettings() {
         guard let data = try? JSONEncoder().encode(settings) else { return }
@@ -43,5 +45,21 @@ class AppCacheService {
         let homeData = try? JSONDecoder().decode(HomeData.self, from: data)
         
         return homeData
+    }
+    
+    func saveCachedLocations(_ locations: [String]) {
+        guard let data = try? JSONEncoder().encode(locations) else { return }
+        UserDefaults.standard.set(data, forKey: AppCacheService.cachedLocationsKey)
+        UserDefaults.standard.synchronize()
+    }
+    
+    private static func loadCachedLocations() -> [String] {
+        guard let data = UserDefaults.standard.object(forKey: cachedLocationsKey) as? Data else { return [String]() }
+        
+        if let cachedLocations = try? JSONDecoder().decode([String].self, from: data) {
+            return cachedLocations
+        } else {
+            return [String]()
+        }
     }
 }
