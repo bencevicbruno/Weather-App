@@ -31,8 +31,8 @@ struct WeatherData: Codable {
     }
 }
 
-class WeatherDataService {
-    static let instance = WeatherDataService()
+class OpenWeatherAPIService {
+    static let instance = OpenWeatherAPIService()
     
     private let apiKey = "2204acb6f0028d27a12476dcb0b6ac80"
     
@@ -43,7 +43,9 @@ class WeatherDataService {
     }
     
     func getWeatherData(for cityName: String) -> WeatherData? {
-        let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?q=\(cityName)&appid=\(apiKey)&units=metric")
+        let urlSafeCityName = cityName.replacingOccurrences(of: " ", with: "%20")
+        
+        let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?q=\(urlSafeCityName)&appid=\(apiKey)&units=metric")
         
         return getWeatherDataFromURL(url)
     }

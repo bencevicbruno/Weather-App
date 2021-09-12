@@ -48,9 +48,13 @@ class AppCacheService {
     }
     
     func saveCachedLocations(_ locations: [String]) {
-        guard let data = try? JSONEncoder().encode(locations) else { return }
-        UserDefaults.standard.set(data, forKey: AppCacheService.cachedLocationsKey)
-        UserDefaults.standard.synchronize()
+        let locationsToSave = Array(Set(locations)).sorted()
+        cachedLocations = locationsToSave
+        
+        if let data = try? JSONEncoder().encode(locationsToSave) {
+            UserDefaults.standard.set(data, forKey: AppCacheService.cachedLocationsKey)
+            UserDefaults.standard.synchronize()
+        }
     }
     
     private static func loadCachedLocations() -> [String] {

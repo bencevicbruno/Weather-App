@@ -14,9 +14,10 @@ class SearchView: UIView {
     private lazy var searchButton = UIButton()
     private lazy var resultsTable = UITableView()
     
-    var onCellTapped: ((Int) -> Void)?
+    var onSearchButtonTapped: ((String) -> Void)?
+    var onCityCellTapped: ((Int) -> Void)?
     
-    private var resultsSource = ["heyy"]//[String]()
+    private var resultsSource = [String]()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -37,8 +38,8 @@ class SearchView: UIView {
         self.addSubview(backgroundImage)
         
         searchField.translatesAutoresizingMaskIntoConstraints = false
-        searchField.text = "Search"
-        searchField.textColor = grayColor
+        searchField.placeholder = "Search"
+        searchField.textColor = .black
         searchField.font = UIFont.systemFont(ofSize: 25)
         searchField.setHorizontalPadding(10)
         searchField.layer.backgroundColor = UIColor.gray.withAlphaComponent(0.3).cgColor
@@ -49,10 +50,11 @@ class SearchView: UIView {
         
         searchButton.translatesAutoresizingMaskIntoConstraints = false
         searchButton.setImage(UIImage(systemName: "magnifyingglass", withConfiguration: UIImage.SymbolConfiguration(font: UIFont.systemFont(ofSize: 45)))?.withTintColor(.black, renderingMode: .alwaysOriginal), for: .normal)
+        searchButton.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
         self.addSubview(searchButton)
         
         resultsTable.translatesAutoresizingMaskIntoConstraints = false
-        resultsTable.backgroundColor = .blue
+        resultsTable.backgroundColor = .clear
         resultsTable.register(UITableViewCell.self, forCellReuseIdentifier: "LocationCell")
         resultsTable.delegate = self
         resultsTable.dataSource = self
@@ -83,6 +85,10 @@ class SearchView: UIView {
         ])
     }
     
+    @objc func searchButtonTapped() {
+        self.onSearchButtonTapped?(searchField.text ?? "")
+    }
+    
     public func setTableData(_ data: [String]) {
         self.resultsSource = data
         resultsTable.reloadData()
@@ -91,7 +97,7 @@ class SearchView: UIView {
 
 extension SearchView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.onCellTapped?(indexPath.row)
+        self.onCityCellTapped?(indexPath.row)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -108,6 +114,8 @@ extension SearchView: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LocationCell", for: indexPath)
         cell.textLabel?.text = resultsSource[indexPath.row]
         cell.textLabel?.font = UIFont.systemFont(ofSize: 30)
+        cell.textLabel?.adjustsFontSizeToFitWidth = true
+        cell.backgroundColor = .clear
         
         return cell
     }

@@ -20,7 +20,7 @@ class HomeViewModel {
         self.updateData?()
         
         LocationSerivce.instance.requestLocationData(thenRun: { [weak self] coordinates in
-            if let weatherData = WeatherDataService.instance.getWeatherData(from: coordinates) {
+            if let weatherData = OpenWeatherAPIService.instance.getWeatherData(from: coordinates) {
                 self?.homeData = HomeData(data: weatherData)
                 self?.updateData?()
             }

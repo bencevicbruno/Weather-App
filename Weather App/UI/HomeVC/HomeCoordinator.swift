@@ -27,7 +27,12 @@ class HomeCoordinator: Coordinator {
         let viewModel = HomeViewModel()
         
         viewModel.onGoToSearchScreen = { [weak self] in
-            self?.goToSearchScreen()
+            self?.goToSearchScreen(onExit: { selectedCityName in
+                if let weatherData = OpenWeatherAPIService.init().getWeatherData(for: selectedCityName) {
+                    viewModel.homeData = HomeData(data: weatherData)
+                    viewModel.updateData?()
+                }
+            })
         }
         
         viewModel.onGoToSettingsScreen = { [weak self] in
@@ -46,9 +51,11 @@ class HomeCoordinator: Coordinator {
         return viewController
     }
     
-    private func goToSearchScreen() {
+    private func goToSearchScreen(onExit: ((String) -> Void)?) {
         let searchCoordinator = SearchCoordinator()
         childCoordinator = searchCoordinator
+        
+        searchCoordinator.onExit = onExit
         
         let searchViewController = searchCoordinator.start()
         self.navigationController?.pushViewController(searchViewController, animated: true)
