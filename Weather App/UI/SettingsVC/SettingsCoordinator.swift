@@ -22,38 +22,40 @@ class SettingsCoordinator: Coordinator {
         let viewController = SettingsViewController()
         let viewModel = SettingsViewModel()
         
-        viewModel.onCelsiusTapped = { wasChecked in
+        viewModel.onCelsiusTapped = { [weak viewController, weak viewModel] wasChecked in
             let newState = !wasChecked
-            viewModel.settings.useCelsius = newState
-            viewController.updateView()
+            viewModel?.settings.useCelsius = newState
+            viewController?.updateView()
         }
         
-        viewModel.onFahrenheitTapped = { wasChecked in
+        viewModel.onFahrenheitTapped = { [weak viewController, weak viewModel] wasChecked in
             let newState = wasChecked
-            viewModel.settings.useCelsius = newState
-            viewController.updateView()
+            viewModel?.settings.useCelsius = newState
+            viewController?.updateView()
         }
         
-        viewModel.onHumidityTapped = { wasChecked in
+        viewModel.onHumidityTapped = { [weak viewController, weak viewModel] wasChecked in
             let newState = !wasChecked
-            viewModel.settings.showHumidity = newState
-            viewController.updateView()
+            viewModel?.settings.showHumidity = newState
+            viewController?.updateView()
         }
         
-        viewModel.onPressureTapped = { wasChecked in
+        viewModel.onPressureTapped = { [weak viewController, weak viewModel] wasChecked in
             let newState = !wasChecked
-            viewModel.settings.showPressure = newState
-            viewController.updateView()
+            viewModel?.settings.showPressure = newState
+            viewController?.updateView()
         }
         
-        viewModel.onWindTapped = { wasChecked in
+        viewModel.onWindTapped = { [weak viewController, weak viewModel] wasChecked in
             let newState = !wasChecked
-            viewModel.settings.showWind = newState
-            viewController.updateView()
+            viewModel?.settings.showWind = newState
+            viewController?.updateView()
         }
         
-        viewModel.onExit = { [weak self] in
-            AppCacheService.instance.settings = viewModel.settings
+        viewModel.onExit = { [weak self, weak viewModel] in
+            if let viewModel = viewModel {
+                AppCacheService.instance.settings = viewModel.settings
+            }
             AppCacheService.instance.saveSettings()
             self?.onExit?()
         }

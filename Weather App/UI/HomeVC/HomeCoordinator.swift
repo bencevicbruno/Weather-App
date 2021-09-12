@@ -26,23 +26,23 @@ class HomeCoordinator: Coordinator {
         let viewController = HomeViewController()
         let viewModel = HomeViewModel()
         
-        viewModel.onGoToSearchScreen = { [weak self] in
+        viewModel.onGoToSearchScreen = { [weak self, weak viewModel] in
             self?.goToSearchScreen(onExit: { selectedCityName in
                 if let weatherData = OpenWeatherAPIService.init().getWeatherData(for: selectedCityName) {
-                    viewModel.homeData = HomeData(data: weatherData)
-                    viewModel.updateData?()
+                    viewModel?.homeData = HomeData(data: weatherData)
+                    viewModel?.updateData?()
                 }
             })
         }
         
-        viewModel.onGoToSettingsScreen = { [weak self] in
+        viewModel.onGoToSettingsScreen = { [weak self, weak viewModel] in
             self?.goToSettingsScreen(onExit: {
-                viewModel.updateData?()
+                viewModel?.updateData?()
             })
         }
         
-        viewModel.updateData = {
-            guard let homeData = viewModel.homeData else { return }
+        viewModel.updateData = { [weak viewModel] in
+            guard let homeData = viewModel?.homeData else { return }
             viewController.updateView(data: homeData, settings: AppCacheService.instance.settings)
             AppCacheService.instance.saveHomeData(data: homeData)
         }
