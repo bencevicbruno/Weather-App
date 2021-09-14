@@ -8,7 +8,7 @@
 import Foundation
 
 extension String {
-    func makeURLSafe() -> String {
+    func toURLSafe() -> String {
         let replacements = [
             " ": "%20",
             "č": "c",

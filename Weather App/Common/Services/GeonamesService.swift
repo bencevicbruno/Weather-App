@@ -19,7 +19,7 @@ class GeonamesService {
     func getListOfCities(prefixedWith prefix: String, errorNotifier: ((String, String?) -> Void)? = nil) -> [String] {
         var cities = [String]()
         
-        let urlSafePrefix = prefix.lowercased().makeURLSafe()
+        let urlSafePrefix = prefix.lowercased().toURLSafe()
         
         if let url = URL(string: "http://api.geonames.org/searchJSON?name_startsWith=\(urlSafePrefix)&maxRows=10&username=bencevic_bruno") {
             do {

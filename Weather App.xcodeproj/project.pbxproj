@@ -27,7 +27,6 @@
 		15E1E80326E553B0000461B8 /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E80226E553B0000461B8 /* HomeCoordinator.swift */; };
 		15E1E80526E55419000461B8 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E80426E55419000461B8 /* HomeViewController.swift */; };
 		15E1E80726E55503000461B8 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E80626E55503000461B8 /* HomeView.swift */; };
-		15E1E80D26E55679000461B8 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E80C26E55679000461B8 /* UIViewControllerExtension.swift */; };
 		15E1E81226E5577F000461B8 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E81126E5577F000461B8 /* HomeViewModel.swift */; };
 		15E1E81426E558FF000461B8 /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E81326E558FF000461B8 /* TypeAliases.swift */; };
 		15E1E81626E55B2E000461B8 /* UINavigationBarExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E81526E55B2E000461B8 /* UINavigationBarExtension.swift */; };
@@ -64,7 +63,6 @@
 		15E1E80226E553B0000461B8 /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
 		15E1E80426E55419000461B8 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		15E1E80626E55503000461B8 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		15E1E80C26E55679000461B8 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		15E1E81126E5577F000461B8 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		15E1E81326E558FF000461B8 /* TypeAliases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeAliases.swift; sourceTree = "<group>"; };
 		15E1E81526E55B2E000461B8 /* UINavigationBarExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationBarExtension.swift; sourceTree = "<group>"; };
@@ -157,7 +155,6 @@
 		15E1E80826E5559F000461B8 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				15E1E80C26E55679000461B8 /* UIViewControllerExtension.swift */,
 				15E1E81526E55B2E000461B8 /* UINavigationBarExtension.swift */,
 				1527542B26ECEAAF0099ACB5 /* UITextFieldExtension.swift */,
 				158EAFD626F0E3A100287DDF /* StringExtensions.swift */,
@@ -285,7 +282,6 @@
 				15E1E82626E64BAA000461B8 /* SearchView.swift in Sources */,
 				15E1E7FE26E5527E000461B8 /* Coordinator.swift in Sources */,
 				15E1E7EC26E50657000461B8 /* ViewController.swift in Sources */,
-				15E1E80D26E55679000461B8 /* UIViewControllerExtension.swift in Sources */,
 				15C6FE0F26EA1615004BF783 /* HomeData.swift in Sources */,
 				15E1E81226E5577F000461B8 /* HomeViewModel.swift in Sources */,
 				15E1E81A26E639A0000461B8 /* SettingsCoordinator.swift in Sources */,
