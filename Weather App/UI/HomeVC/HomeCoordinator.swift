@@ -47,6 +47,17 @@ class HomeCoordinator: Coordinator {
             AppCacheService.instance.saveHomeData(data: homeData)
         }
         
+        viewModel.onFirstAppearance = { [weak viewModel] in
+            viewModel?.updateData?()
+            
+            LocationSerivce.instance.requestLocationData(thenRun: { coordinates in
+                if let weatherData = OpenWeatherAPIService.instance.getWeatherData(from: coordinates, errorNotifier: viewController.showErrorAlert) {
+                    viewModel?.homeData = HomeData(data: weatherData)
+                    viewModel?.updateData?()
+                }
+            })
+        }
+        
         viewController.viewModel = viewModel
         return viewController
     }

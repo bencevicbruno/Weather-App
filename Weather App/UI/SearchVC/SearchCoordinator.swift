@@ -30,12 +30,7 @@ class SearchCoordinator: Coordinator {
             } else {
                 DispatchQueue.global(qos: .background).async {
                     let fetchedCities = GeonamesService.instance.getListOfCities(prefixedWith: searchFieldText, errorNotifier: { [weak viewController] title, message in
-                        DispatchQueue.main.async {
-                            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-                            alert.addAction(UIAlertAction(title: "OK", style: .cancel))
-                            
-                            viewController?.present(alert, animated: true)
-                        }
+                        viewController?.showErrorAlert(title: title, message: message)
                     })
                     
                     viewModel.showingCachedLocations = false

@@ -36,13 +36,13 @@ class OpenWeatherAPIService {
     
     private let apiKey = "2204acb6f0028d27a12476dcb0b6ac80"
     
-    func getWeatherData(from coordinates: CLLocationCoordinate2D) -> WeatherData? {
+    func getWeatherData(from coordinates: CLLocationCoordinate2D, errorNotifier: ((String, String?) -> Void)? = nil) -> WeatherData? {
         let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\(coordinates.latitude)&lon=\(coordinates.longitude)&appid=\(apiKey)&units=metric")
         
         return getWeatherDataFromURL(url)
     }
     
-    func getWeatherData(for cityName: String) -> WeatherData? {
+    func getWeatherData(for cityName: String, errorNotifier: ((String, String?) -> Void)? = nil) -> WeatherData? {
         let urlSafeCityName = cityName.replacingOccurrences(of: " ", with: "%20")
         
         let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?q=\(urlSafeCityName)&appid=\(apiKey)&units=metric")
@@ -50,7 +50,7 @@ class OpenWeatherAPIService {
         return getWeatherDataFromURL(url)
     }
     
-    private func getWeatherDataFromURL(_ url: URL?) -> WeatherData? {
+    private func getWeatherDataFromURL(_ url: URL?, errorNotifier: ((String, String?) -> Void)? = nil) -> WeatherData? {
         guard let url = url else {
             print("Unable to parse URL")
             return nil
@@ -63,13 +63,10 @@ class OpenWeatherAPIService {
                 let weatherData = try JSONDecoder().decode(WeatherData.self, from: data)
                 return weatherData
             } catch {
-                print(error)
-                if let recievedData = String(data: data, encoding: .utf8) {
-                    print(recievedData)
-                }
+                errorNotifier?(error.localizedDescription, String(data: data, encoding: .utf8))
             }
         } catch {
-            print(error)
+            errorNotifier?(error.localizedDescription, nil)
         }
         
         return nil
