@@ -26,29 +26,46 @@ class HomeCoordinator: Coordinator {
         let viewController = HomeViewController()
         let viewModel = HomeViewModel()
         
-        viewModel.onGoToSearchScreen = { [weak self] in
-            self?.goToSearchScreen()
+        viewModel.onGoToSearchScreen = { [weak self, weak viewModel] in
+            self?.goToSearchScreen(onExit: { selectedCityName in
+                if let weatherData = OpenWeatherAPIService.init().getWeatherData(for: selectedCityName) {
+                    viewModel?.homeData = HomeData(data: weatherData)
+                    viewModel?.updateData?()
+                }
+            })
         }
         
-        viewModel.onGoToSettingsScreen = { [weak self] in
-            self?.goToSettingsScreen()
+        viewModel.onGoToSettingsScreen = { [weak self, weak viewModel] in
+            self?.goToSettingsScreen(onExit: {
+                viewModel?.updateData?()
+            })
+        }
+        
+        viewModel.updateData = { [weak viewModel] in
+            guard let homeData = viewModel?.homeData else { return }
+            viewController.updateView(data: homeData, settings: AppCacheService.instance.settings)
+            AppCacheService.instance.saveHomeData(data: homeData)
         }
         
         viewController.viewModel = viewModel
         return viewController
     }
     
-    private func goToSearchScreen() {
+    private func goToSearchScreen(onExit: ((String) -> Void)?) {
         let searchCoordinator = SearchCoordinator()
         childCoordinator = searchCoordinator
+        
+        searchCoordinator.onExit = onExit
         
         let searchViewController = searchCoordinator.start()
         self.navigationController?.pushViewController(searchViewController, animated: true)
     }
     
-    private func goToSettingsScreen() {
+    private func goToSettingsScreen(onExit: EmptyCallback?) {
         let settingsCoordinator = SettingsCoordinator()
         childCoordinator = settingsCoordinator
+        
+        settingsCoordinator.onExit = onExit
         
         let settingsViewController = settingsCoordinator.start()
         self.navigationController?.pushViewController(settingsViewController, animated: true)
