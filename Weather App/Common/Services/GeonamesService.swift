@@ -18,10 +18,10 @@ struct GeonamesResponse: Codable {
 class GeonamesService {
     static var instance = GeonamesService()
     
-    public func getListOfCities(prefixedWith prefix: String) -> [String] {
+    public func getListOfCities(prefixedWith prefix: String, errorNotifier: ((String, String?) -> Void)? = nil) -> [String] {
         var cities = [String]()
         
-        let urlSafePrefix = prefix.replacingOccurrences(of: " ", with: "%20")
+        let urlSafePrefix = prefix.lowercased().makeURLSafe()
         
         if let url = URL(string: "http://api.geonames.org/searchJSON?name_startsWith=\(urlSafePrefix)&maxRows=10&username=bencevic_bruno") {
             do {
@@ -33,13 +33,13 @@ class GeonamesService {
                         cities.append($0.name)
                     }
                 } catch {
-                    print("Error parsing data: ", error)
+                    errorNotifier?("Error parsing data", error.localizedDescription)
                 }
             } catch {
-                print("Error fetching data: ", error)
+                errorNotifier?("Error fetching data", error.localizedDescription)
             }
         } else {
-            fatalError("Corrupted URL")
+            errorNotifier?("Invalid city name", "Make sure your city name doesn")
         }
        
         cities = Array(Set(cities)).sorted()

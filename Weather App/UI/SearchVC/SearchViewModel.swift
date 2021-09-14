@@ -17,4 +17,9 @@ class SearchViewModel {
     var onEmptySearchField: EmptyCallback?
     var onCityCellTapped: ((Int) -> Void)?
     var onExit: EmptyCallback?
+    var errorNotifier: ((String, String?) -> Void)?
+    
+    deinit {
+        
+    }
 }
