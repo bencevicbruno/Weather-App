@@ -27,25 +27,27 @@ class SearchCoordinator: Coordinator {
             
             if searchFieldText.isEmpty {
                 viewModel.onEmptySearchField?()
-            } else {
-                DispatchQueue.global(qos: .background).async {
-                    let fetchedCities = GeonamesService.instance.getListOfCities(prefixedWith: searchFieldText, errorNotifier: { [weak viewController] title, message in
-                        viewController?.showErrorAlert(title: title, message: message)
-                    })
-                    
-                    viewModel.showingCachedLocations = false
-                    viewModel.fetchedLocations = fetchedCities
+                return
+            }
+            
+            DispatchQueue.global(qos: .background).async {
+                let fetchedCities = GeonamesService.instance.getListOfCities(prefixedWith: searchFieldText, errorNotifier: { [weak viewController] title, message in
                     DispatchQueue.main.async {
-                        viewController?.setTableData(viewModel.fetchedLocations)
+                        viewController?.showErrorAlert(title: title, message: message)
                     }
+                })
+                
+                viewModel.showingCachedLocations = false
+                viewModel.fetchedLocations = fetchedCities
+                
+                DispatchQueue.main.async {
+                    viewController?.setTableData(viewModel.fetchedLocations)
                 }
             }
         }
         
         viewModel.onEmptySearchField = { [weak viewController] in
-            let alert = UIAlertController(title: "Please insert a city name in the search field!", message: nil, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .cancel))
-            viewController?.present(alert, animated: true)
+            viewController?.showErrorAlert(title: "Plase insert a city name in the search field!")
         }
         
         viewModel.onCityCellTapped = { [weak viewController, weak viewModel] cellIndex in
@@ -59,7 +61,7 @@ class SearchCoordinator: Coordinator {
         
         viewModel.onExit = { [weak viewModel] in
             guard let viewModel = viewModel else { return }
-            AppCacheService.instance.saveCachedLocations(viewModel.cachedLocations)
+            viewModel.cacheService.saveCachedLocations(viewModel.cachedLocations)
         }
         
         viewController.viewModel = viewModel

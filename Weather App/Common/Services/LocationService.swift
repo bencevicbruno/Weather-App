@@ -20,11 +20,12 @@ class LocationSerivce: NSObject, CLLocationManagerDelegate {
         super.init()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.startUpdatingLocation()
     }
     
     func requestLocationData(thenRun consumer: @escaping LocationConsumer) {
         locationConsumers.append(consumer)
+        
+        locationManager.startUpdatingLocation()
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -33,6 +34,7 @@ class LocationSerivce: NSObject, CLLocationManagerDelegate {
                 consumer(location.coordinate)
             }
             locationConsumers.removeAll()
+            locationManager.stopUpdatingLocation()
         }
     }
     

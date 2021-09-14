@@ -53,10 +53,9 @@ class SettingsCoordinator: Coordinator {
         }
         
         viewModel.onExit = { [weak self, weak viewModel] in
-            if let viewModel = viewModel {
-                AppCacheService.instance.settings = viewModel.settings
-            }
-            AppCacheService.instance.saveSettings()
+            guard let viewModel = viewModel else { return }
+            viewModel.cacheService.settings = viewModel.settings
+            viewModel.cacheService.saveSettings()
             self?.onExit?()
         }
         

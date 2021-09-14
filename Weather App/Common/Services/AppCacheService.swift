@@ -8,15 +8,13 @@
 import Foundation
 
 class AppCacheService {
-    static let instance = AppCacheService()
-    
     private static let settingsKey = "settingsData"
     private static let homeDataKey = "homeData"
     private static let cachedLocationsKey = "cachedLocationsKey"
     
-    public lazy var settings = AppCacheService.loadSettings()
-    public lazy var cachedHomeData = AppCacheService.loadHomeData()
-    public lazy var cachedLocations = AppCacheService.loadCachedLocations()
+    lazy var settings = AppCacheService.loadSettings()
+    lazy var cachedHomeData = AppCacheService.loadHomeData()
+    lazy var cachedLocations = AppCacheService.loadCachedLocations()
     
     func saveSettings() {
         guard let data = try? JSONEncoder().encode(settings) else { return }
@@ -25,7 +23,7 @@ class AppCacheService {
     }
     
     private static func loadSettings() -> SettingsData {
-        if let data = UserDefaults.standard.object(forKey: settingsKey) as? Data {
+        if let data = UserDefaults.standard.object(forKey: AppCacheService.settingsKey) as? Data {
             if let settings = try? JSONDecoder().decode(SettingsData.self, from: data) {
                 return settings
             }
@@ -41,7 +39,7 @@ class AppCacheService {
     }
     
     private static func loadHomeData() -> HomeData? {
-        guard let data = UserDefaults.standard.object(forKey: homeDataKey) as? Data else { return nil }
+        guard let data = UserDefaults.standard.object(forKey: AppCacheService.homeDataKey) as? Data else { return nil }
         let homeData = try? JSONDecoder().decode(HomeData.self, from: data)
         
         return homeData
@@ -58,7 +56,7 @@ class AppCacheService {
     }
     
     private static func loadCachedLocations() -> [String] {
-        guard let data = UserDefaults.standard.object(forKey: cachedLocationsKey) as? Data else { return [String]() }
+        guard let data = UserDefaults.standard.object(forKey: AppCacheService.cachedLocationsKey) as? Data else { return [String]() }
         
         if let cachedLocations = try? JSONDecoder().decode([String].self, from: data) {
             return cachedLocations

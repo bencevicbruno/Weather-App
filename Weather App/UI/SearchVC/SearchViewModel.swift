@@ -9,7 +9,8 @@ import Foundation
 import UIKit
 
 class SearchViewModel {
-    var cachedLocations = AppCacheService.instance.cachedLocations
+    var cacheService = AppCacheService()
+    var cachedLocations: [String]
     var fetchedLocations = [String]()
     var showingCachedLocations = true
     
@@ -17,6 +18,10 @@ class SearchViewModel {
     var onEmptySearchField: EmptyCallback?
     var onCityCellTapped: ((Int) -> Void)?
     var onExit: EmptyCallback?
+    
+    init() {
+        cachedLocations = cacheService.cachedLocations
+    }
     
     deinit {
         

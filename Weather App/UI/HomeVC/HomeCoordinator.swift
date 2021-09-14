@@ -42,9 +42,13 @@ class HomeCoordinator: Coordinator {
         }
         
         viewModel.updateData = { [weak viewModel] in
-            guard let homeData = viewModel?.homeData else { return }
-            viewController.updateView(data: homeData, settings: AppCacheService.instance.settings)
-            AppCacheService.instance.saveHomeData(data: homeData)
+            guard let viewModel = viewModel else { return }
+            
+            if let homeData = viewModel.homeData {
+                viewController.updateView(data: homeData, settings: viewModel.cacheService.settings)
+                viewModel.cacheService.saveHomeData(data: homeData)
+
+            }
         }
         
         viewModel.onFirstAppearance = { [weak viewModel] in

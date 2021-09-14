@@ -9,11 +9,16 @@ import Foundation
 import UIKit
 
 class HomeViewModel {
-    var homeData = AppCacheService.instance.cachedHomeData
+    var cacheService = AppCacheService()
+    var homeData: HomeData?
     
     var onFirstAppearance: EmptyCallback?
     var updateData: EmptyCallback?
     var onWeatherDataRecieved: EmptyCallback?
     var onGoToSearchScreen: EmptyCallback?
     var onGoToSettingsScreen: EmptyCallback?
+    
+    init() {
+        homeData = cacheService.cachedHomeData
+    }
 }
