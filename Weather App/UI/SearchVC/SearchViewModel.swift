@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 class SearchViewModel {
+    var geonamesService = GeonamesService()
     var cacheService = AppCacheService()
     var cachedLocations: [String]
     var fetchedLocations = [String]()

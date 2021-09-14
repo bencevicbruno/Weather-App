@@ -10,6 +10,7 @@ import UIKit
 
 class HomeViewModel {
     var cacheService = AppCacheService()
+    var openWeatherService = OpenWeatherAPIService()
     var homeData: HomeData?
     
     var onFirstAppearance: EmptyCallback?

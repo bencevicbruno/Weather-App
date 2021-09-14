@@ -16,9 +16,7 @@ struct GeonamesResponse: Codable {
 }
 
 class GeonamesService {
-    static var instance = GeonamesService()
-    
-    public func getListOfCities(prefixedWith prefix: String, errorNotifier: ((String, String?) -> Void)? = nil) -> [String] {
+    func getListOfCities(prefixedWith prefix: String, errorNotifier: ((String, String?) -> Void)? = nil) -> [String] {
         var cities = [String]()
         
         let urlSafePrefix = prefix.lowercased().makeURLSafe()

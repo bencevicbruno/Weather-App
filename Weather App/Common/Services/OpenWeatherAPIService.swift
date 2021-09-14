@@ -32,8 +32,6 @@ struct WeatherData: Codable {
 }
 
 class OpenWeatherAPIService {
-    static let instance = OpenWeatherAPIService()
-    
     private let apiKey = "2204acb6f0028d27a12476dcb0b6ac80"
     
     func getWeatherData(from coordinates: CLLocationCoordinate2D, errorNotifier: ((String, String?) -> Void)? = nil) -> WeatherData? {

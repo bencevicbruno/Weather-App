@@ -31,7 +31,7 @@ class SearchCoordinator: Coordinator {
             }
             
             DispatchQueue.global(qos: .background).async {
-                let fetchedCities = GeonamesService.instance.getListOfCities(prefixedWith: searchFieldText, errorNotifier: { [weak viewController] title, message in
+                let fetchedCities = viewModel.geonamesService.getListOfCities(prefixedWith: searchFieldText, errorNotifier: { [weak viewController] title, message in
                     DispatchQueue.main.async {
                         viewController?.showErrorAlert(title: title, message: message)
                     }

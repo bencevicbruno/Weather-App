@@ -55,7 +55,7 @@ class HomeCoordinator: Coordinator {
             viewModel?.updateData?()
             
             LocationSerivce.instance.requestLocationData(thenRun: { coordinates in
-                if let weatherData = OpenWeatherAPIService.instance.getWeatherData(from: coordinates, errorNotifier: viewController.showErrorAlert) {
+                if let weatherData = viewModel?.openWeatherService.getWeatherData(from: coordinates, errorNotifier: viewController.showErrorAlert) {
                     viewModel?.homeData = HomeData(data: weatherData)
                     viewModel?.updateData?()
                 }
