@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class SettingsViewModel {
+final class SettingsViewModel {
     
     var onDismissed: EmptyCallback?
     
@@ -19,8 +19,8 @@ class SettingsViewModel {
     
     private let persistenceService: PersistenceServiceProtocol
     
-    init() {
-        self.persistenceService = PersistenceService()
+    init(persistenceService: PersistenceServiceProtocol) {
+        self.persistenceService = persistenceService
         
         let settings = persistenceService.settingsData
         self.useCelsius = settings.useCelsius

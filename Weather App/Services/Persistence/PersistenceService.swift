@@ -35,6 +35,4 @@ final class PersistenceService: PersistenceServiceProtocol {
             UserDefaults.standard.save(newValue)
         }
     }
-    
-    
 }

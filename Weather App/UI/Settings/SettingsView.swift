@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SettingsView: UIView {
+final class SettingsView: UIView {
     
     var onCelsiusTapped: ((Bool) -> Void)?
     var onFahrenheitTapped: ((Bool) -> Void)?
@@ -45,12 +45,30 @@ class SettingsView: UIView {
         return button
     }()
     
+    private lazy var celsiusLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.font = .boldSystemFont(ofSize: 18)
+        label.text = "Celsius"
+        addSubview(label)
+        return label
+    }()
+    
     private lazy var fahrenheitCheckButton: UIButton = {
         let button = createCheckButton { [weak self] isChecked in
             self?.onFahrenheitTapped?(isChecked)
         }
         addSubview(button)
         return button
+    }()
+    
+    private lazy var fahrenheitLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.font = .boldSystemFont(ofSize: 18)
+        label.text = "Fahrenheit"
+        addSubview(label)
+        return label
     }()
     
     private lazy var optionalChecksStackView: UIStackView = {
@@ -136,6 +154,13 @@ private extension SettingsView {
         let iconCheckmarkDistance: CGFloat = 40
         
         backgroundImage.anchorToSuperview(ignoreSafeArea: true)
+        
+        celsiusCheckButton.anchor(bottom: (fahrenheitCheckButton.topAnchor, 20), leading: (safeAreaLayoutGuide.leadingAnchor, padding), size: CGSize(width: 40, height: 40))
+        celsiusLabel.alignCenterY(with: celsiusCheckButton)
+        celsiusLabel.anchor(leading: (celsiusCheckButton.trailingAnchor, 2 * padding))
+        fahrenheitCheckButton.anchor(bottom: (safeAreaLayoutGuide.centerYAnchor, 5 * padding), leading: (safeAreaLayoutGuide.leadingAnchor, padding), size: CGSize(width: 40, height: 40))
+        fahrenheitLabel.alignCenterY(with: fahrenheitCheckButton)
+        fahrenheitLabel.anchor(leading: (fahrenheitCheckButton.trailingAnchor, 2 * padding))
         
         optionalChecksStackView.anchor(bottom: (safeAreaLayoutGuide.bottomAnchor, 4 * padding), leading: (safeAreaLayoutGuide.leadingAnchor, 50), trailing: (safeAreaLayoutGuide.trailingAnchor, 50))
         

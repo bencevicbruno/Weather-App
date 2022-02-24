@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SettingsViewController: UIViewController {
+final class SettingsViewController: UIViewController {
     
     private lazy var settingsView = SettingsView()
     var viewModel: SettingsViewModel

@@ -8,17 +8,18 @@
 import Foundation
 import UIKit
 
-class HomeViewModel {
+final class HomeViewModel {
     
     var onStateChanged: ((State) -> Void)?
     
     var onGoToSearch: EmptyCallback?
     var onGoToSettings: EmptyCallback?
+    var onGoToInfo: EmptyCallback?
     
     var cachedHomeData: HomeData!
     
     private let persistenceService: PersistenceServiceProtocol
-    private let openWeatherAPIService: OpenWeatherAPIService
+    private let openWeatherAPIService: OpenWeatherAPIServiceProtocol
     private let locationService: LocationServiceProtocol
     
     private var state: State = .loading {
@@ -27,7 +28,7 @@ class HomeViewModel {
         }
     }
     
-    init() {
+    init(persistenceService: PersistenceServiceProtocol, openWeatherAPIService: OpenWeatherAPIServiceProtocol, locationService: LocationServiceProtocol) {
         self.persistenceService = PersistenceService()
         self.openWeatherAPIService = OpenWeatherAPIService()
         self.locationService = LocationSerivce.instance

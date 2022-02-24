@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchViewController: UIViewController {
+final class SearchViewController: UIViewController {
     
     private lazy var searchView = SearchView()
     private var viewModel: SearchViewModel
@@ -31,6 +31,7 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCallbacks()
+        viewModel.fetchSearchedLocations()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -52,12 +53,27 @@ private extension SearchViewController {
     }
     
     func setupCallbacks() {
-        searchView.onSearchButtonTapped = { [weak self] searchFieldText in
-            self?.viewModel.onSearchButtonTapped?(searchFieldText)
+        searchView.onSearchButtonTapped = { [weak self] location in
+            if let location = location {
+                self?.viewModel.fetchLocation(containing: location)
+            } else {
+                self?.showErrorAlert(title: "Please insert a location in the search field.")
+            }
         }
         
-        searchView.onCityCellTapped = { [weak self] cellIndex in
-            self?.viewModel.onCityCellTapped?(cellIndex)
+        searchView.onLocationTapped = { [weak self] location in
+            self?.viewModel.dismiss(location: location)
+        }
+        
+        viewModel.onStateChanged = { [weak self] state in
+            switch(state) {
+            case .showingLocations(let locations):
+                self?.searchView.setupData(locations: locations)
+            case .loading:
+                self?.searchView.showLoading()
+            case .showingError(let error):
+                self?.searchView.showError(error.localizedDescription)
+            }
         }
     }
 }

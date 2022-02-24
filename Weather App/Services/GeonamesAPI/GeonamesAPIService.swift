@@ -7,13 +7,11 @@
 
 import Foundation
 
-class GeonamesAPIService: GeonamesAPIServiceProtocol {
+final class GeonamesAPIService: GeonamesAPIServiceProtocol {
     
-    private let dataService: DataServiceProtocol
+    private let dataService: DataServiceProtocol = ServiceFactory.dataService
     
-    init() {
-        self.dataService = DataService()
-    }
+    init() {}
     
     func fetchCities(prefixedWith prefix: String, completionHandler: @escaping (Result<GeonamesAPIResponse, Error>) -> Void) {
         guard let urlSafePrefix = prefix.urlSafe else {

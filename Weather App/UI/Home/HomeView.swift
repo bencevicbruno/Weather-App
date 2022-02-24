@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HomeView: UIView {
+final class HomeView: UIView {
     
     // MARK: - Init
     
@@ -157,9 +157,9 @@ class HomeView: UIView {
         currentTemperatureLabel.attributedText = currentTemperatureText
         
         // Min & max temperature
-        let minTemperature = settings.useCelsius ? data.minTemperature : data.minTemperature.convertedToFahrenheit
+        let minTemperature = (settings.useCelsius ? data.minTemperature : data.minTemperature.convertedToFahrenheit).rounded
         minTemperatureLabel.text = "min\n\(minTemperature) \(settings.useCelsius ? "C" : "F")"
-        let maxTemperature = settings.useCelsius ? data.maxTemperature : data.maxTemperature.convertedToFahrenheit
+        let maxTemperature = (settings.useCelsius ? data.maxTemperature : data.maxTemperature.convertedToFahrenheit).rounded
         maxTemperatureLabel.text = "max\n\(maxTemperature) \(settings.useCelsius ? "C" : "F")"
         
         // Optional labels
@@ -230,6 +230,8 @@ private extension HomeView {
         optionalLabelsStack.anchor(bottom: (safeAreaLayoutGuide.bottomAnchor, padding), leading: (safeAreaLayoutGuide.leadingAnchor, padding), trailing: (safeAreaLayoutGuide.trailingAnchor, padding))
         
         loadingLabel.centerInSuperview(ignoreSafeArea: true)
+        loadingLabel.anchor(leading: (safeAreaLayoutGuide.leadingAnchor, padding), trailing: (safeAreaLayoutGuide.trailingAnchor, padding))
         errorLabel.centerInSuperview(ignoreSafeArea: true)
+        errorLabel.anchor(leading: (safeAreaLayoutGuide.leadingAnchor, padding), trailing: (safeAreaLayoutGuide.trailingAnchor, padding))
     }
 }

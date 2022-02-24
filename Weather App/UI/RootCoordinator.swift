@@ -13,14 +13,6 @@ final class RootCoordinator: Coordinator {
     var childCoordinator: Coordinator?
     
     func start() -> UIViewController {
-        let viewController: UIViewController
-        
-        viewController = createHomeViewController()
-        
-        return viewController
-    }
-    
-    private func createHomeViewController() -> UIViewController {
         let weatherCoordinator = HomeCoordinator()
         
         childCoordinator = weatherCoordinator

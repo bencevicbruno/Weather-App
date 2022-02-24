@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class HomeCoordinator: Coordinator {
+final class HomeCoordinator: Coordinator {
     
     var childCoordinator: Coordinator?
     var navigationController: UINavigationController?
@@ -23,11 +23,15 @@ class HomeCoordinator: Coordinator {
     }
     
     private func createHomeViewController() -> UIViewController {
-        let viewModel = HomeViewModel()
+        let viewModel = HomeViewModel(persistenceService: ServiceFactory.persistenceService, openWeatherAPIService: ServiceFactory.openWeatherAPIService, locationService: ServiceFactory.locationService)
         let viewController = HomeViewController(viewModel: viewModel)
         
+        viewModel.onGoToInfo = { [weak self] in
+            self?.goToInfo()
+        }
+        
         viewModel.onGoToSearch = { [weak self, weak viewModel] in
-            self?.goToSearchScreen(onDismissed: { selectedLocation in
+            self?.goToSearch(onDismissed: { selectedLocation in
                 guard let selectedLocation = selectedLocation else { return }
                 viewModel?.fetchWeatherData(for: selectedLocation)
             })
@@ -42,7 +46,20 @@ class HomeCoordinator: Coordinator {
         return viewController
     }
     
-    private func goToSearchScreen(onDismissed: ((String?) -> Void)? = nil) {
+    private func goToInfo() {
+        let infoCoordinator = InfoCoordinator()
+        childCoordinator = infoCoordinator
+        
+        infoCoordinator.onDismissed = { [weak self] in
+            self?.navigationController?.popViewController(animated: true)
+            self?.childCoordinator = nil
+        }
+        
+        let infoViewController = infoCoordinator.start()
+        self.navigationController?.pushViewController(infoViewController, animated: true)
+    }
+    
+    private func goToSearch(onDismissed: ((String?) -> Void)? = nil) {
         let searchCoordinator = SearchCoordinator()
         childCoordinator = searchCoordinator
         

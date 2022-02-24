@@ -53,6 +53,11 @@
 		8CFAE9AF27C6E6BC00A6CB96 /* Float+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFAE9AE27C6E6BC00A6CB96 /* Float+.swift */; };
 		8CFAE9B327C6E92500A6CB96 /* UIScreen+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFAE9B227C6E92500A6CB96 /* UIScreen+.swift */; };
 		8CFAE9B527C6ED7400A6CB96 /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFAE9B427C6ED7300A6CB96 /* UIStackView+.swift */; };
+		8CFAE9B827C837C900A6CB96 /* InfoCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFAE9B727C837C900A6CB96 /* InfoCoordinator.swift */; };
+		8CFAE9BA27C8383400A6CB96 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFAE9B927C8383400A6CB96 /* InfoViewController.swift */; };
+		8CFAE9BC27C838C900A6CB96 /* InfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFAE9BB27C838C900A6CB96 /* InfoViewModel.swift */; };
+		8CFAE9BE27C838F700A6CB96 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFAE9BD27C838F700A6CB96 /* InfoView.swift */; };
+		8CFAE9C027C8424A00A6CB96 /* ServiceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFAE9BF27C8424A00A6CB96 /* ServiceFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -104,6 +109,11 @@
 		8CFAE9AE27C6E6BC00A6CB96 /* Float+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Float+.swift"; sourceTree = "<group>"; };
 		8CFAE9B227C6E92500A6CB96 /* UIScreen+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+.swift"; sourceTree = "<group>"; };
 		8CFAE9B427C6ED7300A6CB96 /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
+		8CFAE9B727C837C900A6CB96 /* InfoCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCoordinator.swift; sourceTree = "<group>"; };
+		8CFAE9B927C8383400A6CB96 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
+		8CFAE9BB27C838C900A6CB96 /* InfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewModel.swift; sourceTree = "<group>"; };
+		8CFAE9BD27C838F700A6CB96 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
+		8CFAE9BF27C8424A00A6CB96 /* ServiceFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +130,7 @@
 		1527542A26EB5F8A0099ACB5 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				8CFAE9BF27C8424A00A6CB96 /* ServiceFactory.swift */,
 				8CFAE99327C6BEC700A6CB96 /* Data */,
 				8CFAE9A527C6C5A900A6CB96 /* GeonamesAPI */,
 				8CFAE99A27C6C08600A6CB96 /* Location */,
@@ -165,9 +176,10 @@
 			isa = PBXGroup;
 			children = (
 				15E1E7FF26E552A4000461B8 /* RootCoordinator.swift */,
-				15E1E80E26E556FC000461B8 /* HomeVC */,
-				15E1E81726E63984000461B8 /* SettingsVC */,
-				15E1E81826E6398F000461B8 /* SearchVC */,
+				8CFAE9B627C837C100A6CB96 /* Info */,
+				15E1E80E26E556FC000461B8 /* Home */,
+				15E1E81726E63984000461B8 /* Settings */,
+				15E1E81826E6398F000461B8 /* Search */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -181,7 +193,7 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		15E1E80E26E556FC000461B8 /* HomeVC */ = {
+		15E1E80E26E556FC000461B8 /* Home */ = {
 			isa = PBXGroup;
 			children = (
 				15E1E80226E553B0000461B8 /* HomeCoordinator.swift */,
@@ -189,10 +201,10 @@
 				15E1E81126E5577F000461B8 /* HomeViewModel.swift */,
 				15E1E80626E55503000461B8 /* HomeView.swift */,
 			);
-			path = HomeVC;
+			path = Home;
 			sourceTree = "<group>";
 		};
-		15E1E81726E63984000461B8 /* SettingsVC */ = {
+		15E1E81726E63984000461B8 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
 				15E1E81926E639A0000461B8 /* SettingsCoordinator.swift */,
@@ -200,10 +212,10 @@
 				15E1E82326E64B95000461B8 /* SettingsViewModel.swift */,
 				15E1E82726E64BCD000461B8 /* SettingsView.swift */,
 			);
-			path = SettingsVC;
+			path = Settings;
 			sourceTree = "<group>";
 		};
-		15E1E81826E6398F000461B8 /* SearchVC */ = {
+		15E1E81826E6398F000461B8 /* Search */ = {
 			isa = PBXGroup;
 			children = (
 				15E1E81B26E639AA000461B8 /* SearchCoordinator.swift */,
@@ -211,7 +223,7 @@
 				15E1E82126E64B70000461B8 /* SearchViewModel.swift */,
 				15E1E82526E64BAA000461B8 /* SearchView.swift */,
 			);
-			path = SearchVC;
+			path = Search;
 			sourceTree = "<group>";
 		};
 		8CFAE98027C6B48C00A6CB96 /* Utils */ = {
@@ -307,6 +319,17 @@
 			path = GeonamesAPI;
 			sourceTree = "<group>";
 		};
+		8CFAE9B627C837C100A6CB96 /* Info */ = {
+			isa = PBXGroup;
+			children = (
+				8CFAE9B727C837C900A6CB96 /* InfoCoordinator.swift */,
+				8CFAE9B927C8383400A6CB96 /* InfoViewController.swift */,
+				8CFAE9BB27C838C900A6CB96 /* InfoViewModel.swift */,
+				8CFAE9BD27C838F700A6CB96 /* InfoView.swift */,
+			);
+			path = Info;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -383,6 +406,7 @@
 				8CFAE99227C6B83C00A6CB96 /* HomeData.swift in Sources */,
 				15E1E82626E64BAA000461B8 /* SearchView.swift in Sources */,
 				8CFAE99927C6BF9000A6CB96 /* DataServiceError.swift in Sources */,
+				8CFAE9BC27C838C900A6CB96 /* InfoViewModel.swift in Sources */,
 				8CFAE98B27C6B7B700A6CB96 /* UserDefaults+.swift in Sources */,
 				15E1E7FE26E5527E000461B8 /* Coordinator.swift in Sources */,
 				8CFAE98427C6B51B00A6CB96 /* PersistenceServiceProtocol.swift in Sources */,
@@ -391,13 +415,16 @@
 				15E1E81A26E639A0000461B8 /* SettingsCoordinator.swift in Sources */,
 				15E1E80026E552A4000461B8 /* RootCoordinator.swift in Sources */,
 				15E1E82026E64023000461B8 /* SettingsViewController.swift in Sources */,
+				8CFAE9BE27C838F700A6CB96 /* InfoView.swift in Sources */,
 				1527542C26ECEAAF0099ACB5 /* UITextField+.swift in Sources */,
+				8CFAE9C027C8424A00A6CB96 /* ServiceFactory.swift in Sources */,
 				15E1E81C26E639AA000461B8 /* SearchCoordinator.swift in Sources */,
 				8CFAE9AF27C6E6BC00A6CB96 /* Float+.swift in Sources */,
 				15E1E81426E558FF000461B8 /* TypeAliases.swift in Sources */,
 				15E1E7E826E50657000461B8 /* AppDelegate.swift in Sources */,
 				8CFAE99527C6BED400A6CB96 /* DataServiceProtocol.swift in Sources */,
 				8CFAE9A727C6C5C500A6CB96 /* GeonamesAPIServiceProtocol.swift in Sources */,
+				8CFAE9BA27C8383400A6CB96 /* InfoViewController.swift in Sources */,
 				15E1E7EA26E50657000461B8 /* SceneDelegate.swift in Sources */,
 				8CFAE99027C6B83100A6CB96 /* SearchedLocationsData.swift in Sources */,
 				8CFAE9B527C6ED7400A6CB96 /* UIStackView+.swift in Sources */,
@@ -405,6 +432,7 @@
 				151F385826EA5BDA00D90D01 /* LocationService.swift in Sources */,
 				15E1E80726E55503000461B8 /* HomeView.swift in Sources */,
 				15C1804026ED21A2003B3E3A /* GeonamesAPIService.swift in Sources */,
+				8CFAE9B827C837C900A6CB96 /* InfoCoordinator.swift in Sources */,
 				8CFAE9A927C6C5EC00A6CB96 /* GeonamesAPIResponse.swift in Sources */,
 				15E1E81626E55B2E000461B8 /* UINavigationBar+.swift in Sources */,
 				8CFAE9AD27C6DF0400A6CB96 /* UIView+.swift in Sources */,

@@ -13,4 +13,8 @@ struct GeonamesAPIResponse: Codable {
     struct City: Codable {
         let name: String
     }
+    
+    var locations: [String] {
+        Array(Set(geonames.map { $0.name }))
+    }
 }

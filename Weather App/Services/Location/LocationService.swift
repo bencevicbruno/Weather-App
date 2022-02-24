@@ -8,7 +8,7 @@
 import Foundation
 import CoreLocation
 
-class LocationSerivce: NSObject, CLLocationManagerDelegate, LocationServiceProtocol {
+final class LocationSerivce: NSObject, CLLocationManagerDelegate, LocationServiceProtocol {
     
     static let instance = LocationSerivce()
     

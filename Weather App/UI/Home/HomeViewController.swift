@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HomeViewController: UIViewController {
+final class HomeViewController: UIViewController {
     
     private var viewModel: HomeViewModel
     private lazy var homeView = HomeView()
@@ -24,6 +24,7 @@ class HomeViewController: UIViewController {
     }
     
     //MARK: LifeCycle
+    
     override func loadView() {
         self.view = homeView
     }
@@ -52,6 +53,10 @@ private extension HomeViewController {
         viewModel.onGoToSettings?()
     }
     
+    @objc func goToInfoScreen() {
+        viewModel.onGoToInfo?()
+    }
+    
     // MARK: - Setup
     
     func setupCallbacks() {
@@ -78,7 +83,8 @@ private extension HomeViewController {
         
         self.navigationItem.leftBarButtonItems = [
             UIBarButtonItem(image: UIImage(named: "icon_magnifying_glass"), style: .plain, target: self, action: #selector(goToSearchScreen)),
-            UIBarButtonItem(image: UIImage(named: "icon_gear"), style: .plain, target: self, action: #selector(goToSettingsScreen))
+            UIBarButtonItem(image: UIImage(named: "icon_gear"), style: .plain, target: self, action: #selector(goToSettingsScreen)),
+            UIBarButtonItem(image: UIImage(systemName: "info.circle"), style: .plain, target: self, action: #selector(goToInfoScreen))
         ]
     }
 }

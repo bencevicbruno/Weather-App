@@ -7,14 +7,13 @@
 
 import Foundation
 import CoreLocation
-class OpenWeatherAPIService: OpenWeatherAPIServiceProtocol {
+
+final class OpenWeatherAPIService: OpenWeatherAPIServiceProtocol {
     
     private let apiKey = "2204acb6f0028d27a12476dcb0b6ac80"
-    private let dataService: DataServiceProtocol
+    private let dataService: DataServiceProtocol = ServiceFactory.dataService
     
-    init() {
-        self.dataService = DataService()
-    }
+    init() { }
     
     func fetchWeatherData(from coordinates: CLLocationCoordinate2D, completionHandler: @escaping (Result<OpenWeatherAPIResponse, Error>) -> Void) {
         let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?lat=\(coordinates.latitude)&lon=\(coordinates.longitude)&appid=\(apiKey)&units=metric")
