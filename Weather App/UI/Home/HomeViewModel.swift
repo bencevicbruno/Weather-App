@@ -29,9 +29,9 @@ final class HomeViewModel {
     }
     
     init(persistenceService: PersistenceServiceProtocol, openWeatherAPIService: OpenWeatherAPIServiceProtocol, locationService: LocationServiceProtocol) {
-        self.persistenceService = PersistenceService()
-        self.openWeatherAPIService = OpenWeatherAPIService()
-        self.locationService = LocationSerivce.instance
+        self.persistenceService = persistenceService
+        self.openWeatherAPIService = openWeatherAPIService
+        self.locationService = locationService
     }
     
     func updateData() {
