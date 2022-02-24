@@ -8,187 +8,164 @@
 import UIKit
 
 class SettingsView: UIView {
-    private lazy var backgroundImage = UIImageView()
-    
-    private lazy var celsiusCheckButton = UIButton()
-    private lazy var celsiusLabel = UILabel()
-    private lazy var fahrenheitCheckButton = UIButton()
-    private lazy var fahrenheitLabel = UILabel()
-    
-    private lazy var humidityIconImage = UIImageView()
-    private lazy var humidityCheckButton = UIButton()
-    private lazy var pressureIconImage = UIImageView()
-    private lazy var pressureCheckButton = UIButton()
-    private lazy var windIconImage = UIImageView()
-    private lazy var windCheckButton = UIButton()
     
     var onCelsiusTapped: ((Bool) -> Void)?
     var onFahrenheitTapped: ((Bool) -> Void)?
     var onHumidityTapped: ((Bool) -> Void)?
     var onPressureTapped: ((Bool) -> Void)?
-    var onWindTapped: ((Bool) -> Void)?
+    var onWindSpeedTapped: ((Bool) -> Void)?
+    
+    // MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupView()
-        setupConstraints()
+        setup()
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        setup()
     }
+    
+    // MARK: - Components
+    
+    private lazy var backgroundImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "image_background")
+        imageView.contentMode = .scaleAspectFill
+        addSubview(imageView)
+        return imageView
+    }()
+    
+    private lazy var celsiusCheckButton: UIButton = {
+        let button = createCheckButton { [weak self] isChecked in
+            self?.onCelsiusTapped?(isChecked)
+        }
+        addSubview(button)
+        return button
+    }()
+    
+    private lazy var fahrenheitCheckButton: UIButton = {
+        let button = createCheckButton { [weak self] isChecked in
+            self?.onFahrenheitTapped?(isChecked)
+        }
+        addSubview(button)
+        return button
+    }()
+    
+    private lazy var optionalChecksStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .equalSpacing
+        stackView.alignment = .center
+        addSubview(stackView)
+        return stackView
+    }()
+    
+    private lazy var humidityIcon: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "icon_humidity")
+        addSubview(imageView)
+        return imageView
+    }()
+    
+    private lazy var humidityCheckButton: UIButton = {
+        let button = createCheckButton { [weak self] isChecked in
+            self?.onHumidityTapped?(isChecked)
+        }
+        optionalChecksStackView.addArrangedSubview(button)
+        return button
+    }()
+    
+    private lazy var pressureIcon: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "icon_pressure")
+        addSubview(imageView)
+        return imageView
+    }()
+    
+    private lazy var pressureCheckButton: UIButton = {
+        let button = createCheckButton { [weak self] isChecked in
+            self?.onPressureTapped?(isChecked)
+        }
+        optionalChecksStackView.addArrangedSubview(button)
+        return button
+    }()
+    
+    private lazy var windSpeedIcon: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "icon_wind_speed")
+        addSubview(imageView)
+        return imageView
+    }()
+    
+    private lazy var windSpeedCheckButton: UIButton = {
+        let button = createCheckButton { [weak self] isChecked in
+            self?.onWindSpeedTapped?(isChecked)
+        }
+        optionalChecksStackView.addArrangedSubview(button)
+        return button
+    }()
+    
+    // MARK: - Data setup
+    
+    func setupData(useCelsius: Bool? = nil, showHumidity: Bool? = nil, showPressure: Bool? = nil, showWindSpeed: Bool? = nil) {
+        if let useCelsius = useCelsius {
+            setButtonChecked(celsiusCheckButton, isChecked: useCelsius)
+            setButtonChecked(fahrenheitCheckButton, isChecked: !useCelsius)
+        }
+        
+        if let showHumidity = showHumidity {
+            setButtonChecked(humidityCheckButton, isChecked: showHumidity)
+        }
+        
+        if let showPressure = showPressure {
+            setButtonChecked(pressureCheckButton, isChecked: showPressure)
+        }
+        
+        if let showWindSpeed = showWindSpeed {
+            setButtonChecked(windSpeedCheckButton, isChecked: showWindSpeed)
+        }
+    }
+}
 
-    private func setupView() {
-        setupBackgroundImage()
+private extension SettingsView {
+    
+    func setup() {
+        let padding: CGFloat = 10
+        let iconCheckmarkDistance: CGFloat = 40
         
-        setupCheckButton(celsiusCheckButton, action: #selector(onCelsiusCheckButtonTapped))
-        setupLabel(celsiusLabel, text: "Celsius")
-        setupCheckButton(fahrenheitCheckButton, action: #selector(onFahrenheitCheckButtonTapped))
-        setupLabel(fahrenheitLabel, text: "Fahrenheit")
+        backgroundImage.anchorToSuperview(ignoreSafeArea: true)
         
-        setupImageView(humidityIconImage, image: "humidity")
-        setupCheckButton(humidityCheckButton, action: #selector(onHumidityCheckButtonTapped))
-        setupImageView(pressureIconImage, image: "pressure")
-        setupCheckButton(pressureCheckButton, action: #selector(onPressureCheckButtonTapped))
-        setupImageView(windIconImage, image: "wind")
-        setupCheckButton(windCheckButton, action: #selector(onWindCheckButtonTapped))
-    }
-    
-    private func setupBackgroundImage() {
-        backgroundImage.translatesAutoresizingMaskIntoConstraints = false
-        backgroundImage.image = UIImage(named: "background")
-        backgroundImage.contentMode = .scaleAspectFill
-        self.addSubview(backgroundImage)
-    }
-    
-    private func setupCheckButton(_ checkButton: UIButton, action: Selector) {
-        checkButton.translatesAutoresizingMaskIntoConstraints = false
-        checkButton.layer.backgroundColor = UIColor.white.cgColor
-        checkButton.addTarget(self, action: action, for: .touchUpInside)
-        self.addSubview(checkButton)
-    }
-    
-    private func setupLabel(_ label: UILabel, text: String) {
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = text
-        label.font = UIFont.systemFont(ofSize: 30)
-        self.addSubview(label)
-    }
-    
-    private func setupImageView(_ imageView: UIImageView, image: String) {
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: image)
-        self.addSubview(imageView)
-    }
-    
-    private func setupConstraints() {
-        let SPACE_BETWEEN_ELEMENTS: CGFloat = 20
+        optionalChecksStackView.anchor(bottom: (safeAreaLayoutGuide.bottomAnchor, 4 * padding), leading: (safeAreaLayoutGuide.leadingAnchor, 50), trailing: (safeAreaLayoutGuide.trailingAnchor, 50))
         
-        let CHECK_SIZE: CGFloat = 40
-        let SPACE_FROM_CHECK_TO_EDGE: CGFloat = 20
+        humidityIcon.anchor(size: CGSize(width: 60, height: 60))
+        humidityIcon.anchor(bottom: (humidityCheckButton.topAnchor, iconCheckmarkDistance))
+        humidityIcon.centerXAnchor.constraint(equalTo: humidityCheckButton.centerXAnchor).isActive = true
+        humidityCheckButton.anchor(size: CGSize(width: 40, height: 40))
         
-        let SPACE_BETWEEN_ICONS: CGFloat = 30
-        let ICON_OFFSET_FROM_CENTER_Y: CGFloat = 100
-        let ICON_SIZE_MULTIPLIER: CGFloat = 0.2
+        pressureIcon.anchor(size: CGSize(width: 60, height: 60))
+        pressureIcon.anchor(bottom: (pressureCheckButton.topAnchor, iconCheckmarkDistance))
+        pressureIcon.centerXAnchor.constraint(equalTo: pressureCheckButton.centerXAnchor).isActive = true
+        pressureCheckButton.anchor(size: CGSize(width: 40, height: 40))
         
-        NSLayoutConstraint.activate([
-            backgroundImage.topAnchor.constraint(equalTo: self.topAnchor),
-            backgroundImage.rightAnchor.constraint(equalTo: self.rightAnchor),
-            backgroundImage.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            backgroundImage.leftAnchor.constraint(equalTo: self.leftAnchor),
-            
-            celsiusCheckButton.widthAnchor.constraint(equalToConstant: CHECK_SIZE),
-            celsiusCheckButton.heightAnchor.constraint(equalTo: celsiusCheckButton.widthAnchor),
-            celsiusCheckButton.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor, constant: SPACE_FROM_CHECK_TO_EDGE),
-            celsiusCheckButton.bottomAnchor.constraint(equalTo: fahrenheitCheckButton.topAnchor, constant: -SPACE_BETWEEN_ELEMENTS),
-            
-            celsiusLabel.centerYAnchor.constraint(equalTo: celsiusCheckButton.centerYAnchor),
-            celsiusLabel.leftAnchor.constraint(equalTo: celsiusCheckButton.rightAnchor, constant: SPACE_BETWEEN_ELEMENTS),
-            
-            fahrenheitCheckButton.widthAnchor.constraint(equalToConstant: CHECK_SIZE),
-            fahrenheitCheckButton.heightAnchor.constraint(equalTo: celsiusCheckButton.widthAnchor),
-            fahrenheitCheckButton.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor, constant: SPACE_FROM_CHECK_TO_EDGE),
-            fahrenheitCheckButton.bottomAnchor.constraint(equalTo: self.centerYAnchor, constant: -100),
-            
-            fahrenheitLabel.centerYAnchor.constraint(equalTo: fahrenheitCheckButton.centerYAnchor),
-            fahrenheitLabel.leftAnchor.constraint(equalTo: fahrenheitCheckButton.rightAnchor, constant: SPACE_BETWEEN_ELEMENTS),
-            
-            humidityIconImage.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: ICON_SIZE_MULTIPLIER),
-            humidityIconImage.heightAnchor.constraint(equalTo: humidityIconImage.widthAnchor),
-            humidityIconImage.rightAnchor.constraint(equalTo: pressureIconImage.leftAnchor, constant: -SPACE_BETWEEN_ICONS),
-            humidityIconImage.topAnchor.constraint(equalTo: self.centerYAnchor, constant: ICON_OFFSET_FROM_CENTER_Y),
-            
-            humidityCheckButton.widthAnchor.constraint(equalToConstant: CHECK_SIZE),
-            humidityCheckButton.heightAnchor.constraint(equalTo: humidityCheckButton.widthAnchor),
-            humidityCheckButton.centerXAnchor.constraint(equalTo: humidityIconImage.centerXAnchor),
-            humidityCheckButton.topAnchor.constraint(equalTo: humidityIconImage.bottomAnchor, constant: SPACE_BETWEEN_ELEMENTS),
-            
-            pressureIconImage.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: ICON_SIZE_MULTIPLIER),
-            pressureIconImage.heightAnchor.constraint(equalTo: pressureIconImage.widthAnchor),
-            pressureIconImage.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            pressureIconImage.topAnchor.constraint(equalTo: self.centerYAnchor, constant: ICON_OFFSET_FROM_CENTER_Y),
-            
-            pressureCheckButton.widthAnchor.constraint(equalToConstant: CHECK_SIZE),
-            pressureCheckButton.heightAnchor.constraint(equalTo: pressureCheckButton.widthAnchor),
-            pressureCheckButton.centerXAnchor.constraint(equalTo: pressureIconImage.centerXAnchor),
-            pressureCheckButton.topAnchor.constraint(equalTo: pressureIconImage.bottomAnchor, constant: SPACE_BETWEEN_ELEMENTS),
-            
-            windIconImage.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: ICON_SIZE_MULTIPLIER),
-            windIconImage.heightAnchor.constraint(equalTo: windIconImage.widthAnchor),
-            windIconImage.leftAnchor.constraint(equalTo: pressureIconImage.rightAnchor, constant: SPACE_BETWEEN_ICONS),
-            windIconImage.topAnchor.constraint(equalTo: self.centerYAnchor, constant: ICON_OFFSET_FROM_CENTER_Y),
-            
-            windCheckButton.widthAnchor.constraint(equalToConstant: CHECK_SIZE),
-            windCheckButton.heightAnchor.constraint(equalTo: windCheckButton.widthAnchor),
-            windCheckButton.centerXAnchor.constraint(equalTo: windIconImage.centerXAnchor),
-            windCheckButton.topAnchor.constraint(equalTo: windIconImage.bottomAnchor, constant: SPACE_BETWEEN_ELEMENTS)
-        ])
+        windSpeedIcon.anchor(size: CGSize(width: 60, height: 60))
+        windSpeedIcon.anchor(bottom: (windSpeedCheckButton.topAnchor, iconCheckmarkDistance))
+        windSpeedIcon.centerXAnchor.constraint(equalTo: windSpeedCheckButton.centerXAnchor).isActive = true
+        windSpeedCheckButton.anchor(size: CGSize(width: 40, height: 40))
     }
     
-    @objc func onCelsiusCheckButtonTapped() {
-        onCelsiusTapped?(isButtonChecked(celsiusCheckButton))
+    func createCheckButton(onTapped: ((Bool) -> Void)? = nil) -> UIButton {
+        let button = UIButton()
+        button.layer.backgroundColor = UIColor.white.cgColor
+        button.addAction(UIAction { [weak button] action in
+            let willBecomeChecked = button?.image(for: .normal) == nil
+            onTapped?(willBecomeChecked)
+        }, for: .touchUpInside)
+        return button
     }
     
-    @objc func onFahrenheitCheckButtonTapped() {
-        onFahrenheitTapped?(isButtonChecked(fahrenheitCheckButton))
-    }
-    
-    @objc func onHumidityCheckButtonTapped() {
-        onHumidityTapped?(isButtonChecked(humidityCheckButton))
-    }
-    
-    @objc func onPressureCheckButtonTapped() {
-        onPressureTapped?(isButtonChecked(pressureCheckButton))
-    }
-    
-    @objc func onWindCheckButtonTapped() {
-        onWindTapped?(isButtonChecked(windCheckButton))
-    }
-    
-    public func setupData(data: SettingsData) {
-        if let useCelsius = data.useCelsius {
-            setButtonChecked(celsiusCheckButton, useCelsius)
-            setButtonChecked(fahrenheitCheckButton, !useCelsius)
-        }
-        
-        if let showHumidity = data.showHumidity {
-            setButtonChecked(humidityCheckButton, showHumidity)
-        }
-        
-        if let showPressure = data.showPressure {
-            setButtonChecked(pressureCheckButton, showPressure)
-        }
-        
-        if let showWind = data.showWind {
-            setButtonChecked(windCheckButton, showWind)
-        }
-    }
-    
-    private func setButtonChecked(_ button: UIButton, _ checked: Bool) {
-        button.setImage(checked ? UIImage(named: "check") : nil, for: .normal)
-    }
-    
-    private func isButtonChecked(_ button: UIButton) -> Bool {
-        return button.image(for: .normal) != nil
+    func setButtonChecked(_ button: UIButton, isChecked: Bool) {
+        button.setImage(isChecked ? UIImage(named: "icon_check") : nil, for: .normal)
     }
 }

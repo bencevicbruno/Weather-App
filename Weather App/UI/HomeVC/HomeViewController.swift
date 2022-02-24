@@ -8,8 +8,20 @@
 import UIKit
 
 class HomeViewController: UIViewController {
+    
+    private var viewModel: HomeViewModel
     private lazy var homeView = HomeView()
-    var viewModel: HomeViewModel!
+    
+    // MARK: - Init
+    
+    init(viewModel: HomeViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     //MARK: LifeCycle
     override func loadView() {
@@ -18,46 +30,55 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.onFirstAppearance?()
+        setupCallbacks()
+        viewModel.fetchWeatherData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupNavigationBar()
-        setupNavigationItem()
+        setupNavigationBarAndItems()
+    }
+}
+
+private extension HomeViewController {
+    
+    //MARK: - Actions
+    
+    @objc func goToSearchScreen() {
+        viewModel.onGoToSearch?()
     }
     
-    //MARK: NavigationBar and NavigationItem setup
-    private func setupNavigationBar() {
+    @objc func goToSettingsScreen() {
+        viewModel.onGoToSettings?()
+    }
+    
+    // MARK: - Setup
+    
+    func setupCallbacks() {
+        viewModel.onStateChanged = { [weak self] state in
+            switch(state) {
+            case .showingData(let homeData, let settingsData):
+                self?.homeView.setupData(data: homeData, settings: settingsData)
+            case .loading:
+                self?.homeView.showLoading()
+            case .error(let error):
+                self?.homeView.showError(error.localizedDescription)
+            }
+        }
+    }
+    
+    func setupNavigationBarAndItems() {
         self.navigationController?.navigationBar.setVisible(false)
         self.navigationController?.navigationBar.tintColor = .black
-        removeTextFromBackButton()
-    }
-    
-    private func removeTextFromBackButton() {
+        
+        // Removing back button
         let backButton = UIBarButtonItem()
         backButton.title = ""
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
-    }
-    
-    private func setupNavigationItem() {
-        self.title = "Home"
+        
         self.navigationItem.leftBarButtonItems = [
-            UIBarButtonItem(image: UIImage(named: "search"), style: .plain, target: self, action: #selector(goToSearchScreen)),
-            UIBarButtonItem(image: UIImage(named: "settings"), style: .plain, target: self, action: #selector(goToSettingsScreen))
+            UIBarButtonItem(image: UIImage(named: "icon_magnifying_glass"), style: .plain, target: self, action: #selector(goToSearchScreen)),
+            UIBarButtonItem(image: UIImage(named: "icon_gear"), style: .plain, target: self, action: #selector(goToSettingsScreen))
         ]
-    }
-    
-    //MARK: Actions
-    @objc private func goToSearchScreen() {
-        viewModel.onGoToSearchScreen?()
-    }
-    
-    @objc private func goToSettingsScreen() {
-        viewModel.onGoToSettingsScreen?()
-    }
-    
-    public func updateView(data: HomeData, settings: SettingsData) {
-        homeView.setupData(data: data, settings: settings)
     }
 }

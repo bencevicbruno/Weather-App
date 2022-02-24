@@ -10,17 +10,11 @@ import UIKit
 
 class SearchCoordinator: Coordinator {
     
-    var onExit: ((String) -> Void)?
+    var onDismissed: ((String?) -> Void)?
     
     func start() -> UIViewController {
-        let viewController = createSearchVC()
-        
-        return viewController
-    }
-    
-    private func createSearchVC() -> UIViewController {
-        let viewController = SearchViewController()
         let viewModel = SearchViewModel()
+        let viewController = SearchViewController(viewModel: viewModel)
         
         viewModel.onSearchButtonTapped = { [weak viewController, weak viewModel] searchFieldText in
             guard let viewModel = viewModel else { return }
@@ -30,20 +24,20 @@ class SearchCoordinator: Coordinator {
                 return
             }
             
-            DispatchQueue.global(qos: .background).async {
-                let fetchedCities = viewModel.geonamesService.getListOfCities(prefixedWith: searchFieldText, errorNotifier: { [weak viewController] title, message in
-                    DispatchQueue.main.async {
-                        viewController?.showErrorAlert(title: title, message: message)
-                    }
-                })
-                
-                viewModel.showingCachedLocations = false
-                viewModel.fetchedLocations = fetchedCities
-                
-                DispatchQueue.main.async {
-                    viewController?.setTableData(viewModel.fetchedLocations)
-                }
-            }
+//            DispatchQueue.global(qos: .background).async {
+//                let fetchedCities = viewModel.geonamesService.getListOfCities(prefixedWith: searchFieldText, errorNotifier: { [weak viewController] title, message in
+//                    DispatchQueue.main.async {
+//                        viewController?.showErrorAlert(title: title, message: message)
+//                    }
+//                })
+//
+//                viewModel.showingCachedLocations = false
+//                viewModel.fetchedLocations = fetchedCities
+//
+//                DispatchQueue.main.async {
+//                    viewController?.setTableData(viewModel.fetchedLocations)
+//                }
+//            }
         }
         
         viewModel.onEmptySearchField = { [weak viewController] in
@@ -55,16 +49,14 @@ class SearchCoordinator: Coordinator {
             
             let cityName = (viewModel.showingCachedLocations ? viewModel.cachedLocations : viewModel.fetchedLocations)[cellIndex]
             viewModel.cachedLocations.append(cityName)
-            self.onExit?(cityName)
+//            self.onExit?(cityName)
             viewController?.navigationController?.popViewController(animated: true)
         }
         
-        viewModel.onExit = { [weak viewModel] in
-            guard let viewModel = viewModel else { return }
-            viewModel.cacheService.saveCachedLocations(viewModel.cachedLocations)
+        viewModel.onDismissed = { [weak self] selectedLocation in
+            self?.onDismissed?(selectedLocation)
         }
         
-        viewController.viewModel = viewModel
         return viewController
     }
 }

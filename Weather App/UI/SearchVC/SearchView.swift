@@ -9,114 +9,81 @@ import Foundation
 import UIKit
 
 class SearchView: UIView {
-    private lazy var backgroundImage = UIImageView()
-    private lazy var searchField = UITextField()
-    private lazy var searchButton = UIButton()
-    private lazy var resultsTable = UITableView()
     
     var onSearchButtonTapped: ((String) -> Void)?
-    var onCityCellTapped: ((Int) -> Void)?
+    var onLocationTapped: ((String) -> Void)?
     
-    private var resultsSource = [String]()
+    // MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupView()
-        setupConstraints()
+        setup()
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        setup()
     }
+    
+    // MARK: - Components
+    
+    private lazy var backgroundImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "image_background")
+        imageView.contentMode = .scaleAspectFill
+        addSubview(imageView)
+        return imageView
+    }()
+    
+    private lazy var searchField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "Search"
+        textField.textColor = .black
+        textField.font = UIFont.systemFont(ofSize: 25)
+        textField.setHorizontalPadding(10)
+        textField.layer.backgroundColor = UIColor.gray.withAlphaComponent(0.3).cgColor
+        textField.layer.cornerRadius = 5
+        textField.layer.borderColor = UIColor.gray.cgColor
+        textField.layer.borderWidth = 1.5
+        addSubview(textField)
+        return textField
+    }()
+    
+    private lazy var searchButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "icon_magnifying_glass"), for: .normal)
+        button.contentMode = .scaleAspectFit
+        button.addAction(UIAction { [weak self] _ in
+            guard let self = self else { return }
+            guard let searchText = self.searchField.text else { return }
+            self.onSearchButtonTapped?(searchText)
+        }, for: .touchUpInside)
+        addSubview(button)
+        return button
+    }()
+    
+    private lazy var searchResults: UITableView = {
+        let tableView = UITableView()
+        tableView.backgroundColor = .clear
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "LocationCell")
+        tableView.delegate = self
+        tableView.dataSource = self
+        addSubview(tableView)
+        return tableView
+    }()
+}
 
-    private func setupView() {
-        let grayColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1.0)
-        
-        backgroundImage.translatesAutoresizingMaskIntoConstraints = false
-        backgroundImage.image = UIImage(named: "background")
-        backgroundImage.contentMode = .scaleAspectFill
-        self.addSubview(backgroundImage)
-        
-        searchField.translatesAutoresizingMaskIntoConstraints = false
-        searchField.placeholder = "Search"
-        searchField.textColor = .black
-        searchField.font = UIFont.systemFont(ofSize: 25)
-        searchField.setHorizontalPadding(10)
-        searchField.layer.backgroundColor = UIColor.gray.withAlphaComponent(0.3).cgColor
-        searchField.layer.cornerRadius = 5
-        searchField.layer.borderColor = grayColor.cgColor
-        searchField.layer.borderWidth = 1.5
-        self.addSubview(searchField)
-        
-        searchButton.translatesAutoresizingMaskIntoConstraints = false
-        searchButton.setImage(UIImage(systemName: "magnifyingglass", withConfiguration: UIImage.SymbolConfiguration(font: UIFont.systemFont(ofSize: 45)))?.withTintColor(.black, renderingMode: .alwaysOriginal), for: .normal)
-        searchButton.addTarget(self, action: #selector(searchButtonTapped), for: .touchUpInside)
-        self.addSubview(searchButton)
-        
-        resultsTable.translatesAutoresizingMaskIntoConstraints = false
-        resultsTable.backgroundColor = .clear
-        resultsTable.register(UITableViewCell.self, forCellReuseIdentifier: "LocationCell")
-        resultsTable.delegate = self
-        resultsTable.dataSource = self
-        self.addSubview(resultsTable)
-    }
+private extension SearchView {
     
-    private func setupConstraints() {
-        NSLayoutConstraint.activate([
-            backgroundImage.topAnchor.constraint(equalTo: self.topAnchor),
-            backgroundImage.rightAnchor.constraint(equalTo: self.rightAnchor),
-            backgroundImage.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            backgroundImage.leftAnchor.constraint(equalTo: self.leftAnchor),
-            
-            searchField.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            searchField.topAnchor.constraint(equalTo: self.topAnchor, constant: 140),
-            searchField.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.7),
-            searchField.heightAnchor.constraint(equalToConstant: 45),
-            
-            searchButton.leftAnchor.constraint(equalTo: searchField.rightAnchor, constant: 5),
-            searchButton.topAnchor.constraint(equalTo: searchField.topAnchor),
-            searchButton.widthAnchor.constraint(equalToConstant: 45),
-            searchButton.heightAnchor.constraint(equalTo: searchButton.widthAnchor),
-            
-            resultsTable.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            resultsTable.widthAnchor.constraint(equalTo: searchField.widthAnchor),
-            resultsTable.topAnchor.constraint(equalTo: searchField.bottomAnchor, constant: 50),
-            resultsTable.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor)
-        ])
-    }
-    
-    @objc func searchButtonTapped() {
-        self.onSearchButtonTapped?(searchField.text ?? "")
-    }
-    
-    public func setTableData(_ data: [String]) {
-        self.resultsSource = data
-        resultsTable.reloadData()
+    func setup() {
+        backgroundImage.anchorToSuperview(ignoreSafeArea: true)
+        searchField.anchor(top: (safeAreaLayoutGuide.topAnchor, 20), leading: (safeAreaLayoutGuide.leadingAnchor, 20), trailing: (safeAreaLayoutGuide.trailingAnchor, 60), size: CGSize(width: 0, height: 40))
+        searchButton.anchor(leading: (searchField.trailingAnchor, 5), trailing: (safeAreaLayoutGuide.trailingAnchor, 5))
+        searchButton.aspectRatio(1)
+        searchButton.alignCenterY(with: searchField)
     }
 }
 
-extension SearchView: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.onCityCellTapped?(indexPath.row)
-    }
+extension SearchView: UITableViewDelegate, UITableViewDataSource {
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 55
-    }
-}
-
-extension SearchView: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return resultsSource.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "LocationCell", for: indexPath)
-        cell.textLabel?.text = resultsSource[indexPath.row]
-        cell.textLabel?.font = UIFont.systemFont(ofSize: 30)
-        cell.textLabel?.adjustsFontSizeToFitWidth = true
-        cell.backgroundColor = .clear
-        
-        return cell
-    }
 }

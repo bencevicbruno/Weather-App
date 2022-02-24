@@ -23,64 +23,48 @@ class HomeCoordinator: Coordinator {
     }
     
     private func createHomeViewController() -> UIViewController {
-        let viewController = HomeViewController()
         let viewModel = HomeViewModel()
+        let viewController = HomeViewController(viewModel: viewModel)
         
-        viewModel.onGoToSearchScreen = { [weak self, weak viewModel] in
-            self?.goToSearchScreen(onExit: { selectedCityName in
-                if let weatherData = OpenWeatherAPIService.init().getWeatherData(for: selectedCityName) {
-                    viewModel?.homeData = HomeData(data: weatherData)
-                    viewModel?.updateData?()
-                }
+        viewModel.onGoToSearch = { [weak self, weak viewModel] in
+            self?.goToSearchScreen(onDismissed: { selectedLocation in
+                guard let selectedLocation = selectedLocation else { return }
+                viewModel?.fetchWeatherData(for: selectedLocation)
             })
         }
         
-        viewModel.onGoToSettingsScreen = { [weak self, weak viewModel] in
-            self?.goToSettingsScreen(onExit: {
-                viewModel?.updateData?()
+        viewModel.onGoToSettings = { [weak self, weak viewModel] in
+            self?.goToSettings(onDismissed: {
+                viewModel?.updateData()
             })
         }
         
-        viewModel.updateData = { [weak viewModel] in
-            guard let viewModel = viewModel else { return }
-            
-            if let homeData = viewModel.homeData {
-                viewController.updateView(data: homeData, settings: viewModel.cacheService.settings)
-                viewModel.cacheService.saveHomeData(data: homeData)
-
-            }
-        }
-        
-        viewModel.onFirstAppearance = { [weak viewModel] in
-            viewModel?.updateData?()
-            
-            LocationSerivce.instance.requestLocationData(thenRun: { coordinates in
-                if let weatherData = viewModel?.openWeatherService.getWeatherData(from: coordinates, errorNotifier: viewController.showErrorAlert) {
-                    viewModel?.homeData = HomeData(data: weatherData)
-                    viewModel?.updateData?()
-                }
-            })
-        }
-        
-        viewController.viewModel = viewModel
         return viewController
     }
     
-    private func goToSearchScreen(onExit: ((String) -> Void)?) {
+    private func goToSearchScreen(onDismissed: ((String?) -> Void)? = nil) {
         let searchCoordinator = SearchCoordinator()
         childCoordinator = searchCoordinator
         
-        searchCoordinator.onExit = onExit
+        searchCoordinator.onDismissed = { [weak self] selectedLocation in
+            onDismissed?(selectedLocation)
+            self?.navigationController?.popViewController(animated: true)
+            self?.childCoordinator = nil
+        }
         
         let searchViewController = searchCoordinator.start()
         self.navigationController?.pushViewController(searchViewController, animated: true)
     }
     
-    private func goToSettingsScreen(onExit: EmptyCallback?) {
+    private func goToSettings(onDismissed: EmptyCallback? = nil) {
         let settingsCoordinator = SettingsCoordinator()
         childCoordinator = settingsCoordinator
         
-        settingsCoordinator.onExit = onExit
+        settingsCoordinator.onDismissed = { [weak self] in
+            onDismissed?()
+            self?.navigationController?.popViewController(animated: true)
+            self?.childCoordinator = nil
+        }
         
         let settingsViewController = settingsCoordinator.start()
         self.navigationController?.pushViewController(settingsViewController, animated: true)

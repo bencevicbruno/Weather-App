@@ -8,210 +8,228 @@
 import UIKit
 
 class HomeView: UIView {
-    private lazy var backgroundImage = UIImageView()
-    private lazy var conditionImage = UIImageView()
-    private lazy var currentTemperatureLabel = UILabel()
-    private lazy var cityNameLabel = UILabel()
-    private lazy var minTemperatureLabel = UILabel()
-    private lazy var maxTemperatureLabel = UILabel()
-    private lazy var humidityLabel = UILabel()
-    private lazy var pressureLabel = UILabel()
-    private lazy var windLabel = UILabel()
     
-    private lazy var optionalViews = [humidityLabel, pressureLabel, windLabel]
+    // MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupView()
-        setupConstraints()
+        setup()
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    private func setupView() {
-        setupBackgroundImage()
-        setupConditionImage()
-        setupCurrentTemperatureLabel()
-        setupCityNameLabel()
-        setMinMaxTemperatureLabel(minTemperatureLabel)
-        setMinMaxTemperatureLabel(maxTemperatureLabel)
-        setupOptionalLabel(humidityLabel)
-        setupOptionalLabel(pressureLabel)
-        setupOptionalLabel(windLabel)
+        super.init(coder: coder)
+        setup()
     }
     
-    private func setupBackgroundImage() {
-        backgroundImage.translatesAutoresizingMaskIntoConstraints = false
-        backgroundImage.image = UIImage(named: "background")
-        backgroundImage.contentMode = .scaleAspectFill
-        self.addSubview(backgroundImage)
-    }
+    // MARK: - Components
     
-    private func setupConditionImage() {
-        conditionImage.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(conditionImage)
-    }
+    private lazy var backgroundImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "image_background")
+        imageView.contentMode = .scaleAspectFill
+        addSubview(imageView)
+        return imageView
+    }()
     
-    private func setupCurrentTemperatureLabel() {
-        currentTemperatureLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(currentTemperatureLabel)
-    }
+    private lazy var conditionImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        addSubview(imageView)
+        return imageView
+    }()
     
-    private func setupCityNameLabel() {
-        cityNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        cityNameLabel.font = UIFont.systemFont(ofSize: 30)
-        self.addSubview(cityNameLabel)
-    }
+    private lazy var currentTemperatureLabel: UILabel = {
+        let label = UILabel()
+        addSubview(label)
+        return label
+    }()
     
-    private func setMinMaxTemperatureLabel(_ label: UILabel) {
-        label.translatesAutoresizingMaskIntoConstraints = false
+    private lazy var locationLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 30)
+        addSubview(label)
+        return label
+    }()
+    
+    private lazy var minTemperatureLabel: UILabel = {
+        let label = UILabel()
         label.textAlignment = .center
         label.numberOfLines = 2
         label.font = UIFont.systemFont(ofSize: 30)
-        self.addSubview(label)
-    }
+        addSubview(label)
+        return label
+    }()
     
-    private func setupOptionalLabel(_ label: UILabel) {
-        label.translatesAutoresizingMaskIntoConstraints = false
+    private lazy var maxTemperatureLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.numberOfLines = 2
+        label.font = UIFont.systemFont(ofSize: 30)
+        addSubview(label)
+        return label
+    }()
+    
+    private lazy var optionalLabelsStack: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fill
+        addSubview(stackView)
+        return stackView
+    }()
+    
+    private lazy var humidityLabel: UILabel = {
+        let label = UILabel()
         label.numberOfLines = 2
         label.textAlignment = .center
         label.textColor = .white
-    }
+        optionalLabelsStack.addArrangedSubview(label)
+        return label
+    }()
     
-    private func setupConstraints() {
-        let OFFSET_FROM_TOP: CGFloat = 50
-        let OFFSET_FROM_SIDE: CGFloat = 10
-        let MIN_MAX_TEMPERATURE_OFFSET: CGFloat = 25
-        
-        NSLayoutConstraint.activate([
-            backgroundImage.topAnchor.constraint(equalTo: self.topAnchor),
-            backgroundImage.rightAnchor.constraint(equalTo: self.rightAnchor),
-            backgroundImage.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            backgroundImage.leftAnchor.constraint(equalTo: self.leftAnchor),
-            
-            conditionImage.topAnchor.constraint(equalTo: self.topAnchor, constant: OFFSET_FROM_TOP),
-            conditionImage.rightAnchor.constraint(equalTo: self.safeAreaLayoutGuide.rightAnchor, constant: -OFFSET_FROM_SIDE),
-            conditionImage.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.25),
-            conditionImage.heightAnchor.constraint(equalTo: conditionImage.widthAnchor),
-            
-            currentTemperatureLabel.topAnchor.constraint(equalTo: conditionImage.bottomAnchor, constant: 10),
-            currentTemperatureLabel.rightAnchor.constraint(equalTo: self.safeAreaLayoutGuide.rightAnchor, constant: -OFFSET_FROM_SIDE),
-            
-            cityNameLabel.topAnchor.constraint(equalTo: currentTemperatureLabel.bottomAnchor, constant: 10),
-            cityNameLabel.rightAnchor.constraint(equalTo: self.safeAreaLayoutGuide.rightAnchor, constant: -OFFSET_FROM_SIDE),
-            
-            minTemperatureLabel.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerYAnchor, constant: -MIN_MAX_TEMPERATURE_OFFSET * 2),
-            minTemperatureLabel.rightAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor, constant: -MIN_MAX_TEMPERATURE_OFFSET),
-            
-            maxTemperatureLabel.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerYAnchor, constant: -MIN_MAX_TEMPERATURE_OFFSET * 2),
-            maxTemperatureLabel.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor, constant: MIN_MAX_TEMPERATURE_OFFSET)
-        ])
-    }
+    private lazy var pressureLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 2
+        label.textAlignment = .center
+        label.textColor = .white
+        optionalLabelsStack.addArrangedSubview(label)
+        return label
+    }()
     
-    private func setupConstraintsForOptionalLabels() {
-        let visibleLabels = optionalViews.filter { self.subviews.contains($0) }
+    private lazy var windSpeedLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 2
+        label.textAlignment = .center
+        label.textColor = .white
+        optionalLabelsStack.addArrangedSubview(label)
+        return label
+    }()
+    
+    private lazy var loadingLabel: UILabel = {
+        let label = UILabel()
+        label.text = " Loading... "
+        label.font = UIFont.boldSystemFont(ofSize: 30)
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.textColor = .white
+        label.layer.backgroundColor = UIColor.white.withAlphaComponent(0.2).cgColor
+        label.layer.cornerRadius = 10
+        label.isHidden = true
+        addSubview(label)
+        return label
+    }()
+    
+    private lazy var errorLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 30)
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.textColor = .white
+        label.layer.backgroundColor = UIColor.red.withAlphaComponent(0.2).cgColor
+        label.layer.cornerRadius = 10
+        label.isHidden = true
+        addSubview(label)
+        return label
+    }()
+    
+    // MARK: - Data setup
+    
+    func setupData(data: HomeData, settings: SettingsData) {
+        let isScreenSmall = UIScreen.main.isSmall
         
-        let HORIZONTAL_OFFSET: CGFloat = 15
-        let BOTTOM_OFFSET: CGFloat = -30
+        // Hide loading or error label and show others
+        self.subviews.forEach { subview in
+            subview.isHidden = subview == loadingLabel || subview == errorLabel
+        }
         
-        if visibleLabels.isEmpty { return }
+        // Condition & Location
+        conditionImage.image = UIImage(systemName: data.condition)?.withTintColor(UIColor(red: 0.1, green: 0.3, blue: 0.3, alpha: 1.0), renderingMode: .alwaysOriginal)
+        locationLabel.text = data.cityName
         
-        if visibleLabels.count == 1 {
-            let label = visibleLabels[0]
-            
-            NSLayoutConstraint.activate([
-                label.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
-                label.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: BOTTOM_OFFSET)
-            ])
-        } else if visibleLabels.count == 2 {
-            let label1 = visibleLabels[0]
-            let label2 = visibleLabels[1]
-
-            NSLayoutConstraint.activate([
-                label1.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor, constant: -HORIZONTAL_OFFSET * 5),
-                label1.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: BOTTOM_OFFSET),
-                label2.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor, constant: HORIZONTAL_OFFSET * 5),
-                label2.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: BOTTOM_OFFSET)
-            ])
-        } else if visibleLabels.count == 3 {
-            let label1 = visibleLabels[0]
-            let label2 = visibleLabels[1]
-            let label3 = visibleLabels[2]
-
-            NSLayoutConstraint.activate([
-                label1.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor, constant: HORIZONTAL_OFFSET),
-                label1.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: BOTTOM_OFFSET),
-                label2.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
-                label2.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: BOTTOM_OFFSET),
-                label3.rightAnchor.constraint(equalTo: self.safeAreaLayoutGuide.rightAnchor, constant: -HORIZONTAL_OFFSET),
-                label3.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: BOTTOM_OFFSET),
-            ])
+        // Current temperature
+        let currentTemperature = Int(settings.useCelsius ? data.currentTemperature.rounded : data.currentTemperature.convertedToFahrenheit.rounded)
+        let currentTemperatureText = NSMutableAttributedString()
+        currentTemperatureText.append(NSMutableAttributedString(
+            string: "\(currentTemperature)",
+            attributes: [.font: UIFont(name: "AvenirNext-Bold", size: isScreenSmall ? 65 : 85)!]))
+        currentTemperatureText.append(NSMutableAttributedString(
+            string: settings.useCelsius ? "°C" : "°F",
+            attributes: [.font: UIFont.systemFont(ofSize: isScreenSmall ? 80 : 100)]))
+        currentTemperatureLabel.attributedText = currentTemperatureText
+        
+        // Min & max temperature
+        let minTemperature = settings.useCelsius ? data.minTemperature : data.minTemperature.convertedToFahrenheit
+        minTemperatureLabel.text = "min\n\(minTemperature) \(settings.useCelsius ? "C" : "F")"
+        let maxTemperature = settings.useCelsius ? data.maxTemperature : data.maxTemperature.convertedToFahrenheit
+        maxTemperatureLabel.text = "max\n\(maxTemperature) \(settings.useCelsius ? "C" : "F")"
+        
+        // Optional labels
+        let optionalLabelTitleFont = UIFont.systemFont(ofSize: isScreenSmall ? 18 : 20)
+        let optionalLabelValueFont = UIFont.systemFont(ofSize: isScreenSmall ? 20 : 27)
+        
+        if settings.showHumidity {
+            let attributedString = NSMutableAttributedString(string: "Humidity\n", attributes: [.font: optionalLabelTitleFont])
+            attributedString.append(NSMutableAttributedString(string: "\(data.humidity) %", attributes: [.font: optionalLabelValueFont]))
+            humidityLabel.attributedText = attributedString
+            optionalLabelsStack.setVisible(humidityLabel)
         } else {
-            fatalError("Layout not implemented for more than 3 optional labels!")
+            optionalLabelsStack.setHidden(humidityLabel)
+        }
+        
+        if settings.showPressure {
+            let attributedString = NSMutableAttributedString(string: "Pressure\n", attributes: [.font: optionalLabelTitleFont])
+            attributedString.append(NSMutableAttributedString(string: "\(data.pressure) hpa", attributes: [.font: optionalLabelValueFont]))
+            pressureLabel.attributedText = attributedString
+            optionalLabelsStack.setVisible(pressureLabel)
+        } else {
+            optionalLabelsStack.setHidden(pressureLabel)
+        }
+        
+        if settings.showWindSpeed {
+            let attributedString = NSMutableAttributedString(string: "Wind\n", attributes: [.font: optionalLabelTitleFont])
+            attributedString.append(NSMutableAttributedString(string: "\(data.wind) mph", attributes: [.font: optionalLabelValueFont]))
+            windSpeedLabel.attributedText = attributedString
+            optionalLabelsStack.setVisible(windSpeedLabel)
+        } else {
+            optionalLabelsStack.setHidden(windSpeedLabel)
+        }
+    }
+    
+    func showLoading() {
+        self.subviews.forEach { subview in
+            subview.isHidden = subview != loadingLabel && subview != backgroundImage
+        }
+    }
+    
+    func showError(_ message: String) {
+        errorLabel.text = "Error:\n\(message)"
+        
+        self.subviews.forEach { subview in
+            subview.isHidden = subview != errorLabel && subview != backgroundImage
         }
     }
 }
 
-extension HomeView {
-    public func setupData(data: HomeData, settings: SettingsData) {
-        optionalViews.forEach {
-            $0.removeFromSuperview()
-        }
-        
-        conditionImage.image = UIImage(systemName: data.condition)?.withTintColor(UIColor(red: 0.1, green: 0.3, blue: 0.3, alpha: 1.0), renderingMode: .alwaysOriginal)
-        cityNameLabel.text = data.cityName
-        
-        let useCelsius = settings.useCelsius ?? true
-        setupTemperatures(current: data.currentTemperature, min: data.minTemperature, max: data.maxTemperature, useCelsius: useCelsius)
-        
-        let showHumidity = settings.showHumidity ?? true
-        if showHumidity {
-            let attributedString = NSMutableAttributedString(string: "Humidity\n", attributes: [.font: UIFont.systemFont(ofSize: 20)])
-            attributedString.append(NSMutableAttributedString(string: "\(data.humidity) %", attributes: [.font: UIFont.systemFont(ofSize: 27)]))
-            humidityLabel.attributedText = attributedString
-            self.addSubview(humidityLabel)
-        } else {
-            humidityLabel.removeFromSuperview()
-        }
-        
-        let showPressure = settings.showPressure ?? true
-        if showPressure {
-            let attributedString = NSMutableAttributedString(string: "Pressure\n", attributes: [.font: UIFont.systemFont(ofSize: 20)])
-            attributedString.append(NSMutableAttributedString(string: "\(data.pressure) hpa", attributes: [.font: UIFont.systemFont(ofSize: 27)]))
-            pressureLabel.attributedText = attributedString
-            self.addSubview(pressureLabel)
-        } else {
-            pressureLabel.removeFromSuperview()
-        }
-        
-        let showWind = settings.showWind ?? true
-        if showWind {
-            let attributedString = NSMutableAttributedString(string: "Wind\n", attributes: [.font: UIFont.systemFont(ofSize: 20)])
-            attributedString.append(NSMutableAttributedString(string: "\(data.wind) mph", attributes: [.font: UIFont.systemFont(ofSize: 27)]))
-            windLabel.attributedText = attributedString
-            self.addSubview(windLabel)
-        } else {
-            windLabel.removeFromSuperview()
-        }
-        
-        setupConstraintsForOptionalLabels()
-    }
+private extension HomeView {
     
-    private func setupTemperatures(current: Int, min: Float, max: Float, useCelsius: Bool) {
-        let currentTemperature = useCelsius ? current : Int(convertToFahrenheitAndRound(Float(current)))
-        let attributedString = NSMutableAttributedString(string: "\(currentTemperature)", attributes: [.font: UIFont(name: "AvenirNext-Bold", size: 85)!])
-        attributedString.append(NSMutableAttributedString(string: useCelsius ? "°C" : "°F", attributes: [.font: UIFont.systemFont(ofSize: 100)]))
-        currentTemperatureLabel.attributedText = attributedString
+    func setup() {
+        let isScreenSmall = UIScreen.main.isSmall
         
-        let minTemperature = useCelsius ? min : convertToFahrenheitAndRound(min)
-        minTemperatureLabel.text = "min\n\(minTemperature) \(useCelsius ? "C" : "F")"
-        let maxTemperature = useCelsius ? max : convertToFahrenheitAndRound(max)
-        maxTemperatureLabel.text = "max\n\(maxTemperature) \(useCelsius ? "C" : "F")"
-    }
-    
-    private func convertToFahrenheitAndRound(_ celsius: Float) -> Float {
-        return ((celsius * 1.8 + 32) * 100).rounded() / 100
+        let padding: CGFloat = 10
+        let minMaxTempLabelDistance: CGFloat = isScreenSmall ? 15 : 25
+        
+        backgroundImage.anchorToSuperview(ignoreSafeArea: true)
+        conditionImage.anchor(top: (topAnchor, isScreenSmall ? padding : 3 * padding), trailing: (safeAreaLayoutGuide.trailingAnchor, 0))
+        conditionImage.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.33).isActive = true
+        conditionImage.heightAnchor.constraint(equalTo: conditionImage.widthAnchor).isActive = true
+        currentTemperatureLabel.anchor(top: (conditionImage.bottomAnchor, 10), trailing: (safeAreaLayoutGuide.trailingAnchor, padding))
+        locationLabel.anchor(top: (currentTemperatureLabel.bottomAnchor, 10), trailing: (safeAreaLayoutGuide.trailingAnchor, padding))
+        
+        minTemperatureLabel.anchor(top: (safeAreaLayoutGuide.centerYAnchor, -2 * minMaxTempLabelDistance), trailing: (safeAreaLayoutGuide.centerXAnchor, minMaxTempLabelDistance))
+        maxTemperatureLabel.anchor(top: (safeAreaLayoutGuide.centerYAnchor, -2 * minMaxTempLabelDistance), leading: (safeAreaLayoutGuide.centerXAnchor, minMaxTempLabelDistance))
+        
+        optionalLabelsStack.anchor(bottom: (safeAreaLayoutGuide.bottomAnchor, padding), leading: (safeAreaLayoutGuide.leadingAnchor, padding), trailing: (safeAreaLayoutGuide.trailingAnchor, padding))
+        
+        loadingLabel.centerInSuperview(ignoreSafeArea: true)
+        errorLabel.centerInSuperview(ignoreSafeArea: true)
     }
 }

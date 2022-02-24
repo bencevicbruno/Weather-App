@@ -10,56 +10,16 @@ import UIKit
 
 class SettingsCoordinator: Coordinator {
     
-    var onExit: EmptyCallback?
+    var onDismissed: EmptyCallback?
     
     func start() -> UIViewController {
-        let viewController = createSettingsVC()
-        
-        return viewController
-    }
-    
-    private func createSettingsVC() -> UIViewController {
-        let viewController = SettingsViewController()
         let viewModel = SettingsViewModel()
+        let viewController = SettingsViewController(viewModel: viewModel)
         
-        viewModel.onCelsiusTapped = { [weak viewController, weak viewModel] wasChecked in
-            let newState = !wasChecked
-            viewModel?.settings.useCelsius = newState
-            viewController?.updateView()
+        viewModel.onDismissed = { [weak self] in
+            self?.onDismissed?()
         }
         
-        viewModel.onFahrenheitTapped = { [weak viewController, weak viewModel] wasChecked in
-            let newState = wasChecked
-            viewModel?.settings.useCelsius = newState
-            viewController?.updateView()
-        }
-        
-        viewModel.onHumidityTapped = { [weak viewController, weak viewModel] wasChecked in
-            let newState = !wasChecked
-            viewModel?.settings.showHumidity = newState
-            viewController?.updateView()
-        }
-        
-        viewModel.onPressureTapped = { [weak viewController, weak viewModel] wasChecked in
-            let newState = !wasChecked
-            viewModel?.settings.showPressure = newState
-            viewController?.updateView()
-        }
-        
-        viewModel.onWindTapped = { [weak viewController, weak viewModel] wasChecked in
-            let newState = !wasChecked
-            viewModel?.settings.showWind = newState
-            viewController?.updateView()
-        }
-        
-        viewModel.onExit = { [weak self, weak viewModel] in
-            guard let viewModel = viewModel else { return }
-            viewModel.cacheService.settings = viewModel.settings
-            viewModel.cacheService.saveSettings()
-            self?.onExit?()
-        }
-        
-        viewController.viewModel = viewModel
         return viewController
     }
 }

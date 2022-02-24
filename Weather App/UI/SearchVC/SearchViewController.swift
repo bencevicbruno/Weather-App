@@ -8,8 +8,20 @@
 import UIKit
 
 class SearchViewController: UIViewController {
+    
     private lazy var searchView = SearchView()
-    var viewModel: SearchViewModel!
+    private var viewModel: SearchViewModel
+    
+    // MARK: - Init
+    
+    init(viewModel: SearchViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     //MARK: LifeCycle
     override func loadView() {
@@ -18,43 +30,34 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchView.setTableData(viewModel.cachedLocations)
+        setupCallbacks()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupCallbacks()
-        setupNavigationBar()
-        setupNavigationItem()
+        setupNavigationBarAndItems()
     }
+}
+
+private extension SearchViewController {
     
-    override func viewWillDisappear(_ animated: Bool) {
-        viewModel?.onExit?()
-    }
-    
-    //MARK: NavigationBar and NavigationItem setup
-    private func setupNavigationBar() {
+    func setupNavigationBarAndItems() {
         self.navigationController?.navigationBar.setVisible(false)
         self.navigationController?.navigationBar.tintColor = .black
+        
+        let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), primaryAction: UIAction { [weak self] _ in
+            self?.viewModel.dismiss()
+        })
+        self.navigationItem.leftBarButtonItem = backButton
     }
     
-    private func setupNavigationItem() {
-        self.title = "Search"
-    }
-    
-    //MARK: Callbakcs
-    private func setupCallbacks() {
+    func setupCallbacks() {
         searchView.onSearchButtonTapped = { [weak self] searchFieldText in
             self?.viewModel.onSearchButtonTapped?(searchFieldText)
         }
         
         searchView.onCityCellTapped = { [weak self] cellIndex in
             self?.viewModel.onCityCellTapped?(cellIndex)
-            
         }
-    }
-    
-    public func setTableData(_ data: [String]) {
-        searchView.setTableData(data)
     }
 }

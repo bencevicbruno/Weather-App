@@ -9,8 +9,8 @@ import Foundation
 import UIKit
 
 class SearchViewModel {
-    var geonamesService = GeonamesService()
-    var cacheService = AppCacheService()
+    var geonamesService = GeonamesAPIService()
+//    var cacheService = AppCacheService()
     var cachedLocations: [String]
     var fetchedLocations = [String]()
     var showingCachedLocations = true
@@ -18,13 +18,12 @@ class SearchViewModel {
     var onSearchButtonTapped: ((String) -> Void)?
     var onEmptySearchField: EmptyCallback?
     var onCityCellTapped: ((Int) -> Void)?
-    var onExit: EmptyCallback?
+    var onDismissed: ((String?) -> Void)?
     
     init() {
-        cachedLocations = cacheService.cachedLocations
+        cachedLocations = PersistenceService.init().searchedLocationsData.locations
     }
-    
-    deinit {
-        
+    func dismiss() {
+        onDismissed?(nil)
     }
 }
