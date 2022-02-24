@@ -13,7 +13,7 @@ final class SearchCoordinator: Coordinator {
     var onDismissed: ((String?) -> Void)?
     
     func start() -> UIViewController {
-        let viewModel = SearchViewModel(persistenceService: ServiceFactory.persistenceService, geonamesService: ServiceFactory.geonameAPIService)
+        let viewModel = SearchViewModel(persistenceService: ServiceFactory.persistenceService, geonamesService: ServiceFactory.geonamesAPIService)
         let viewController = SearchViewController(viewModel: viewModel)
         
         viewModel.onDismissed = { [weak self] selectedLocation in
