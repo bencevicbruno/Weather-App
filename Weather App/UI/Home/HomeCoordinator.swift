@@ -37,10 +37,8 @@ final class HomeCoordinator: Coordinator {
             })
         }
         
-        viewModel.onGoToSettings = { [weak self, weak viewModel] in
-            self?.goToSettings(onDismissed: {
-                viewModel?.updateData()
-            })
+        viewModel.onGoToSettings = { [weak self] actionWhenDismissed in
+            self?.goToSettings(actionWhenDismissed: actionWhenDismissed)
         }
         
         return viewController
@@ -59,6 +57,19 @@ final class HomeCoordinator: Coordinator {
         self.navigationController?.pushViewController(infoViewController, animated: true)
     }
     
+    private func goToSettings(actionWhenDismissed: @escaping () -> Void) {
+        let coordinator = SettingsCoordinator()
+        childCoordinator = coordinator
+        
+        coordinator.onDismissed = { [weak self] in
+            self?.navigationController?.popViewController(animated: true)
+            actionWhenDismissed()
+        }
+        
+        let vc = coordinator.start()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     private func goToSearch(onDismissed: ((String?) -> Void)? = nil) {
         let searchCoordinator = SearchCoordinator()
         childCoordinator = searchCoordinator
@@ -71,19 +82,5 @@ final class HomeCoordinator: Coordinator {
         
         let searchViewController = searchCoordinator.start()
         self.navigationController?.pushViewController(searchViewController, animated: true)
-    }
-    
-    private func goToSettings(onDismissed: EmptyCallback? = nil) {
-        let settingsCoordinator = SettingsCoordinator()
-        childCoordinator = settingsCoordinator
-        
-        settingsCoordinator.onDismissed = { [weak self] in
-            onDismissed?()
-            self?.navigationController?.popViewController(animated: true)
-            self?.childCoordinator = nil
-        }
-        
-        let settingsViewController = settingsCoordinator.start()
-        self.navigationController?.pushViewController(settingsViewController, animated: true)
     }
 }

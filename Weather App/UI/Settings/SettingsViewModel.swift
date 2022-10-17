@@ -2,36 +2,47 @@
 //  SettingsViewModel.swift
 //  Weather App
 //
-//  Created by Bruno Benčević on 9/6/21.
+//  Created by Bruno Bencevic on 13.10.2022..
 //
 
 import Foundation
-import UIKit
 
 final class SettingsViewModel {
     
-    var onDismissed: EmptyCallback?
+    var onDismissed: (() -> Void)?
+    var onUpdateView: ((SettingsData) -> Void)?
     
-    var useCelsius: Bool
-    var showHumidity: Bool
-    var showPressure: Bool
-    var showWindSpeed: Bool
-    
-    private let persistenceService: PersistenceServiceProtocol
+    private var persistenceService: PersistenceServiceProtocol
     
     init(persistenceService: PersistenceServiceProtocol) {
         self.persistenceService = persistenceService
-        
-        let settings = persistenceService.settingsData
-        self.useCelsius = settings.useCelsius
-        self.showHumidity = settings.showHumidity
-        self.showPressure = settings.showPressure
-        self.showWindSpeed = settings.showWindSpeed
+    }
+    
+    func updateUseCelsius(_ shouldUseCelsius: Bool) {
+        let newSettingData = persistenceService.settingsData.overrideUseCelsius(shouldUseCelsius)
+        persistenceService.settingsData = newSettingData
+        onUpdateView?(newSettingData)
+    }
+    
+    func updateShowWindspeed(_ shouldShowWindSpeed: Bool) {
+        let newSettingData = persistenceService.settingsData.overrideShowWindSpeed(shouldShowWindSpeed)
+        persistenceService.settingsData = newSettingData
+        onUpdateView?(newSettingData)
+    }
+    
+    func updateShowPressure(_ shouldShowPressure: Bool) {
+        let newSettingData = persistenceService.settingsData.overrideShowPressure(shouldShowPressure)
+        persistenceService.settingsData = newSettingData
+        onUpdateView?(newSettingData)
+    }
+    
+    func updateShowHumidity(_ shouldShowHumidity: Bool) {
+        let newSettingData = persistenceService.settingsData.overrideShowHumidity(shouldShowHumidity)
+        persistenceService.settingsData = newSettingData
+        onUpdateView?(newSettingData)
     }
     
     func dismiss() {
-        let newSettingsData = SettingsData(useCelsius: useCelsius, showHumidity: showHumidity, showPressure: showPressure, showWindSpeed: showWindSpeed)
-        persistenceService.settingsData = newSettingsData
         onDismissed?()
     }
 }

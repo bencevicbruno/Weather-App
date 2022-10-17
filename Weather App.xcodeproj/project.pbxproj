@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -25,14 +25,18 @@
 		15E1E81226E5577F000461B8 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E81126E5577F000461B8 /* HomeViewModel.swift */; };
 		15E1E81426E558FF000461B8 /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E81326E558FF000461B8 /* TypeAliases.swift */; };
 		15E1E81626E55B2E000461B8 /* UINavigationBar+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E81526E55B2E000461B8 /* UINavigationBar+.swift */; };
-		15E1E81A26E639A0000461B8 /* SettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E81926E639A0000461B8 /* SettingsCoordinator.swift */; };
 		15E1E81C26E639AA000461B8 /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E81B26E639AA000461B8 /* SearchCoordinator.swift */; };
 		15E1E81E26E64018000461B8 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E81D26E64018000461B8 /* SearchViewController.swift */; };
 		15E1E82026E64023000461B8 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E81F26E64023000461B8 /* SettingsViewController.swift */; };
 		15E1E82226E64B70000461B8 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E82126E64B70000461B8 /* SearchViewModel.swift */; };
-		15E1E82426E64B95000461B8 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E82326E64B95000461B8 /* SettingsViewModel.swift */; };
 		15E1E82626E64BAA000461B8 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E82526E64BAA000461B8 /* SearchView.swift */; };
-		15E1E82826E64BCD000461B8 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E1E82726E64BCD000461B8 /* SettingsView.swift */; };
+		8C2BCD7F28F80AE800BC02BD /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C2BCD7E28F80AE800BC02BD /* SettingsViewModel.swift */; };
+		8C2BCD8128F80BCF00BC02BD /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C2BCD8028F80BCF00BC02BD /* SettingsView.swift */; };
+		8C2BCD8328F819E600BC02BD /* SettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C2BCD8228F819E600BC02BD /* SettingsCoordinator.swift */; };
+		8C2BCD8528F82DEB00BC02BD /* InfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C2BCD8428F82DEB00BC02BD /* InfoViewModel.swift */; };
+		8C2BCD8928F82EAD00BC02BD /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C2BCD8828F82EAD00BC02BD /* InfoViewController.swift */; };
+		8C47B71328F6A33B0064DEEF /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C47B71228F6A33B0064DEEF /* InfoView.swift */; };
+		8C47B71628F6A6130064DEEF /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 8C47B71528F6A6130064DEEF /* ConfettiSwiftUI */; };
 		8CFAE98227C6B51200A6CB96 /* PersistenceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFAE98127C6B51200A6CB96 /* PersistenceService.swift */; };
 		8CFAE98427C6B51B00A6CB96 /* PersistenceServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFAE98327C6B51B00A6CB96 /* PersistenceServiceProtocol.swift */; };
 		8CFAE98B27C6B7B700A6CB96 /* UserDefaults+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFAE98A27C6B7B700A6CB96 /* UserDefaults+.swift */; };
@@ -54,9 +58,6 @@
 		8CFAE9B327C6E92500A6CB96 /* UIScreen+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFAE9B227C6E92500A6CB96 /* UIScreen+.swift */; };
 		8CFAE9B527C6ED7400A6CB96 /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFAE9B427C6ED7300A6CB96 /* UIStackView+.swift */; };
 		8CFAE9B827C837C900A6CB96 /* InfoCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFAE9B727C837C900A6CB96 /* InfoCoordinator.swift */; };
-		8CFAE9BA27C8383400A6CB96 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFAE9B927C8383400A6CB96 /* InfoViewController.swift */; };
-		8CFAE9BC27C838C900A6CB96 /* InfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFAE9BB27C838C900A6CB96 /* InfoViewModel.swift */; };
-		8CFAE9BE27C838F700A6CB96 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFAE9BD27C838F700A6CB96 /* InfoView.swift */; };
 		8CFAE9C027C8424A00A6CB96 /* ServiceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFAE9BF27C8424A00A6CB96 /* ServiceFactory.swift */; };
 /* End PBXBuildFile section */
 
@@ -81,14 +82,17 @@
 		15E1E81126E5577F000461B8 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		15E1E81326E558FF000461B8 /* TypeAliases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeAliases.swift; sourceTree = "<group>"; };
 		15E1E81526E55B2E000461B8 /* UINavigationBar+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationBar+.swift"; sourceTree = "<group>"; };
-		15E1E81926E639A0000461B8 /* SettingsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinator.swift; sourceTree = "<group>"; };
 		15E1E81B26E639AA000461B8 /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
 		15E1E81D26E64018000461B8 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		15E1E81F26E64023000461B8 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		15E1E82126E64B70000461B8 /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
-		15E1E82326E64B95000461B8 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		15E1E82526E64BAA000461B8 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
-		15E1E82726E64BCD000461B8 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		8C2BCD7E28F80AE800BC02BD /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		8C2BCD8028F80BCF00BC02BD /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		8C2BCD8228F819E600BC02BD /* SettingsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinator.swift; sourceTree = "<group>"; };
+		8C2BCD8428F82DEB00BC02BD /* InfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewModel.swift; sourceTree = "<group>"; };
+		8C2BCD8828F82EAD00BC02BD /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
+		8C47B71228F6A33B0064DEEF /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		8CFAE98127C6B51200A6CB96 /* PersistenceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceService.swift; sourceTree = "<group>"; };
 		8CFAE98327C6B51B00A6CB96 /* PersistenceServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceServiceProtocol.swift; sourceTree = "<group>"; };
 		8CFAE98A27C6B7B700A6CB96 /* UserDefaults+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+.swift"; sourceTree = "<group>"; };
@@ -110,9 +114,6 @@
 		8CFAE9B227C6E92500A6CB96 /* UIScreen+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+.swift"; sourceTree = "<group>"; };
 		8CFAE9B427C6ED7300A6CB96 /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
 		8CFAE9B727C837C900A6CB96 /* InfoCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCoordinator.swift; sourceTree = "<group>"; };
-		8CFAE9B927C8383400A6CB96 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
-		8CFAE9BB27C838C900A6CB96 /* InfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewModel.swift; sourceTree = "<group>"; };
-		8CFAE9BD27C838F700A6CB96 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		8CFAE9BF27C8424A00A6CB96 /* ServiceFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -121,6 +122,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8C47B71628F6A6130064DEEF /* ConfettiSwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,7 +166,6 @@
 				15E1E7E926E50657000461B8 /* SceneDelegate.swift */,
 				15E1E7F026E50659000461B8 /* Assets.xcassets */,
 				15E1E7F526E50659000461B8 /* Info.plist */,
-				8CFAE98C27C6B80B00A6CB96 /* DataModels */,
 				1527542A26EB5F8A0099ACB5 /* Services */,
 				15E1E7FB26E55265000461B8 /* UI */,
 				8CFAE98027C6B48C00A6CB96 /* Utils */,
@@ -207,10 +208,10 @@
 		15E1E81726E63984000461B8 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				15E1E81926E639A0000461B8 /* SettingsCoordinator.swift */,
+				8C2BCD8228F819E600BC02BD /* SettingsCoordinator.swift */,
 				15E1E81F26E64023000461B8 /* SettingsViewController.swift */,
-				15E1E82326E64B95000461B8 /* SettingsViewModel.swift */,
-				15E1E82726E64BCD000461B8 /* SettingsView.swift */,
+				8C2BCD7E28F80AE800BC02BD /* SettingsViewModel.swift */,
+				8C2BCD8028F80BCF00BC02BD /* SettingsView.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -226,6 +227,23 @@
 			path = Search;
 			sourceTree = "<group>";
 		};
+		8C47B71728F6A9DD0064DEEF /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8CFAE98D27C6B81800A6CB96 /* SettingsData.swift */,
+				8CFAE98F27C6B83100A6CB96 /* SearchedLocationsData.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		8C47B71828F6A9ED0064DEEF /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8CFAE99127C6B83C00A6CB96 /* HomeData.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		8CFAE98027C6B48C00A6CB96 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -239,6 +257,7 @@
 		8CFAE98527C6B52E00A6CB96 /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
+				8C47B71728F6A9DD0064DEEF /* Models */,
 				8CFAE98127C6B51200A6CB96 /* PersistenceService.swift */,
 				8CFAE98327C6B51B00A6CB96 /* PersistenceServiceProtocol.swift */,
 			);
@@ -268,16 +287,6 @@
 			path = Foundation;
 			sourceTree = "<group>";
 		};
-		8CFAE98C27C6B80B00A6CB96 /* DataModels */ = {
-			isa = PBXGroup;
-			children = (
-				8CFAE99127C6B83C00A6CB96 /* HomeData.swift */,
-				8CFAE98F27C6B83100A6CB96 /* SearchedLocationsData.swift */,
-				8CFAE98D27C6B81800A6CB96 /* SettingsData.swift */,
-			);
-			path = DataModels;
-			sourceTree = "<group>";
-		};
 		8CFAE99327C6BEC700A6CB96 /* Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -300,6 +309,7 @@
 		8CFAE99D27C6C24000A6CB96 /* OpenWeatherAPI */ = {
 			isa = PBXGroup;
 			children = (
+				8C47B71828F6A9ED0064DEEF /* Models */,
 				8CFAE99F27C6C27600A6CB96 /* OpenWeatherAPIResponse.swift */,
 				8CFAE9A327C6C4D400A6CB96 /* OpenWeatherAPIError.swift */,
 				151F385526EA549400D90D01 /* OpenWeatherAPIService.swift */,
@@ -323,9 +333,9 @@
 			isa = PBXGroup;
 			children = (
 				8CFAE9B727C837C900A6CB96 /* InfoCoordinator.swift */,
-				8CFAE9B927C8383400A6CB96 /* InfoViewController.swift */,
-				8CFAE9BB27C838C900A6CB96 /* InfoViewModel.swift */,
-				8CFAE9BD27C838F700A6CB96 /* InfoView.swift */,
+				8C2BCD8428F82DEB00BC02BD /* InfoViewModel.swift */,
+				8C47B71228F6A33B0064DEEF /* InfoView.swift */,
+				8C2BCD8828F82EAD00BC02BD /* InfoViewController.swift */,
 			);
 			path = Info;
 			sourceTree = "<group>";
@@ -346,6 +356,9 @@
 			dependencies = (
 			);
 			name = "Weather App";
+			packageProductDependencies = (
+				8C47B71528F6A6130064DEEF /* ConfettiSwiftUI */,
+			);
 			productName = "Weather App";
 			productReference = 15E1E7E426E50657000461B8 /* Weather App.app */;
 			productType = "com.apple.product-type.application";
@@ -373,6 +386,9 @@
 				Base,
 			);
 			mainGroup = 15E1E7DB26E50657000461B8;
+			packageReferences = (
+				8C47B71428F6A6130064DEEF /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
+			);
 			productRefGroup = 15E1E7E526E50657000461B8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -400,31 +416,30 @@
 			buildActionMask = 2147483647;
 			files = (
 				158EAFD926F0E67D00287DDF /* UIViewController+.swift in Sources */,
-				15E1E82826E64BCD000461B8 /* SettingsView.swift in Sources */,
+				8C2BCD8128F80BCF00BC02BD /* SettingsView.swift in Sources */,
 				8CFAE98E27C6B81800A6CB96 /* SettingsData.swift in Sources */,
 				15E1E81E26E64018000461B8 /* SearchViewController.swift in Sources */,
 				8CFAE99227C6B83C00A6CB96 /* HomeData.swift in Sources */,
 				15E1E82626E64BAA000461B8 /* SearchView.swift in Sources */,
 				8CFAE99927C6BF9000A6CB96 /* DataServiceError.swift in Sources */,
-				8CFAE9BC27C838C900A6CB96 /* InfoViewModel.swift in Sources */,
 				8CFAE98B27C6B7B700A6CB96 /* UserDefaults+.swift in Sources */,
 				15E1E7FE26E5527E000461B8 /* Coordinator.swift in Sources */,
 				8CFAE98427C6B51B00A6CB96 /* PersistenceServiceProtocol.swift in Sources */,
 				15E1E81226E5577F000461B8 /* HomeViewModel.swift in Sources */,
 				8CFAE9A227C6C2AF00A6CB96 /* OpenWeatherAPIServiceProtocol.swift in Sources */,
-				15E1E81A26E639A0000461B8 /* SettingsCoordinator.swift in Sources */,
 				15E1E80026E552A4000461B8 /* RootCoordinator.swift in Sources */,
+				8C47B71328F6A33B0064DEEF /* InfoView.swift in Sources */,
 				15E1E82026E64023000461B8 /* SettingsViewController.swift in Sources */,
-				8CFAE9BE27C838F700A6CB96 /* InfoView.swift in Sources */,
 				1527542C26ECEAAF0099ACB5 /* UITextField+.swift in Sources */,
 				8CFAE9C027C8424A00A6CB96 /* ServiceFactory.swift in Sources */,
+				8C2BCD8928F82EAD00BC02BD /* InfoViewController.swift in Sources */,
 				15E1E81C26E639AA000461B8 /* SearchCoordinator.swift in Sources */,
+				8C2BCD8328F819E600BC02BD /* SettingsCoordinator.swift in Sources */,
 				8CFAE9AF27C6E6BC00A6CB96 /* Float+.swift in Sources */,
 				15E1E81426E558FF000461B8 /* TypeAliases.swift in Sources */,
 				15E1E7E826E50657000461B8 /* AppDelegate.swift in Sources */,
 				8CFAE99527C6BED400A6CB96 /* DataServiceProtocol.swift in Sources */,
 				8CFAE9A727C6C5C500A6CB96 /* GeonamesAPIServiceProtocol.swift in Sources */,
-				8CFAE9BA27C8383400A6CB96 /* InfoViewController.swift in Sources */,
 				15E1E7EA26E50657000461B8 /* SceneDelegate.swift in Sources */,
 				8CFAE99027C6B83100A6CB96 /* SearchedLocationsData.swift in Sources */,
 				8CFAE9B527C6ED7400A6CB96 /* UIStackView+.swift in Sources */,
@@ -438,6 +453,8 @@
 				8CFAE9AD27C6DF0400A6CB96 /* UIView+.swift in Sources */,
 				15E1E82226E64B70000461B8 /* SearchViewModel.swift in Sources */,
 				15E1E80526E55419000461B8 /* HomeViewController.swift in Sources */,
+				8C2BCD7F28F80AE800BC02BD /* SettingsViewModel.swift in Sources */,
+				8C2BCD8528F82DEB00BC02BD /* InfoViewModel.swift in Sources */,
 				8CFAE9A427C6C4D400A6CB96 /* OpenWeatherAPIError.swift in Sources */,
 				8CFAE99727C6BF5700A6CB96 /* DataService.swift in Sources */,
 				158EAFD726F0E3A100287DDF /* String+.swift in Sources */,
@@ -445,7 +462,6 @@
 				15E1E80326E553B0000461B8 /* HomeCoordinator.swift in Sources */,
 				8CFAE9B327C6E92500A6CB96 /* UIScreen+.swift in Sources */,
 				151F385626EA549400D90D01 /* OpenWeatherAPIService.swift in Sources */,
-				15E1E82426E64B95000461B8 /* SettingsViewModel.swift in Sources */,
 				8CFAE98227C6B51200A6CB96 /* PersistenceService.swift in Sources */,
 				8CFAE99C27C6C0A000A6CB96 /* LocationServiceProtocol.swift in Sources */,
 			);
@@ -587,8 +603,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 6P46HLU94P;
+				DEVELOPMENT_TEAM = 4WJNF6ZYQ9;
 				INFOPLIST_FILE = "Weather App/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -606,8 +623,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 6P46HLU94P;
+				DEVELOPMENT_TEAM = 4WJNF6ZYQ9;
 				INFOPLIST_FILE = "Weather App/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -641,6 +659,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8C47B71428F6A6130064DEEF /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/simibac/ConfettiSwiftUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8C47B71528F6A6130064DEEF /* ConfettiSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8C47B71428F6A6130064DEEF /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */;
+			productName = ConfettiSwiftUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 15E1E7DC26E50657000461B8 /* Project object */;
 }

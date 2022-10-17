@@ -5,21 +5,20 @@
 //  Created by Bruno Benčević on 24.02.2022..
 //
 
-import Foundation
-import UIKit
+import SwiftUI
 
 final class InfoCoordinator: Coordinator {
     
     var onDismissed: EmptyCallback?
     
     func start() -> UIViewController {
-        let viewModel = InfoViewModel()
-        let viewController = InfoViewController(viewModel: viewModel)
+        let vm = InfoViewModel()
+        let vc = UIHostingController(rootView: InfoView(viewModel: vm))
         
-        viewModel.onDismissed = { [weak self] in
+        vm.onDismissed = { [weak self] in
             self?.onDismissed?()
         }
         
-        return viewController
+        return vc
     }
 }

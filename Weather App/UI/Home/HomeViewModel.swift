@@ -12,8 +12,8 @@ final class HomeViewModel {
     
     var onStateChanged: ((State) -> Void)?
     
+    var onGoToSettings: ((_ actionWhenDismissed: @escaping EmptyCallback) -> Void)?
     var onGoToSearch: EmptyCallback?
-    var onGoToSettings: EmptyCallback?
     var onGoToInfo: EmptyCallback?
     
     var cachedHomeData: HomeData!

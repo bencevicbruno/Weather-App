@@ -50,7 +50,9 @@ private extension HomeViewController {
     }
     
     @objc func goToSettingsScreen() {
-        viewModel.onGoToSettings?()
+        viewModel.onGoToSettings?({ [weak self] in
+            self?.viewModel.updateData()
+        })
     }
     
     @objc func goToInfoScreen() {
