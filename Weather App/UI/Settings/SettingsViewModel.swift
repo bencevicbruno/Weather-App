@@ -12,10 +12,9 @@ final class SettingsViewModel {
     var onDismissed: (() -> Void)?
     var onUpdateView: ((SettingsData) -> Void)?
     
-    private var persistenceService: PersistenceServiceProtocol
+    @Service private var persistenceService: PersistenceServiceProtocol
     
-    init(persistenceService: PersistenceServiceProtocol) {
-        self.persistenceService = persistenceService
+    init() {
     }
     
     func updateUseCelsius(_ shouldUseCelsius: Bool) {

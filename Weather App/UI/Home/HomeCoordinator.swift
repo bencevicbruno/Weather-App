@@ -23,18 +23,15 @@ final class HomeCoordinator: Coordinator {
     }
     
     private func createHomeViewController() -> UIViewController {
-        let viewModel = HomeViewModel(persistenceService: ServiceFactory.persistenceService, openWeatherAPIService: ServiceFactory.openWeatherAPIService, locationService: ServiceFactory.locationService)
+        let viewModel = HomeViewModel()
         let viewController = HomeViewController(viewModel: viewModel)
         
         viewModel.onGoToInfo = { [weak self] in
             self?.goToInfo()
         }
         
-        viewModel.onGoToSearch = { [weak self, weak viewModel] in
-            self?.goToSearch(onDismissed: { selectedLocation in
-                guard let selectedLocation = selectedLocation else { return }
-                viewModel?.fetchWeatherData(for: selectedLocation)
-            })
+        viewModel.onGoToSearch = { [weak self] in
+            self?.goToSearch()
         }
         
         viewModel.onGoToSettings = { [weak self] actionWhenDismissed in
@@ -57,7 +54,8 @@ final class HomeCoordinator: Coordinator {
         self.navigationController?.pushViewController(infoViewController, animated: true)
     }
     
-    private func goToSettings(actionWhenDismissed: @escaping () -> Void) {
+    func goToSettings(actionWhenDismissed: @escaping () -> Void) {
+        guard !(childCoordinator is SettingsCoordinator) else { return }
         let coordinator = SettingsCoordinator()
         childCoordinator = coordinator
         
@@ -70,12 +68,12 @@ final class HomeCoordinator: Coordinator {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    private func goToSearch(onDismissed: ((String?) -> Void)? = nil) {
+    func goToSearch() {
+        guard !(childCoordinator is SearchCoordinator) else { return }
         let searchCoordinator = SearchCoordinator()
         childCoordinator = searchCoordinator
         
         searchCoordinator.onDismissed = { [weak self] selectedLocation in
-            onDismissed?(selectedLocation)
             self?.navigationController?.popViewController(animated: true)
             self?.childCoordinator = nil
         }

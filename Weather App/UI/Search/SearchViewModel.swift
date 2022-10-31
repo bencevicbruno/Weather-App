@@ -5,69 +5,108 @@
 //  Created by Bruno Benčević on 9/6/21.
 //
 
-import Foundation
-import UIKit
+import Combine
+import SwiftUI
 
-final class SearchViewModel {
+final class SearchViewModel: ObservableObject {
     
-    var onDismissed: ((String?) -> Void)?
-    var onStateChanged: ((State) -> Void)?
+    var onDismissed: EmptyCallback!
     
-    private var state: State = .loading {
-        didSet {
-            onStateChanged?(state)
-        }
+    @Published var searchText = ""
+    @Published var isEditing = false
+    @Published var isSearchFieldInFocus: Bool = false
+    
+    @Published private(set) var results: [String] = []
+    @Published private(set) var previousResults: [String] = []
+    @Published private(set) var isActivityRunning = false
+    @Published private(set) var error: SearchError?
+    
+    @Service(.singleton) var persistenceService: PersistenceServiceProtocol
+    @Service var locationNamesService: LocationNamesServiceProtocol
+    
+    private var cancellables: Set<AnyCancellable> = []
+    
+    init() {
+        previousResults = persistenceService.searchedLocationsData.locations
+        setupCancellables()
     }
     
-    private let persistenceService: PersistenceServiceProtocol
-    private let geonameService: GeonamesAPIServiceProtocol
+    // MARK: - User Interactions
     
-    init(persistenceService: PersistenceServiceProtocol, geonamesService: GeonamesAPIServiceProtocol) {
-        self.persistenceService = persistenceService
-        self.geonameService = geonamesService
+    func didTapBackButton() {
+        onDismissed?()
     }
     
-    func fetchSearchedLocations() {
-        state = .showingLocations(persistenceService.searchedLocationsData.locations)
+    func didTapDeleteButton() {
+        previousResults = []
+        persistenceService.searchedLocationsData = .init(locations: [])
     }
     
-    func fetchLocation(containing key: String) {
-        state = .loading
-        
-        DispatchQueue.global(qos: .background).async { [weak self] in
-            guard let self = self else { return }
-            
-            self.geonameService.fetchCities(prefixedWith: key) { result in
-                DispatchQueue.main.async {
-                    switch(result) {
-                    case .success(let response):
-                        let locations = response.locations.filter { response.locations.firstIndex(of: $0) ?? 10 < 10 }
-                        self.state = .showingLocations(locations)
-                    case .failure(let error):
-                        self.state = .showingError(error)
-                    }
-                }
-            }
-        }
-    }
-    
-    func dismiss(location: String? = nil) {
-        if let location = location {
-            var searchedLocations = persistenceService.searchedLocationsData.locations
-            searchedLocations.insert(location, at: 0)
-            searchedLocations = searchedLocations.filter { searchedLocations.firstIndex(of: $0) ?? 10 < 10 }
-            persistenceService.searchedLocationsData = SearchedLocationsData(locations: searchedLocations)
-        }
-        
-        onDismissed?(location)
+    func didTapLocationCell(location: String) {
+        persistenceService.targetLocation = location
+        persistenceService.searchedLocationsData.append(location)
+        NotificationCenter.default.post(name: .loadWeatherDataNotification, object: nil)
+        onDismissed()
     }
 }
 
-extension SearchViewModel {
+private extension SearchViewModel {
     
-    enum State {
-        case showingLocations([String])
-        case loading
-        case showingError(Error)
+    func setupCancellables() {
+        self.$searchText
+            .debounce(for: 0.3, scheduler: RunLoop.main)
+            .sink { [weak self] (value: String) in
+                guard value != "" else { return }
+                
+                self?.fetchLocation(containing: value)
+            }
+            .store(in: &cancellables)
+    }
+    
+    // MARK: - API Calls
+    
+    func fetchLocation(containing key: String) {
+        isActivityRunning = true
+        
+        Task {
+            do {
+                let locations = try await locationNamesService.fetchCities(prefixedWith: key)
+                
+                if locations.isEmpty {
+                    if self.error != .empty {
+                        await MainActor.run {
+                            withAnimation(.linear(duration: 0.3)) {
+                                self.error = .empty
+                            }
+                        }
+                    }
+                } else {
+                    await MainActor.run {
+                        withAnimation(.linear(duration: 0.3)) {
+                            self.error = nil
+                            
+                            self.results = locations.filter { location in
+                                !previousResults.contains(where: { $0 == location })
+                            }
+                        }
+                    }
+                }
+            } catch {
+                await MainActor.run {
+                    withAnimation(.linear(duration: 0.3)) {
+                        self.error = .init(systemImageName: "antenna.radiowaves.left.and.right.slash",
+                                           title: "Ooops",
+                                           description: "Couldn't find any locations you were looking for :(",
+                                           detailedDescription: error.localizedDescription)
+                    }
+                }
+            }
+            
+            await MainActor.run {
+                withAnimation(.linear(duration: 0.3)) {
+                    self.isActivityRunning = false
+                }
+            }
+        }
     }
 }

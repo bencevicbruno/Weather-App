@@ -33,7 +33,7 @@ struct InfoView: View {
                 .scaledToFill()
                 .edgesIgnoringSafeArea(.all)
         )
-        .confettiCannon(counter: $confettiCounter, num: 50, confettis: [.text("Coordinator"), .shape(.roundedCross)], colors: [.white, .black, .cyan, .blue, .gray, .pink, .purple, .red], confettiSize: 100, rainHeight: UIScreen.main.bounds.height * 0.75, radius: UIScreen.main.bounds.width)
+        .confettiCannon(counter: $confettiCounter, num: 100, confettis: [.shape(.roundedCross)], colors: [.white, .black, .cyan, .blue, .gray, .pink, .purple, .red], confettiSize: 20, rainHeight: UIScreen.main.bounds.height * 0.75, radius: UIScreen.main.bounds.width)
     }
 }
 

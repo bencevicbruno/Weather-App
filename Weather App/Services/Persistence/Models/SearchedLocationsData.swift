@@ -8,10 +8,14 @@
 import Foundation
 
 struct SearchedLocationsData: Codable {
-    let locations: [String]
+    var locations: [String]
     
     static var defaultData: Self {
         SearchedLocationsData(locations: [])
+    }
+    
+    mutating func append(_ newLocation: String) {
+        locations.append(newLocation)
     }
 }
 

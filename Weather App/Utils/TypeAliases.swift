@@ -8,3 +8,5 @@
 import Foundation
 
 typealias EmptyCallback = () -> Void
+typealias Callback<T> = (T) -> Void
+typealias ServiceResult<T> = Result<T, Error>

@@ -33,11 +33,12 @@ final class HomeViewController: UIViewController {
         super.viewDidLoad()
         setupCallbacks()
         viewModel.fetchWeatherData()
+        setupNavigationBarAndItems()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupNavigationBarAndItems()
+        self.navigationController?.isNavigationBarHidden = false
     }
 }
 

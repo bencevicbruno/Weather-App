@@ -28,7 +28,7 @@ final class SettingsViewController: UIViewController {
         self.view = settingsView
         setupCallbacks()
         
-        let persistenceService = ServiceFactory.persistenceService
+        @Service var persistenceService: PersistenceServiceProtocol
         let settings = persistenceService.settingsData
         
         settingsView.update(data: settings)

@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import WidgetKit
 
 final class HomeViewModel {
     
@@ -18,9 +19,8 @@ final class HomeViewModel {
     
     var cachedHomeData: HomeData!
     
-    private let persistenceService: PersistenceServiceProtocol
-    private let openWeatherAPIService: OpenWeatherAPIServiceProtocol
-    private let locationService: LocationServiceProtocol
+    @Service(.singleton) private var persistenceService: PersistenceServiceProtocol
+    @Service private var weatherService: WeatherServiceProtocol
     
     private var state: State = .loading {
         didSet {
@@ -28,27 +28,31 @@ final class HomeViewModel {
         }
     }
     
-    init(persistenceService: PersistenceServiceProtocol, openWeatherAPIService: OpenWeatherAPIServiceProtocol, locationService: LocationServiceProtocol) {
-        self.persistenceService = persistenceService
-        self.openWeatherAPIService = openWeatherAPIService
-        self.locationService = locationService
+    init() {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(loadWeatherData), name: .loadWeatherDataNotification, object: nil)
+    }
+    
+    @MainActor
+    @objc func loadWeatherData() {
+        guard let targetLocation = persistenceService.targetLocation else { return }
+        
+        fetchWeatherData(for: targetLocation)
+        persistenceService.targetLocation = nil
     }
     
     func updateData() {
         self.state = .showingData(cachedHomeData, persistenceService.settingsData)
     }
     
+    @MainActor
     func fetchWeatherData(for location: String? = nil) {
         state = .loading
         
         if let location = location {
             fetchWeatherDataForLocation(location)
         } else {
-            if let homeData = persistenceService.homeData {
-                state = .showingData(homeData, persistenceService.settingsData)
-            } else {
-                fetchWeatherDataForCurrentLocation()
-            }
+            fetchWeatherDataForCurrentLocation()
         }
     }
 }
@@ -64,39 +68,37 @@ extension HomeViewModel {
 
 private extension HomeViewModel {
     
+    @MainActor
     func fetchWeatherDataForLocation(_ location: String) {
         state = .loading
         
-        DispatchQueue.global(qos: .background).async { [weak self] in
-            self?.openWeatherAPIService.fetchWeatherData(for: location) { result in
-                self?.didFetchWeatherData(result)
+        Task {
+            do {
+                let weatherData = try await weatherService.fetchWeatherData(for: location)
+                self.persistenceService.homeData = weatherData
+                self.cachedHomeData = weatherData
+                
+                self.state = .showingData(weatherData, persistenceService.settingsData)
+                WidgetCenter.shared.reloadAllTimelines()
+            } catch {
+                self.state = .error(error)
             }
         }
     }
     
+    @MainActor
     func fetchWeatherDataForCurrentLocation() {
         state = .loading
         
-        DispatchQueue.global(qos: .background).async { [weak self] in
-            self?.locationService.fetchLocation { locationCoordinates in
-                self?.openWeatherAPIService.fetchWeatherData(from: locationCoordinates) { result in
-                    self?.didFetchWeatherData(result)
-                }
-            }
-        }
-    }
-    
-    func didFetchWeatherData(_ result: Result<OpenWeatherAPIResponse, Error>) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            
-            switch(result) {
-            case .success(let response):
-                let homeData = HomeData(data: response)
-                self.state = .showingData(homeData, self.persistenceService.settingsData)
-                self.persistenceService.homeData = homeData
-                self.cachedHomeData = homeData
-            case .failure(let error):
+        Task {
+            do {
+                let weatherData = try await weatherService.fetchWeatherDataForCurrentLocation()
+                self.persistenceService.homeData = weatherData
+                self.cachedHomeData = weatherData
+                
+                self.state = .showingData(weatherData, persistenceService.settingsData)
+                WidgetCenter.shared.reloadAllTimelines()
+            } catch {
                 self.state = .error(error)
             }
         }
