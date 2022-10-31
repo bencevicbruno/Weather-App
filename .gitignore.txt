@@ -2,6 +2,8 @@
 *.swp
 *~.nib
 
+## User settings
+xcuserdata/
 
 *.pbxuser
 *.perspective
