@@ -37,6 +37,10 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Weather App needs access to your location to provide you with accurate weather information</string>
+	<key>NSUserActivityTypes</key>
+	<array>
+		<string>SelectLocationIntent</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

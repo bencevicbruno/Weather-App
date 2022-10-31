@@ -1,201 +1,162 @@
 //
-//  SearchView.swift
+//  SearchView2.swift
 //  Weather App
 //
-//  Created by Bruno Benčević on 9/6/21.
+//  Created by Bruno Bencevic on 26.10.2022..
 //
 
-import Foundation
-import UIKit
+import SwiftUI
 
-final class SearchView: UIView {
+struct SearchView: View {
     
-    var onSearchButtonTapped: ((String?) -> Void)?
-    var onLocationTapped: ((String) -> Void)?
+    @ObservedObject var viewModel : SearchViewModel
     
-    private var locations = [String]()
+    @FocusState var isSearchFieldInFocus: Bool
     
-    // MARK: - Init
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setup()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setup()
-    }
-    
-    // MARK: - Components
-    
-    private lazy var backgroundImage: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "image_background")
-        imageView.contentMode = .scaleAspectFill
-        addSubview(imageView)
-        return imageView
-    }()
-    
-    private lazy var searchField: UITextField = {
-        let textField = UITextField()
-        textField.placeholder = "Search"
-        textField.textColor = .black
-        textField.font = UIFont.systemFont(ofSize: 25)
-        textField.setHorizontalPadding(10)
-        textField.layer.backgroundColor = UIColor.gray.withAlphaComponent(0.3).cgColor
-        textField.layer.cornerRadius = 5
-        textField.layer.borderColor = UIColor.gray.cgColor
-        textField.layer.borderWidth = 1.5
-        addSubview(textField)
-        return textField
-    }()
-    
-    private lazy var searchButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "icon_magnifying_glass"), for: .normal)
-        button.contentMode = .scaleAspectFit
-        button.addAction(UIAction { [weak self] _ in
-            guard let self = self else { return }
-            self.onSearchButtonTapped?(self.searchField.text)
-        }, for: .touchUpInside)
-        addSubview(button)
-        return button
-    }()
-    
-    private lazy var locationsTable: UITableView = {
-        let tableView = UITableView()
-        tableView.backgroundColor = .clear
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "LocationCell")
-        tableView.delegate = self
-        tableView.dataSource = self
-        addSubview(tableView)
-        return tableView
-    }()
-    
-    private lazy var loadingLabel: UILabel = {
-        let label = UILabel()
-        label.text = " Loading... "
-        label.font = UIFont.boldSystemFont(ofSize: 30)
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        label.textColor = .white
-        label.layer.backgroundColor = UIColor.white.withAlphaComponent(0.2).cgColor
-        label.layer.cornerRadius = 10
-        label.isHidden = true
-        addSubview(label)
-        return label
-    }()
-    
-    private lazy var errorLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 30)
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        label.textColor = .white
-        label.layer.backgroundColor = UIColor.red.withAlphaComponent(0.2).cgColor
-        label.layer.cornerRadius = 10
-        label.isHidden = true
-        addSubview(label)
-        return label
-    }()
-    
-    private lazy var noResultsFoundLabel: UILabel = {
-        let label = UILabel()
-        label.text = "No results found."
-        label.font = UIFont.boldSystemFont(ofSize: 30)
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        label.textColor = .white
-        label.layer.backgroundColor = UIColor.white.withAlphaComponent(0.2).cgColor
-        label.layer.cornerRadius = 10
-        label.isHidden = true
-        addSubview(label)
-        return label
-    }()
-    
-    // MARK: - Data setup
-    
-    func setupData(locations: [String]) {
-        if locations.isEmpty {
-            locationsTable.isHidden = true
-            noResultsFoundLabel.isHidden = false
-            errorLabel.isHidden = true
-            loadingLabel.isHidden = true
-        } else {
-            self.locations = locations
-            locationsTable.reloadData()
+    var body: some View {
+        ZStack(alignment: .top) {
+            resultsList
             
-            locationsTable.isHidden = false
-            noResultsFoundLabel.isHidden = true
-            errorLabel.isHidden = true
-            loadingLabel.isHidden = true
+            navigationBar
+                .padding(.top, UIScreen.main.topUnsafePadding)
+                .padding(.horizontal, 16)
+                .background(BlurredView(style: .light))
         }
-    }
-    
-    func showLoading() {
-        locationsTable.isHidden = true
-        noResultsFoundLabel.isHidden = true
-        errorLabel.isHidden = true
-        loadingLabel.isHidden = false
-    }
-    
-    func showError(_ message: String) {
-        errorLabel.text = "Error:\n\(message)"
-        
-        locationsTable.isHidden = true
-        noResultsFoundLabel.isHidden = true
-        errorLabel.isHidden = false
-        loadingLabel.isHidden = true
+        .frame(maxWidth: .infinity)
+        .frame(maxHeight: .infinity)
+        .contentShape(Rectangle())
+        .background(
+            Image("image_background")
+                .resizable()
+                .scaledToFill()
+        )
+        .edgesIgnoringSafeArea(.all)
+        .toolbar(.hidden, for: .navigationBar)
+        .onChange(of: isSearchFieldInFocus) { isInFocus in
+            withAnimation(.easeOut(duration: 0.3)) {
+                viewModel.isEditing = isInFocus
+                viewModel.isSearchFieldInFocus = isInFocus
+            }
+        }
+        .onChange(of: viewModel.isSearchFieldInFocus) { isInFocus in
+            withAnimation(.easeOut(duration: 0.3)) {
+                isSearchFieldInFocus = isInFocus
+            }
+        }
+        .foregroundColor(.black)
+        .onTapGesture {
+            isSearchFieldInFocus = false
+        }
+        .onAppear {
+            isSearchFieldInFocus = viewModel.isSearchFieldInFocus
+        }
     }
 }
 
 private extension SearchView {
     
-    func setup() {
-        let padding: CGFloat = 10
-        
-        backgroundImage.anchorToSuperview(ignoreSafeArea: true)
-        searchField.anchor(top: (safeAreaLayoutGuide.topAnchor, 20), leading: (safeAreaLayoutGuide.leadingAnchor, 20), trailing: (safeAreaLayoutGuide.trailingAnchor, 60), size: CGSize(width: 0, height: 40))
-        searchButton.anchor(leading: (searchField.trailingAnchor, 5), trailing: (safeAreaLayoutGuide.trailingAnchor, 5))
-        searchButton.aspectRatio(1)
-        searchButton.alignCenterY(with: searchField)
-        
-        locationsTable.anchor(top: (searchField.bottomAnchor, 10), bottom: (safeAreaLayoutGuide.bottomAnchor, 10), leading: (safeAreaLayoutGuide.leadingAnchor, 10), trailing: (safeAreaLayoutGuide.trailingAnchor, 10))
-        
-        loadingLabel.centerInSuperview()
-        loadingLabel.anchor(leading: (safeAreaLayoutGuide.leadingAnchor, padding), trailing: (safeAreaLayoutGuide.trailingAnchor, padding))
-        errorLabel.centerInSuperview()
-        errorLabel.anchor(leading: (safeAreaLayoutGuide.leadingAnchor, padding), trailing: (safeAreaLayoutGuide.trailingAnchor, padding))
-        noResultsFoundLabel.centerInSuperview()
-        noResultsFoundLabel.anchor(leading: (safeAreaLayoutGuide.leadingAnchor, padding), trailing: (safeAreaLayoutGuide.trailingAnchor, padding))
+    @ViewBuilder
+    var navigationBar: some View {
+        ZStack(alignment: .top) {
+            HStack(alignment: .bottom, spacing: 16) {
+                Image(systemName: "chevron.left")
+                    .frameAsIcon()
+                    .onTapGesture {
+                        viewModel.didTapBackButton()
+                    }
+                
+                Spacer()
+                
+                Image(systemName: "trash")
+                    .frameAsIcon()
+                    .onTapGesture {
+                        viewModel.didTapDeleteButton()
+                    }
+            }
+            .frame(height: 60)
+            
+            SearchField($viewModel.searchText, isSearchFieldInFocus: _isSearchFieldInFocus, isEditing: viewModel.isEditing)
+                .frame(height: 60, alignment: viewModel.isEditing ? .top : .center)
+                .padding(.horizontal, viewModel.isEditing ? 0 : (40 + 16))
+                .padding(.top, viewModel.isEditing ? 60 : 0)
+        }
+    }
+    
+    var resultsList: some View {
+        ScrollView(.vertical) {
+            LazyVStack(alignment: .leading, spacing: 4) {
+                if viewModel.isActivityRunning {
+                    activityCell
+                }
+                
+                if let error = viewModel.error {
+                    SearchErrorCell(error: error) {
+                        isSearchFieldInFocus = false
+                    }
+                    .id(error.id)
+                }
+                
+                ForEach(viewModel.results, id: \.self) { result in
+                    LocationCell(location: result)
+                        .onTapGesture {
+                            isSearchFieldInFocus = false
+                            viewModel.didTapLocationCell(location: result)
+                        }
+                        .id(result)
+                }
+                
+                if !viewModel.previousResults.isEmpty {
+                    if !viewModel.results.isEmpty {
+                        Rectangle()
+                            .fill(.gray)
+                            .frame(height: 1)
+                            .padding(.vertical, 4)
+                            .padding(.horizontal, 10)
+                    }
+                    
+                    ForEach(viewModel.previousResults, id: \.self) { result in
+                        LocationCell(location: result)
+                            .onTapGesture {
+                                isSearchFieldInFocus = false
+                                viewModel.didTapLocationCell(location: result)
+                            }
+                            .id(result)
+                    }
+                }
+                
+                if viewModel.results.isEmpty && viewModel.previousResults.isEmpty {
+                    LocationCell(location: "Your search results will appear here", isPlaceholder: true)
+                }
+            }
+            .padding(.bottom, UIScreen.main.bottomUnsafePadding + 16)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, 16)
+            .padding(.top, 8 + UIScreen.main.topUnsafePadding + 60 + (viewModel.isEditing ? 60 : 0))
+        }
+    }
+    
+    var activityCell: some View {
+        HStack {
+            Spacer()
+            
+            ProgressView()
+                .preferredColorScheme(.dark)
+            
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(height: 50)
+        .background(BlurredView(style: .light))
+        .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 }
 
-extension SearchView: UITableViewDelegate {
+struct SearchView_Previews: PreviewProvider {
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        onLocationTapped?(locations[indexPath.row])
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
-    }
-}
-
-extension SearchView: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return locations.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "LocationCell", for: indexPath)
-        cell.textLabel?.text = locations[indexPath.row]
-        cell.textLabel?.font = UIFont.systemFont(ofSize: 30)
-        cell.textLabel?.adjustsFontSizeToFitWidth = true
-        cell.backgroundColor = .clear
-        
-        return cell
+    static var previews: some View {
+        NavigationStack {
+            SearchView(viewModel: .init())
+        }
+        .previewMultipleDevices([.iPhone11, .iPhone14Pro])
     }
 }

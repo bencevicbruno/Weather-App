@@ -164,7 +164,7 @@ final class HomeView: UIView {
         
         // Optional labels
         let optionalLabelTitleFont = UIFont.systemFont(ofSize: isScreenSmall ? 18 : 20)
-        let optionalLabelValueFont = UIFont.systemFont(ofSize: isScreenSmall ? 20 : 27)
+        let optionalLabelValueFont = UIFont.boldSystemFont(ofSize: isScreenSmall ? 20 : 24)
         
         if settings.showHumidity {
             let attributedString = NSMutableAttributedString(string: "Humidity\n", attributes: [.font: optionalLabelTitleFont])

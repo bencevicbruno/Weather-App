@@ -33,11 +33,12 @@ final class HomeViewController: UIViewController {
         super.viewDidLoad()
         setupCallbacks()
         viewModel.fetchWeatherData()
+        setupNavigationBarAndItems()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setupNavigationBarAndItems()
+        self.navigationController?.isNavigationBarHidden = false
     }
 }
 
@@ -50,7 +51,9 @@ private extension HomeViewController {
     }
     
     @objc func goToSettingsScreen() {
-        viewModel.onGoToSettings?()
+        viewModel.onGoToSettings?({ [weak self] in
+            self?.viewModel.updateData()
+        })
     }
     
     @objc func goToInfoScreen() {

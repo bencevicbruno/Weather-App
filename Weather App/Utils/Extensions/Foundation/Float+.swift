@@ -20,4 +20,8 @@ extension Float {
     var rounded: Float {
         (self * 100).rounded() / 100
     }
+    
+    func convertedToFahrenheit(_ converted: Bool) -> Float {
+        converted ? convertedToFahrenheit : self
+    }
 }

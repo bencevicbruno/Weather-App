@@ -2,19 +2,22 @@
 //  InfoViewModel.swift
 //  Weather App
 //
-//  Created by Bruno Benčević on 24.02.2022..
+//  Created by Bruno Bencevic on 13.10.2022..
 //
 
 import Foundation
-import UIKit
 
-final class InfoViewModel {
+final class InfoViewModel: ObservableObject {
     
-    var onDismissed: EmptyCallback?
+    var onDismissed: (() -> Void)?
     
-    init() {}
+    init() {
+        
+    }
     
-    func dismiss() {
-        onDismissed?()
+    func dismissAfter(seconds: Double) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) { [weak self] in
+            self?.onDismissed?()
+        }
     }
 }

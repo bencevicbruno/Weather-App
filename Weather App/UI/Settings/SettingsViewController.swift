@@ -9,8 +9,10 @@ import UIKit
 
 final class SettingsViewController: UIViewController {
     
-    private lazy var settingsView = SettingsView()
-    var viewModel: SettingsViewModel
+    var onDimissed: (() -> Void)?
+    
+    private var settingsView = SettingsView()
+    private var viewModel: SettingsViewModel
     
     init(viewModel: SettingsViewModel) {
         self.viewModel = viewModel
@@ -21,15 +23,15 @@ final class SettingsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: LifeCycle
-    override func loadView() {
-        self.view = settingsView
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view = settingsView
         setupCallbacks()
-        settingsView.setupData(useCelsius: viewModel.useCelsius, showHumidity: viewModel.showHumidity, showPressure: viewModel.showPressure, showWindSpeed: viewModel.showWindSpeed)
+        
+        @Service var persistenceService: PersistenceServiceProtocol
+        let settings = persistenceService.settingsData
+        
+        settingsView.update(data: settings)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,35 +51,40 @@ private extension SettingsViewController {
         self.navigationController?.navigationBar.tintColor = .black
         
         let backButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left"), primaryAction: UIAction { [weak self] _ in
-            self?.viewModel.dismiss()
+            guard let self = self else { return }
+            self.viewModel.dismiss()
         })
         self.navigationItem.leftBarButtonItem = backButton
     }
     
     func setupCallbacks() {
+        viewModel.onUpdateView = { [weak self] data in
+            self?.settingsView.update(data: data)
+        }
+        
         settingsView.onCelsiusTapped = { [weak self] isChecked in
-            self?.viewModel.useCelsius = isChecked
-            self?.settingsView.setupData(useCelsius: isChecked)
+            guard let self = self else { return }
+            self.viewModel.updateUseCelsius(isChecked)
         }
         
         settingsView.onFahrenheitTapped = { [weak self] isChecked in
-            self?.viewModel.useCelsius = !isChecked
-            self?.settingsView.setupData(useCelsius: !isChecked)
+            guard let self = self else { return }
+            self.viewModel.updateUseCelsius(!isChecked)
         }
         
         settingsView.onHumidityTapped = { [weak self] isChecked in
-            self?.viewModel.showHumidity = isChecked
-            self?.settingsView.setupData(showHumidity: isChecked)
+            guard let self = self else { return }
+            self.viewModel.updateShowHumidity(isChecked)
         }
         
         settingsView.onPressureTapped = { [weak self] isChecked in
-            self?.viewModel.showPressure = isChecked
-            self?.settingsView.setupData(showPressure: isChecked)
+            guard let self = self else { return }
+            self.viewModel.updateShowPressure(isChecked)
         }
         
         settingsView.onWindSpeedTapped = { [weak self] isChecked in
-            self?.viewModel.showWindSpeed = isChecked
-            self?.settingsView.setupData(showWindSpeed: isChecked)
+            guard let self = self else { return }
+            self.viewModel.updateShowWindspeed(isChecked)
         }
     }
 }

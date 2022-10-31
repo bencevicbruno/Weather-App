@@ -2,55 +2,77 @@
 //  InfoView.swift
 //  Weather App
 //
-//  Created by Bruno Benčević on 24.02.2022..
+//  Created by Bruno Bencevic on 12.10.2022..
 //
 
-import Foundation
-import UIKit
+import SwiftUI
+import ConfettiSwiftUI
 
-final class InfoView: UIView {
+struct InfoView: View {
     
-    // MARK: - Init
+    @ObservedObject var viewModel: InfoViewModel
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setup()
+    @State private var confettiCounter = 0
+    
+    var body: some View {
+        VStack {
+            Spacer()
+            
+            textContent
+                .padding()
+            
+            Spacer()
+            
+            surpriseButton
+                .padding(.bottom)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(
+            Image("image_background")
+                .resizable()
+                .scaledToFill()
+                .edgesIgnoringSafeArea(.all)
+        )
+        .confettiCannon(counter: $confettiCounter, num: 100, confettis: [.shape(.roundedCross)], colors: [.white, .black, .cyan, .blue, .gray, .pink, .purple, .red], confettiSize: 20, rainHeight: UIScreen.main.bounds.height * 0.75, radius: UIScreen.main.bounds.width)
     }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setup()
-    }
-    
-    // MARK: - Components
-    
-    private lazy var backgroundImage: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "image_background")
-        imageView.contentMode = .scaleAspectFill
-        addSubview(imageView)
-        return imageView
-    }()
-    
-    private lazy var infoLabel: UILabel = {
-       let label = UILabel()
-        label.text = "\nThis WeatherApp project was made as the final project for the UIKit part of iOS Summer School at Cobe. This version of the app was later perfected to match all features from the SwiftUI version.\n"
-        label.numberOfLines = 0
-        label.font = .systemFont(ofSize: 28)
-        label.textColor = .white
-        label.backgroundColor = .white.withAlphaComponent(0.1)
-        label.layer.cornerRadius = 10
-        label.textAlignment = .center
-        addSubview(label)
-        return label
-    }()
 }
 
 private extension InfoView {
     
-    func setup() {
-        backgroundImage.anchorToSuperview(ignoreSafeArea: true)
-        infoLabel.centerInSuperview(ignoreSafeArea: true)
-        infoLabel.anchor(size: CGSize(width: 250, height: 0))
+    var textContent: some View {
+        Text("This app was created as a project in UIKit during the iOS Summer School @COBE. This screen was later added as as UIKit sscreen, but then implemented as a SwiftUI view wrapped inside UIHostingViewController.")
+            .foregroundColor(.white)
+            .fontWeight(.medium)
+            .font(.system(size: 20))
+            .padding(15)
+            .background(.black.opacity(0.25))
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+    }
+    
+    var surpriseButton: some View {
+        Text("Tap for surprise".uppercased())
+            .foregroundColor(.white)
+            .fontWeight(.bold)
+            .frame(height: 60)
+            .frame(maxWidth: .infinity)
+            .background(
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(.white.opacity(0.25))
+            )
+            .padding(.horizontal, 40)
+            .contentShape(RoundedRectangle(cornerRadius: 15))
+            .onTapGesture {
+                confettiCounter += 100
+                viewModel.dismissAfter(seconds: 5)
+            }
+    }
+}
+
+struct InfoView_Previews: PreviewProvider {
+    static var previews: some View {
+        NavigationView {
+            InfoView(viewModel: .init())
+        }
+        .navigationViewStyle(.stack)
     }
 }

@@ -2,24 +2,23 @@
 //  SettingsCoordinator.swift
 //  Weather App
 //
-//  Created by Bruno Benčević on 9/6/21.
+//  Created by Bruno Bencevic on 13.10.2022..
 //
 
-import Foundation
 import UIKit
 
 final class SettingsCoordinator: Coordinator {
     
-    var onDismissed: EmptyCallback?
+    var onDismissed: (() -> Void)?
     
     func start() -> UIViewController {
-        let viewModel = SettingsViewModel(persistenceService: ServiceFactory.persistenceService)
-        let viewController = SettingsViewController(viewModel: viewModel)
+        let vm = SettingsViewModel()
+        let vc = SettingsViewController(viewModel: vm)
         
-        viewModel.onDismissed = { [weak self] in
+        vm.onDismissed = { [weak self] in
             self?.onDismissed?()
         }
         
-        return viewController
+        return vc
     }
 }

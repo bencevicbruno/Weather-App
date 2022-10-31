@@ -11,28 +11,41 @@ final class PersistenceService: PersistenceServiceProtocol {
     
     var homeData: HomeData? {
         get {
-            UserDefaults.standard.load()
+            UserDefaults(suiteName: "group.cobeisfresh.weatherapp")!.load("homeData")
         }
         set {
-            UserDefaults.standard.save(newValue)
+            UserDefaults(suiteName: "group.cobeisfresh.weatherapp")!.save(newValue, for: "homeData")
         }
     }
     
     var searchedLocationsData: SearchedLocationsData {
         get {
-            UserDefaults.standard.load() ?? SearchedLocationsData.defaultData
+            let data = UserDefaults(suiteName: "group.cobeisfresh.weatherapp")!.load("searchData") ?? SearchedLocationsData.defaultData
+            let locations = Array(Set(data.locations)).sorted()
+            return .init(locations: locations)
         }
         set {
-            UserDefaults.standard.save(newValue)
+            UserDefaults(suiteName: "group.cobeisfresh.weatherapp")!.save(newValue, for: "searchData")
         }
     }
     
     var settingsData: SettingsData {
         get {
-            UserDefaults.standard.load() ?? SettingsData.defaultData
+            UserDefaults(suiteName: "group.cobeisfresh.weatherapp")!.load("settingsData") ?? SettingsData.defaultData
         }
         set {
-            UserDefaults.standard.save(newValue)
+            UserDefaults(suiteName: "group.cobeisfresh.weatherapp")!.save(newValue, for: "settingsData")
         }
     }
+    
+    var deviceLocation: [Double] {
+        get {
+            UserDefaults(suiteName: "group.cobeisfresh.weatherapp")!.load("deviceLocation") ?? [0, 0]
+        }
+        set {
+            UserDefaults(suiteName: "group.cobeisfresh.weatherapp")!.save(newValue, for: "deviceLocation")
+        }
+    }
+    
+    var targetLocation: String?
 }

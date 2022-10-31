@@ -20,4 +20,15 @@ final class RootCoordinator: Coordinator {
         
         return homeViewController
     }
+    
+    func deepLinkToSettings() {
+        guard let homeCoordinator = childCoordinator as? HomeCoordinator else { return }
+        homeCoordinator.goToSettings(actionWhenDismissed: {})
+    }
+    
+    func deepLinkToSearch() {
+        guard let homeCoordinator = childCoordinator as? HomeCoordinator else { return }
+        homeCoordinator.goToSearch()
+    }
+
 }

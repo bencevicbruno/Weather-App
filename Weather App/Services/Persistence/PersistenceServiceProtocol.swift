@@ -12,4 +12,6 @@ protocol PersistenceServiceProtocol: AnyObject {
     var homeData: HomeData? { get set }
     var searchedLocationsData: SearchedLocationsData { get set }
     var settingsData: SettingsData { get set }
+    var deviceLocation: [Double] { get set }
+    var targetLocation: String? { get set }
 }

@@ -2,12 +2,15 @@
 //  SettingsView.swift
 //  Weather App
 //
-//  Created by Bruno Benčević on 9/6/21.
+//  Created by Bruno Bencevic on 13.10.2022..
 //
 
+import Foundation
 import UIKit
 
 final class SettingsView: UIView {
+    
+    // MARK: - Properties
     
     var onCelsiusTapped: ((Bool) -> Void)?
     var onFahrenheitTapped: ((Bool) -> Void)?
@@ -17,17 +20,25 @@ final class SettingsView: UIView {
     
     // MARK: - Init
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init() {
+        super.init(frame: .zero)
         setup()
     }
     
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setup()
+        fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Components
+    func update(data: SettingsData) {
+        setButtonChecked(celsiusCheckButton, isChecked: data.useCelsius)
+        setButtonChecked(fahrenheitCheckButton, isChecked: !data.useCelsius)
+        
+        setButtonChecked(humidityCheckButton, isChecked: data.showHumidity)
+        setButtonChecked(pressureCheckButton, isChecked: data.showPressure)
+        setButtonChecked(windSpeedCheckButton, isChecked: data.showWindSpeed)
+    }
+    
+    // MARK: - UI Components
     
     private lazy var backgroundImage: UIImageView = {
         let imageView = UIImageView()
@@ -125,29 +136,17 @@ final class SettingsView: UIView {
         return button
     }()
     
-    // MARK: - Data setup
-    
-    func setupData(useCelsius: Bool? = nil, showHumidity: Bool? = nil, showPressure: Bool? = nil, showWindSpeed: Bool? = nil) {
-        if let useCelsius = useCelsius {
-            setButtonChecked(celsiusCheckButton, isChecked: useCelsius)
-            setButtonChecked(fahrenheitCheckButton, isChecked: !useCelsius)
-        }
-        
-        if let showHumidity = showHumidity {
-            setButtonChecked(humidityCheckButton, isChecked: showHumidity)
-        }
-        
-        if let showPressure = showPressure {
-            setButtonChecked(pressureCheckButton, isChecked: showPressure)
-        }
-        
-        if let showWindSpeed = showWindSpeed {
-            setButtonChecked(windSpeedCheckButton, isChecked: showWindSpeed)
-        }
+    func createCheckButton(onTapped: ((Bool) -> Void)? = nil) -> UIButton {
+        let button = UIButton()
+        button.layer.backgroundColor = UIColor.white.cgColor
+        button.addAction(UIAction { [weak button] action in
+            let willBecomeChecked = button?.image(for: .normal) == nil
+            onTapped?(willBecomeChecked)
+        }, for: .touchUpInside)
+        return button
     }
-}
-
-private extension SettingsView {
+    
+    // MARK: - Setup & Misc
     
     func setup() {
         let padding: CGFloat = 10
@@ -178,16 +177,6 @@ private extension SettingsView {
         windSpeedIcon.anchor(bottom: (windSpeedCheckButton.topAnchor, iconCheckmarkDistance))
         windSpeedIcon.centerXAnchor.constraint(equalTo: windSpeedCheckButton.centerXAnchor).isActive = true
         windSpeedCheckButton.anchor(size: CGSize(width: 40, height: 40))
-    }
-    
-    func createCheckButton(onTapped: ((Bool) -> Void)? = nil) -> UIButton {
-        let button = UIButton()
-        button.layer.backgroundColor = UIColor.white.cgColor
-        button.addAction(UIAction { [weak button] action in
-            let willBecomeChecked = button?.image(for: .normal) == nil
-            onTapped?(willBecomeChecked)
-        }, for: .touchUpInside)
-        return button
     }
     
     func setButtonChecked(_ button: UIButton, isChecked: Bool) {
