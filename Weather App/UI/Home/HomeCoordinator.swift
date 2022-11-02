@@ -73,9 +73,11 @@ final class HomeCoordinator: Coordinator {
         let searchCoordinator = SearchCoordinator()
         childCoordinator = searchCoordinator
         
-        searchCoordinator.onDismissed = { [weak self] selectedLocation in
-            self?.navigationController?.popViewController(animated: true)
-            self?.childCoordinator = nil
+        searchCoordinator.onDismissed = { [weak self] in
+            guard let self = self else { return }
+            
+            self.navigationController?.popViewController(animated: true)
+            self.childCoordinator = nil
         }
         
         let searchViewController = searchCoordinator.start()

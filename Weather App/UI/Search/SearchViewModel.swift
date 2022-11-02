@@ -21,6 +21,8 @@ final class SearchViewModel: ObservableObject {
     @Published private(set) var isActivityRunning = false
     @Published private(set) var error: SearchError?
     
+    @Published var confirmationDialog: ConfirmationDialog?
+    
     @Service(.singleton) var persistenceService: PersistenceServiceProtocol
     @Service var locationNamesService: LocationNamesServiceProtocol
     
@@ -38,8 +40,14 @@ final class SearchViewModel: ObservableObject {
     }
     
     func didTapDeleteButton() {
-        previousResults = []
-        persistenceService.searchedLocationsData = .init(locations: [])
+        self.confirmationDialog = .init(message: "Are you sure you want to delete all previous search results?", confirmTitle: "Delete", declineTitle: "Cancel", confirmAction: { [weak self] in
+            guard let self = self else { return }
+            
+            withAnimation(.linear(duration: 0.3)) {
+                self.previousResults = []
+                self.persistenceService.searchedLocationsData = .init(locations: [])
+            }
+        })
     }
     
     func didTapLocationCell(location: String) {

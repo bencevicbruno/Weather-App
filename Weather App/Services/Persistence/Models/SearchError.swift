@@ -25,21 +25,17 @@ struct SearchError: Equatable, Identifiable {
 
 extension SearchError {
     
-    static let previewID = UUID()
-    static let emptyID = UUID()
-    
     static var previewSample: SearchError {
-        .init(id: Self.previewID,
+        .init(id: UUID(),
               systemImageName: "antenna.radiowaves.left.and.right.slash",
               title: "Error",
               description: "There was an error connecting to openweatherapi.com",
               detailedDescription: "The network request failed due to wrong HTTP method type. Only GET method is supported. Please contact the developers to fix this.")
     }
     
-    static var empty: SearchError {
-        .init(id: Self.emptyID,
-              systemImageName: "globe.europe.africa.fill",
-              title: "Guess what...",
-              description: "No locations were found. You sure it's on earth?")
-    }
+    static let empty = SearchError(
+        id: UUID(),
+        systemImageName: "globe.europe.africa.fill",
+        title: "Guess what...",
+        description: "No locations were found. Are you sure it's on earth?")
 }

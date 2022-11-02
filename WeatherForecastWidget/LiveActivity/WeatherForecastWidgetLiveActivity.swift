@@ -10,6 +10,7 @@ import WidgetKit
 import SwiftUI
 
 struct WeatherForecastWidgetAttributes: ActivityAttributes {
+    
     public struct ContentState: Codable, Hashable {
         // Dynamic stateful properties about your activity go here!
         var value: Int

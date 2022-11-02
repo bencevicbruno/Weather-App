@@ -1,5 +1,5 @@
 //
-//  SearchView2.swift
+//  SearchView.swift
 //  Weather App
 //
 //  Created by Bruno Bencevic on 26.10.2022..
@@ -11,7 +11,8 @@ struct SearchView: View {
     
     @ObservedObject var viewModel : SearchViewModel
     
-    @FocusState var isSearchFieldInFocus: Bool
+    @FocusState private var isSearchFieldInFocus: Bool
+    @State private var keyboardHeight: CGFloat = .zero
     
     var body: some View {
         ZStack(alignment: .top) {
@@ -19,9 +20,10 @@ struct SearchView: View {
             
             navigationBar
                 .padding(.top, UIScreen.main.topUnsafePadding)
-                .padding(.horizontal, 16)
+                .padding(.horizontal, 12)
                 .background(BlurredView(style: .light))
         }
+        .foregroundColor(.black)
         .frame(maxWidth: .infinity)
         .frame(maxHeight: .infinity)
         .contentShape(Rectangle())
@@ -43,13 +45,14 @@ struct SearchView: View {
                 isSearchFieldInFocus = isInFocus
             }
         }
-        .foregroundColor(.black)
+        .readKeyboardHeight(into: $keyboardHeight)
         .onTapGesture {
             isSearchFieldInFocus = false
         }
         .onAppear {
             isSearchFieldInFocus = viewModel.isSearchFieldInFocus
         }
+        .confirmationDialog($viewModel.confirmationDialog)
     }
 }
 
@@ -70,8 +73,10 @@ private extension SearchView {
                 Image(systemName: "trash")
                     .frameAsIcon()
                     .onTapGesture {
+                        isSearchFieldInFocus = false
                         viewModel.didTapDeleteButton()
                     }
+                    .isHidden(viewModel.results.isEmpty && viewModel.previousResults.isEmpty)
             }
             .frame(height: 60)
             
@@ -128,11 +133,12 @@ private extension SearchView {
                     LocationCell(location: "Your search results will appear here", isPlaceholder: true)
                 }
             }
-            .padding(.bottom, UIScreen.main.bottomUnsafePadding + 16)
+            .padding(.bottom, keyboardHeight == 0 ? (UIScreen.main.bottomUnsafePadding + 16) : 16)
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, 16)
             .padding(.top, 8 + UIScreen.main.topUnsafePadding + 60 + (viewModel.isEditing ? 60 : 0))
         }
+        .padding(.bottom, keyboardHeight)
     }
     
     var activityCell: some View {

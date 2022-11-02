@@ -11,14 +11,14 @@ import SwiftUI
 
 final class SearchCoordinator: Coordinator {
     
-    var onDismissed: ((String?) -> Void)?
+    var onDismissed: EmptyCallback!
     
     func start() -> UIViewController {
         let viewModel = SearchViewModel()
         let viewController = UIHostingController(rootView: SearchView(viewModel: viewModel))
         
         viewModel.onDismissed = { [weak self] in
-            self?.onDismissed?("")
+            self?.onDismissed()
         }
         
         return viewController
